@@ -16,6 +16,8 @@
   --font-size-m: 0.9375rem;
   --font-size-l: 1.0625rem;
 
+  --font-size-xl: 1.8rem;
+
   --font-weight-light: 350;
   --font-weight-regular: 400;
   --font-weight-bold: 500;
@@ -31,7 +33,9 @@
   --border: rgba(0, 0, 0, 0.1);
   --selection: rgba(0, 0, 0, 0.08);
   --code-bg: rgba(0, 0, 0, 0.04);
-  --mark: #f3ffc4;
+  --mark: #fff891;
+
+  --emphasis: rgb(22, 37, 247);
 
   /* Syntax Theme  */
   --astro-code-foreground: rgba(0, 0, 0, 0.85);
@@ -56,7 +60,7 @@ html.light {
   --border: rgba(0, 0, 0, 0.1);
   --selection: rgba(0, 0, 0, 0.08);
   --code-bg: rgba(0, 0, 0, 0.04);
-  --mark: #f3ffc4;
+  --mark: #fff891;
 
   /* Syntax Theme  */
   --astro-code-foreground: rgba(0, 0, 0, 0.85);

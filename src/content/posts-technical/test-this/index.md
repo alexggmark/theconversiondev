@@ -1,23 +1,21 @@
 ---
-title: 'The TR-808 Story'
+title: 'Test This'
 pubDate: '2025-05-10'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 image: {
-  url: "./_assets/tr-808.jpg",
+  url: "./reading-time.png",
   alt: "Person praying with Bible and journal"
 }
 tags: ["prayer", "devotional", "spiritual growth"]
 ---
 
-![_tr-808](./_assets/tr-808.jpg)
+![_tr-808](./reading-time.png)
 
 The Roland TR-808 Rhythm Composer, often simply called the "808," is one of the most influential electronic instruments ever created. Despite its initial commercial failure, this drum machine went on to shape entire genres of music and become a cultural icon. This is the story of how a machine designed to replace drummers ended up revolutionizing music production.
 
 ## The Birth of the 808
 
 In the late 1970s, Roland Corporation was looking to create an affordable drum machine that could compete with the expensive Linn LM-1, which was the first drum machine to use digital samples. The company's engineers, led by **Ikutaro Kakehashi**, set out to create something different—a machine that would use **analog synthesis** to generate drum sounds rather than digital samples.
-
-![Well looky here, an image my boy](./_assets/tr-808.jpg)
 
 The development team faced several challenges:
 
