@@ -4,9 +4,10 @@ import type { PostListProps } from '@/types'
 import { themeConfig } from '@/config'
 
 const { posts } = Astro.props as PostListProps
+const { title } = Astro.props
 ---
 
-<h2 class="heading">Writing about CRO</h2>
+{title && <h2 class="heading">{title}</h2>}
 <ul>
   {
     posts.map((post) => (
@@ -17,6 +18,9 @@ const { posts } = Astro.props as PostListProps
               <p class="date font-features">
                 <FormattedDate date={post.data.pubDate} context="list" />
               </p>
+            )}
+            {post.data.result && (
+              <span class="results">{post.data.result}</span>
             )}
             <p class="title">{post.data.title}</p>
             {themeConfig.date.dateOnRight && (
@@ -52,6 +56,20 @@ const { posts } = Astro.props as PostListProps
     display: block;
     text-decoration: none;
     transition: opacity 0.15s ease-out;
+  }
+
+  /* mark {
+    background-color: #b2ffc5;
+    color: var(--text-primary);
+    padding: 0 2px;
+  } */
+
+  .results {
+    margin: 0;
+    background-color: #f7f7f7;
+    padding: 0 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -95,6 +113,19 @@ const { posts } = Astro.props as PostListProps
 
   .post-item.date-left .date {
     margin-right: 0.75rem;
+  }
+
+  h2.heading {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    margin: 0  0 1.2rem 0;
+  }
+
+  @media (min-width: 768px) {
+    h2.heading {
+      font-size: 1.5rem;
+    }
   }
 
   .title {

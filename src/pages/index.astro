@@ -3,15 +3,20 @@ import IndexLayout from '@/layouts/IndexLayout.astro'
 import About from '@/components/widgets/About.astro'
 import PostList from '@/components/widgets/PostList.astro'
 import { themeConfig } from '@/config'
-import { getSortedFilteredPosts } from '@/utils/draft'
+import { getSortedFilteredPostsByTag } from '@/utils/draft';
 
-const posts = await getSortedFilteredPosts()
+const caseStudyPosts = await getSortedFilteredPostsByTag('case-study');
+const webPosts = await getSortedFilteredPostsByTag('web');
+const artPosts = await getSortedFilteredPostsByTag('art');
+// const nonTaggedPosts = await getSortedFilteredPostsByTag(true);
 ---
 
 <IndexLayout title={themeConfig.site.title} description={themeConfig.site.description}>
   <About />
   <main>
-    <PostList posts={posts} title={"Test Title"} />
+    <PostList posts={caseStudyPosts} title={"Case Studies"} />
+    <PostList posts={webPosts} title={"Writing about CRO"} />
+    <PostList posts={artPosts} title={"Writing about Art"} />
+    <!-- <PostList posts={nonTaggedPosts} title={"Test Title 3"} /> -->
   </main>
-  <About />
 </IndexLayout>

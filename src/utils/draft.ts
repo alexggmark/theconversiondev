@@ -18,3 +18,27 @@ export async function getSortedFilteredPosts() {
       b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
 }
+
+/**
+ * Get all posts sorted by publication date, filtering out posts whose filenames start with _
+ */
+export async function getSortedFilteredPostsByTag(tag: string | boolean) {
+  const posts = await getFilteredPosts()
+
+  let filteredPosts = null;
+
+  if (tag == true || tag == false) {
+    filteredPosts = posts.filter(({ data }: CollectionEntry<'posts'>) => {
+      return !data.tags.length;
+    });
+  } else {
+    filteredPosts = posts.filter(({ data }: CollectionEntry<'posts'>) => {
+      return data.tags.includes(tag);
+    })
+  }
+
+  return filteredPosts.sort(
+    (a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) =>
+      b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  )
+}

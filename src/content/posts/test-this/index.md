@@ -1,12 +1,12 @@
 ---
-title: 'Test This'
+title: 'Why most UX work is wasted in eCommerce'
 pubDate: '2025-05-10'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 image: {
   url: "./reading-time.png",
   alt: "Person praying with Bible and journal"
 }
-tags: ["prayer", "devotional", "spiritual growth"]
+tags: ["web"]
 ---
 
 ![_tr-808](./reading-time.png)

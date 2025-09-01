@@ -14,7 +14,8 @@ const posts = defineCollection({
           alt: z.string().default('').optional()
         })
         .optional(),
-      tags: z.array(z.string()).default([])
+      tags: z.array(z.string()).default([]),
+      result: z.string().optional()
     })
 })
 
