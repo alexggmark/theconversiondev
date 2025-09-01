@@ -31,6 +31,8 @@ The development team faced several challenges:
 
 When the TR-808 was released in 1980, it was met with **disappointing sales**. The machine cost \$1,195 (approximately \$4,000 in today's dollars) and was criticized for its "unrealistic" drum sounds. Professional studios preferred the more expensive Linn LM-1, which used actual drum samples.
 
+### Just a little headline
+
 The 808's analog sounds were considered too electronic and artificial:
 
 - The kick drum was too boomy and lacked the punch of real drums
