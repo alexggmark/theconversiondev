@@ -102,8 +102,8 @@
           const newSystemTheme = e.matches ? 'dark' : 'light'
 
           // Always follow system theme changes and update stored theme preference
-          this.setStoredTheme('newSystemTheme')
-          this.applyTheme('newSystemTheme')
+          this.setStoredTheme(newSystemTheme)
+          this.applyTheme(newSystemTheme)
         })
 
         this.initialized = true
