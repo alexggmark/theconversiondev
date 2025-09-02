@@ -12,11 +12,11 @@ result: '+11% CVR'
 
 ![_tr-808](./_assets/tr-808.jpg)
 
-The Roland TR-808 Rhythm Composer, often simply called the "808," is one of the most influential electronic instruments ever created. Despite its initial commercial failure, this drum machine went on to shape entire genres of music and become a cultural icon. This is the story of how a machine designed to replace drummers ended up revolutionizing music production.
+The Roland TR-808 Rhythm Composer, often simply called the "808," is one of the most influential electronic instruments ever created. Despite its <mark>initial commercial failure</mark>, this drum machine went on to shape entire genres of music and become a cultural icon. This is the story of how a machine designed to replace drummers ended up revolutionizing music production.
 
 ## The Birth of the 808
 
-In the late 1970s, Roland Corporation was looking to create an affordable drum machine that could compete with the expensive Linn LM-1, which was the first drum machine to use digital samples. The company's engineers, led by **Ikutaro Kakehashi**, set out to create something different—a machine that would use **analog synthesis** to generate drum sounds rather than digital samples.
+In the late 1970s, Roland Corporation was looking to create an affordable drum machine that could compete with the expensive Linn LM-1, which was the first <mark>drum machine to use digital samples</mark>. The company's engineers, led by **Ikutaro Kakehashi**, set out to create something different—a machine that would use **analog synthesis** to generate drum sounds rather than digital samples.
 
 ![Well looky here, an image my boy](./_assets/tr-808.jpg)
 
