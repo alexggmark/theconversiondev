@@ -5,6 +5,35 @@ description: "Discover how establishing a daily prayer routine can bring peace a
 tags: ["web"]
 ---
 
+Read any marketing material from Shopify and you’d be mistaken for thinking they have a seamless and tightly-optimised way for merchants to run A/B tests…
+
+**Spoiler**: they don’t.
+
+I even got confirmation of this at a New Year’s Eve party last year when I randomly met a Shopify sales rep, and he proudly stated:
+
+> _“Oh, A/B testing? Yeah you can’t really do that with us”_<br>
+> — some Shopify guy at a party
+
+Now that’s a bit of an overstatement. I think what he meant was “you can A/B test on Shopify, but it’s really quite annoying”.
+
+Tools like <mark>VWO, Convert, and AB Tasty are powerful</mark>, but they’re largely built for “normal” websites – static HTML, headless CMS stuff, and predictable DOM structure.
+
+What they weren’t designed for was to work inside Shopify’s dynamic frontend that mixes LIQUID rendering, JavaScript enhancements, and a lot of moving parts.
+
+So if you're working on a custom Shopify build and want to launch clean, reliable experiments without trashing performance or breaking layout, here’s how I approach it.
+
+## 1. Add the VWO snippet
+
+First, you’ll need to add VWO’s tracking code site-wide. This is what:
+
+Assigns users to a test variant
+
+Loads your experiment config
+
+Injects the DOM changes client-side.
+
+Add the VWO snippet in your theme.liquid just before the closing </head> tag. It needs to load early to avoid flicker.
+
 The Roland TR-808 Rhythm Composer, often simply called the "808," is one of the most influential electronic instruments ever created. Despite its initial commercial failure, this drum machine went on to shape entire genres of music and become a cultural icon. This is the story of how a machine designed to replace drummers ended up revolutionizing music production.
 
 ## The Birth of the 808

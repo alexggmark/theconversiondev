@@ -36,6 +36,10 @@
   font-size: 1.4rem;
 }
 
+.prose h2 {
+  font-size: var(--font-size-l);
+}
+
 @media (min-width: 768px) {
   .prose h1 {
     font-size: 2.2rem;
@@ -414,7 +418,9 @@
 .prose mark {
   background-color: var(--mark);
   color: var(--text-primary);
-  padding: 3px 1px;
+  padding: 2px 1px;
+  /* WARNING: you added font-size in here to allow for use in headings */
+  font-size: inherit;
 }
 
 /* Footnotes */
