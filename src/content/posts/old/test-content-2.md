@@ -1,6 +1,6 @@
 ---
 title: 'How to set up VWO on a Shopify Site and run A/B tests'
-pubDate: '2025-05-12'
+pubDate: '2025-06-12'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
 ---
