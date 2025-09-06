@@ -188,7 +188,7 @@
 
 .prose .img-caption {
   display: block;
-  text-align: left;
+  text-align: center;
   color: var(--text-secondary);
   font-size: var(--font-size-s);
   margin-bottom: 2em;
