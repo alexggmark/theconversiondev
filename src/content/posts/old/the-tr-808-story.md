@@ -6,8 +6,7 @@ image: {
   url: "./_assets/tr-808.jpg",
   alt: "Person praying with Bible and journal"
 }
-tags: ['case-study']
-result: '+11% CVR'
+tags: ['hidden']
 ---
 
 ![_tr-808](./_assets/tr-808.jpg)

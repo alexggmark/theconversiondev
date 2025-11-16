@@ -1,7 +1,8 @@
 ---
-title: 'Theme Guide'
+title: 'Hydropeptide'
 pubDate: '2025-07-10'
-tags: ['hidden']
+tags: ['case-study']
+result: '+69% CVR'
 ---
 
 Chiri is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
@@ -92,19 +93,3 @@ export default defineConfig({
   }
 })
 ```
-
----
-
-## Preview of Some Features
-
-![Theme Toggle](./_assets/theme-toggle.png)
-
-![Dotted Divider](./_assets/dotted-divider.png)
-
-![Date on Left Side](./_assets/date-on-left.png)
-
-![Table of Contents](./_assets/toc.png)
-
-![Reading Time](./_assets/reading-time.png)
-
-![Copy Code](./_assets/copy-code.png)

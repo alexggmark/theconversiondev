@@ -7,7 +7,7 @@ This content will be displayed at the top of the index page.
 You can leave this empty if you don’t want to show any content.
 -->
 
-# Alex Grønmark builds systems that make eCommerce smarter, faster, and more profitable.
+# Alex Grønmark builds systems that make websites <mark>smarter, faster, and more profitable.</mark>
 
 I exist in that _sweet spot_ between conversion psychology and code…
 
