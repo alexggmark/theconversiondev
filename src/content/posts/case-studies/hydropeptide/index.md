@@ -2,10 +2,12 @@
 title: 'Hydropeptide'
 pubDate: '2025-07-10'
 tags: ['case-study']
-result: '+69% CVR'
+result: '+62.1% CVR'
 ---
 
 Chiri is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
+
+![HIKARI](./_assets/hp-proof-1.png)
 
 ---
 
