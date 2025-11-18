@@ -9,7 +9,7 @@ You can leave this empty if you don’t want to show any content.
 
 # Alex Grønmark builds systems that make websites smarter, faster, and more profitable.
 
-<!-- ![_HIKARI](./_assets/logos.avif) -->
+![_HIKARI](./_assets/logos.avif)
 
 <!-- I exist in that _sweet spot_ between conversion psychology and code… -->
 
