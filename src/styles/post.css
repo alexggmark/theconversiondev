@@ -416,9 +416,12 @@
 
 /* Highlighted text */
 .prose mark {
-  background-color: var(--mark);
-  color: var(--text-primary);
+  /* background-color: var(--mark); */
+  background-color: #daedff;
+  color: #000;
   padding: 2px 1px;
+  border-radius: 4px;
+  padding: 2px 3px;
   /* WARNING: you added font-size in here to allow for use in headings */
   font-size: inherit;
 }

@@ -9,11 +9,11 @@ A few weeks ago I built a small Next.js endpoint to get Segment data back into t
 
 We use Twilio’s Segment as our CDP. It ingests Shopify browsing behaviour, lets us build audiences, and forwards those audiences to other tools.
 
-The catch is, for anonymous users, data only flows in one direction: into Segment, not back to the page.
+The catch is, <mark>for anonymous users</mark>, data only flows in one direction: into Segment, not back to the page.
 
 This meant that when my CMO created an `is_affluent` audience (based on GA browsing patterns), there was no way to use that to trigger a “premium” popup. Even with ConvertFlow’s Segment connector, you can only trigger events based on identified users.
 
-With a deadline looming, I had to use Segment’s Profiles API to get this data. This needs server credentials - and exposes pretty sensitive data - so our frontend couldn’t fetch it safely.
+With a deadline looming, I had to use <mark>Segment’s Profiles API to get this data</mark>. This needs server credentials - and exposes pretty sensitive data - so our frontend couldn’t fetch it safely.
 
 As a solution, I built a tiny Next.js route, deployed on Vercel. It sits next to the site, keeps the token private, fetches only the traits we request, and returns a minimal, browser-safe JSON response.
 

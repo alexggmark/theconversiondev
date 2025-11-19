@@ -7,7 +7,7 @@ result: '+35.6% RPV'
 
 Chiri is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
 
-![HIKARI](./_assets/cs-proof-1.png)
+![This is an example of the work](./_assets/cs-proof-1.png)
 
 ---
 
