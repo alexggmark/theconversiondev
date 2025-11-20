@@ -36,6 +36,7 @@
   --mark: #fff891;
   --mark-text: #B392F0;
   --emphasis: rgba(0, 0, 0, 0.85);
+  --link: rgba(0, 0, 0, 0.85);
 
   /* Syntax Theme  */
   --astro-code-foreground: rgba(0, 0, 0, 0.85);
@@ -63,6 +64,7 @@ html.light {
   --mark: #fff891;
   --mark-text: #B392F0;
   --emphasis: rgba(0, 0, 0, 0.85);
+  --link: rgba(0, 0, 0, 0.85);
 
   /* Syntax Theme  */
   --astro-code-foreground: rgba(0, 0, 0, 0.85);
@@ -90,6 +92,7 @@ html.dark {
   --mark: #24292e;
   --mark-text: #9ECBFF;
   --emphasis: #F97583;
+  --link: #9ECBFF;
 
   /* Syntax Theme  */
   --astro-code-foreground: rgba(255, 255, 255, 0.9);
