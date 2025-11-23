@@ -9,6 +9,8 @@ I led a complete rebuild and ongoing optimisation program for [Hydropeptide UK](
 
 Through strategic site architecture and continuous experimentation, we achieved <mark>11.1% increase in AOV</mark> and <mark>32.4% increase in RPV</mark> over 4 months.
 
+***
+
 ## Business Context
 
 Hydropeptide is a premium US-based skincare brand targeting women in the UK market. When I took on this project, the site was running on an inherited Shopify theme from 2018, patched up with bad jQuery and third-party apps.
@@ -21,6 +23,8 @@ The business had never employed a dedicated web developer, relying instead on pl
 
 Getting buy-in for a complete rebuild took considerable effort, as the company hadn’t previously prioritised technical infrastructure.
 
+***
+
 ## Problem & Analytics
 
 The data painted a clear picture: we had a reasonably strong 3-month LTV, but 12-month LTV was abysmal. This suggested we were capturing initial purchases but failing to retain customers long-term.
@@ -31,7 +35,11 @@ CVR hovered around 1-2% - not unusual for DTC skincare or that catastrophic give
 
 CVR is a ratio metric, and with recent SEO improvements spiking traffic, this number would inevitably fluctuate. More importantly, for a business with our margins and indeterminate CPA numbers (we inherited a shaky Google Ads account), maximising order value is a more reliable lever than chasing incremental CVR improvements.
 
+![Test image](./_assets/analytics-audit.png)
+
 Traffic volume posed another challenge: we didn’t have the numbers to run traditional Frequentist A/B tests with statistical confidence. This meant we needed Bayesian testing.
+
+***
 
 ## Strategy
 
@@ -44,6 +52,8 @@ A complete rebuild was non-negotiable. The existing codebase made testing nearly
 Knowing we’d be running feature flag experiments from day one, I structured the build to keep code isolated - avoiding Dawn’s temptation to dump everything into shared JS/CSS files and instead maintaining component-level separation.
 
 Our product margins revealed an immediate opportunity: high-margin items were being undersold while low-margin bundles dominated. The existing bundle strategy prioritised products that moved volume but didn’t maximise profit per transaction. This was low-hanging fruit we could address through better merchandising and strategic upselling. -->
+
+***
 
 ## UX Management & Feature Research
 
@@ -61,7 +71,7 @@ I also ran a competitive feature audit, analysing how other premium skincare bra
 
 Each feature was evaluated against our AOV strategy, determining which patterns would translate to our customer base and product catalogue.
 
-![Test image](./_assets/analytics-audit.png)
+***
 
 ## Technical Implementation
 
@@ -97,6 +107,8 @@ The hardest thing to build was the navigation menu. Our UX designers had really 
 
 ![Test image](./_assets/hp-nav-anim-gif.gif)
 
+***
+
 ## Initial Results
 
 Post-launch showed promising lifts in both CVR and AOV. There was a brief dip immediately following launch - a textbook primacy effect as returning customers adjusted to the new interface - but numbers stabilised and established a new baseline.
@@ -104,6 +116,8 @@ Post-launch showed promising lifts in both CVR and AOV. There was a brief dip im
 ![Test image](./_assets/main-report-post-launch.png)
 
 The data confirmed what I’d suspected: we were a first-order-driven business. Retention issues wouldn’t be solved by a theme update. This validated my decision to focus experimentation on front-end AOV and CVR optimisation rather than chasing long-term behavioural change.
+
+***
 
 ## Experimentation Framework
 
@@ -205,6 +219,8 @@ function handleRecentlyViewed() {
 ```
 
 By reducing the friction of backtracking to previously viewed items, we hypothesised we could increase both conversion likelihood and basket size for users deep in product research.
+
+***
 
 ## Key Learnings
 

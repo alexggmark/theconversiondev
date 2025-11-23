@@ -70,7 +70,7 @@
 
 /* Links */
 .prose a {
-  color: var(--link);
+  color: var(--primary);
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-color: var(--text-tertiary);
