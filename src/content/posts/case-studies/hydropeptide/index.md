@@ -1,11 +1,11 @@
 ---
-title: 'Hydropeptide'
+title: 'HydroPeptide'
 pubDate: '2025-07-10'
 tags: ['case-study']
 result: '+32.4% RPV'
 ---
 
-I led a complete rebuild and ongoing optimisation program for [Hydropeptide UK](https://hydropeptide.co.uk/), transitioning from an unmaintainable legacy Shopify theme to a modern, test-ready platform.
+I led a complete rebuild and ongoing optimisation program for [HydroPeptide UK](https://hydropeptide.co.uk/), transitioning from an unmaintainable legacy Shopify theme to a modern, test-ready platform.
 
 Through strategic site architecture and continuous experimentation, we achieved <mark>11.1% increase in AOV</mark> and <mark>32.4% increase in RPV</mark> over 4 months.
 
@@ -13,7 +13,7 @@ Through strategic site architecture and continuous experimentation, we achieved 
 
 ## Business Context
 
-Hydropeptide is a premium US-based skincare brand targeting women in the UK market. When I took on this project, the site was running on an inherited Shopify theme from 2018, patched up with bad jQuery and third-party apps.
+HydroPeptide is a premium US-based skincare brand targeting women in the UK market. When I took on this project, the site was running on an inherited Shopify theme from 2018, patched up with bad jQuery and third-party apps.
 
 ![Test image](./_assets/before-after-mobile-view.png)
 
