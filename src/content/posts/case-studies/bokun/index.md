@@ -11,25 +11,25 @@ result: '+29.3% CVR'
 
 ## Business Context
 
-Bokun was driving traffic but failing to convert visitors into qualified trial users. Their conversion rate sat at 2.3%, below the B2B SaaS benchmark of 3-5%, and 40% of trial signups were poor fits that never closed.
+Bokun was driving traffic but failing to convert visitors into qualified trial users. Their conversion rate sat at 2.3%, below the B2B SaaS benchmark of 3-5%, and 50%+ of trial signups were poor fits that never closed.
 
 The business's CPA had reached an unsustainable level, and the sales team reported that many trial signups didn't match their ideal customer profile, resulting in poor trial-to-paid CVR.
 
-In B2B SaaS, improving top-of-funnel conversion has a compounding effect on revenue (_Geometric Growth!_) because it reduces CPA while also increasing the volume of qualified leads entering the pipeline.
+In B2B SaaS, improving top-of-funnel conversion has a compounding effect on revenue (_Geometric Growth!_) because it lowers CPA while also increasing the volume of qualified leads entering the pipeline.
 
 ## Problem & Analytics
 
-On our initial calls, I noticed a major disconnect: Bokun was fixated on attracting enterprise clients, but the majority of their revenue came from small to mid-sized tour operators. This led to product messaging that alienated their core audience.
+On our initial calls, I noticed a major disconnect. Bokun was fixated on attracting enterprise clients, but the majority of their revenue came from small to mid-sized tour operators. This led to product messaging that alienated their core audience.
 
 GA4 showed visitors skimming the homepage before navigating directly to pricing - very common in B2B SaaS comparison shoppers.
 
-I created a 37-page heuristic audit that highlighted where the site focused on enterprise features like "scalability" and "API access" (which mean nothing to small operators struggling with Excel spreadsheets).
+I started with a 31-page heuristic audit that highlighted where the site focused on enterprise features like "scalability" and "API access" (which mean nothing to small operators struggling with Excel spreadsheets).
+
+![A 31 page heuristic site walkthrough breaking down each issue for UX team](./_assets/heuristic-analysis-doc.gif)
 
 ## Research Strategy
 
 Instead of traditional UX personas, I wanted to do direct customer research on reviews. I find this is often more helpful as it avoids those _"Bob, 37, wants to buy our product!"_ personas that never lead anywhere…
-
-![alt text](./_assets/resumeble-splash-image.png)
 
 To make things even more quantitative, I wrote a Python script to scrape 1,000+ reviews from G2, Capterra, and TrustRadius. Sentiment analysis showed three themes dominating positive reviews: ease of implementation (67%), Viator integration (54%), and customer support (48%).
 
@@ -63,9 +63,7 @@ The wireframes also addressed a critical finding: trial signup friction was too 
 
 I prepared detailed specs to hand over to our dev team, explaining why specific elements mattered for conversions. I also designed a post-launch testing roadmap for hero messaging variations, pricing presentation formats, and signup form tests. Implementation took six weeks with close collaboration to preserve conversion principles.
 
-The results validated our approach. Within eight weeks, trial signup conversion increased 29.3% from 2.3% to 3.0%. More importantly, qualified trial percentage increased from 60% to 78% - we were converting the right visitors.
-
-The simplified signup form reduced abandonment 41% at that step. Also, highlighting Viator integration correlated with a much higher engagement from visitors who had previously bounced.
+Within eight weeks, trial signup conversion increased 29.3% from 2.3% to 3.0%. Most importantly, 6 months on, qualified trial percentage had increased 2X - we were finally converting the right visitors.
 
 ## Key Learnings
 
