@@ -9,6 +9,8 @@ I led a complete rebuild and ongoing optimisation program for [HydroPeptide UK](
 
 Through strategic site architecture and continuous experimentation, we achieved <mark>11.1% increase in AOV</mark> and <mark>32.4% increase in RPV</mark> over 4 months.
 
+![](./_assets/hp-splash-image.png)
+
 ***
 
 ## Business Context

@@ -7,7 +7,9 @@ result: '+29.3% CVR'
 
 [Bokun](https://www.bokun.io/) is a B2B booking SaaS based in Iceland that helps tour operators manage and sell bookings. After being acquired by TripAdvisor, they wanted to scale their acquisition. I joined as CRO consultant to rework their signup funnel, and 3 months post-launch <mark>CVR increased 29.3%</mark>.
 
-![alt text](./_assets/resumeble-splash-image.png)
+![](./_assets/bokun-splash-image.png)
+
+***
 
 ## Business Context
 
@@ -16,6 +18,8 @@ Bokun was driving traffic but failing to convert visitors into qualified trial u
 The business's CPA had reached an unsustainable level, and the sales team reported that many trial signups didn't match their ideal customer profile, resulting in poor trial-to-paid CVR.
 
 In B2B SaaS, improving top-of-funnel conversion has a compounding effect on revenue (_Geometric Growth!_) because it lowers CPA while also increasing the volume of qualified leads entering the pipeline.
+
+***
 
 ## Problem & Analytics
 
@@ -26,6 +30,8 @@ GA4 showed visitors skimming the homepage before navigating directly to pricing 
 I started with a 31-page heuristic audit that highlighted where the site focused on enterprise features like "scalability" and "API access" (which mean nothing to small operators struggling with Excel spreadsheets).
 
 ![A 31 page heuristic site walkthrough breaking down each issue for UX team](./_assets/heuristic-analysis-doc.gif)
+
+***
 
 ## Research Strategy
 
@@ -39,7 +45,7 @@ The enterprise features Bokun emphasized barely registered - API capabilities ap
 
 Critically, the analysis showed how customers actually described their problems: "double bookings," "manual processes," and "spreadsheet hell" - not the "robust booking management solutions" language Bokun was using. This gap represented a massive opportunity.
 
----
+***
 
 ## Strategic Framework & Wireframing
 
@@ -59,11 +65,15 @@ I rewrote the homepage to lead with three outcomes dominating our research: elim
 
 The wireframes also addressed a critical finding: trial signup friction was too high. The existing flow asked for business details, booking volume, and implementation timeline upfront. I redesigned it to collect only email and password initially, moving qualification questions into product onboarding - maximizing volume and qualifying later.
 
+***
+
 ## Implementation & Results
 
 I prepared detailed specs to hand over to our dev team, explaining why specific elements mattered for conversions. I also designed a post-launch testing roadmap for hero messaging variations, pricing presentation formats, and signup form tests. Implementation took six weeks with close collaboration to preserve conversion principles.
 
 Within eight weeks, trial signup conversion increased 29.3% from 2.3% to 3.0%. Most importantly, 6 months on, qualified trial percentage had increased 2X - we were finally converting the right visitors.
+
+***
 
 ## Key Learnings
 

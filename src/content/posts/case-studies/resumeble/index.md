@@ -9,7 +9,9 @@ result: '+108% CVR'
 
 Within just four weeks of relaunching, <mark>CVR increased 108%</mark>, while amazingly <mark>mobile conversions jumped 340%</mark>.
 
-![Resumeble's new homepage 6 weeks after launch](./_assets/resumeble-splash-image.png)
+![](./_assets/resumeble-splash-image.png)
+
+***
 
 ## Business Context
 
@@ -24,6 +26,8 @@ Years of SEO focus had resulted in a sprawling site with 40+ pages, creating a c
 ![New navigation massively simplified site architecture](./_assets/site-architecture.png)
 
 The business impact was clear: Resumeble was spending heavily on traffic acquisition but failing to convert qualified visitors, resulting in an unsustainable CPA and losing revenue to competitors with better-optimised funnels (not better businesses).
+
+***
 
 ## Problem & Analytics
 
@@ -43,6 +47,8 @@ This was fascinating because Resumeble delivered completed resumes in just four 
 
 My competitive analysis of TopResume, ZipJob, and TopStack Resume revealed a consistent pattern: all used a three-tier pricing model (versus Resumeble’s five), and heavily featured guarantees above the fold.
 
+***
+
 ## Hypothesis Development
 
 Using the ICE framework to prioritize hypotheses, I identified four high-impact opportunities:
@@ -61,6 +67,8 @@ Using the ICE framework to prioritize hypotheses, I identified four high-impact 
 
 ![The new pricing page puts social proof right at the top](./_assets/new-pricing-page.png)
 
+***
+
 ## Implementation Strategy
 
 Given traffic volume constraints, I recommended a structured rollout we could measure through before-and-after analysis, then iterate on.
@@ -75,6 +83,8 @@ Post-launch, we addressed conversion funnel friction. Session recordings showed 
 
 Throughout this process, I set up comprehensive tracking for CVR, add-to-cart rate, and engagement rate by device.
 
+***
+
 ## Results
 
 Four weeks post-launch, the results exceeded projections. Overall conversion rate jumped from 2.1% to 4.4% - a 108% increase. Revenue per visitor increased 92%. Bounce rate decreased 23%.
@@ -84,6 +94,8 @@ Four weeks post-launch, the results exceeded projections. Overall conversion rat
 The most dramatic improvements came from mobile. Mobile conversion rate skyrocketed 340%, rising from 1.0% to 4.4% - reaching parity with desktop. Mobile abandonment on the pricing page dropped from 95% to 65%. Mobile now accounted for 51% of all conversions versus 18% previously.
 
 Target personas showed even stronger results: IT professionals converted at 156% higher rates. The free resume review service hovered around the same, creating a robust lead nurture funnel.
+
+***
 
 ## Key Takeaways
 
