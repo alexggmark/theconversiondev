@@ -1,45 +1,47 @@
 ---
-title: 'Glue: building a Next.js serverless endpoint to send Segment data back to Shopify'
+title: 'Getting CDP data back to the browser with a proxy'
 pubDate: '2025-06-12'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
 ---
 
-A few weeks ago I built a small Next.js endpoint to get Segment data back into the browser - so we can read anonymous traits and decide which offers to show, instantly.
+We use Segment as our _Customer Data Platform_ (CDP). It ingests browsing behavior, builds audiences, and forwards them to marketing tools. The system works well - until you need that data *back* in the browser.
 
-We use Twilio’s Segment as our CDP. It ingests Shopify browsing behaviour, lets us build audiences, and forwards those audiences to other tools.
+This is how I created "glue" for that problem, leveraging the Profiles API and a small proxy.
 
-The catch is, <mark>for anonymous users</mark>, data only flows in one direction: into Segment, not back to the page.
+![Extremely crude diagram showing flow of data](./_assets/graph-vercel-segment-flow.png)
 
-This meant that when my CMO created an `is_affluent` audience (based on GA browsing patterns), there was no way to use that to trigger a “premium” popup. Even with ConvertFlow’s Segment connector, you can only trigger events based on identified users.
+## The problem
 
-With a deadline looming, I had to use <mark>Segment’s Profiles API to get this data</mark>. This needs server credentials - and exposes pretty sensitive data - so our frontend couldn’t fetch it safely.
+Here's the scenario: our CMO created an `is_affluent` audience based on browsing patterns. She wanted to show premium offers to these users immediately, without waiting for them to identify themselves.
 
-As a solution, I built a tiny Next.js route, deployed on Vercel. It sits next to the site, keeps the token private, fetches only the traits we request, and returns a minimal, browser-safe JSON response.
+But for anonymous users, Segment data only flows one direction: *into* Segment, not back to the page… (even ConvertFlow's Segment connector can only trigger events for identified users).
 
-## Why kind of glue is necessary
+So we needed a way to check audience membership for anonymous visitors and trigger things in real-time - specifically, showing a "two luxury gifts + 30% off" offer to affluent shoppers.
 
-When we first started talking about Segment, I made a classic mistake: I skim-read the documentation. (In my defense, it’s pretty dull).
+With a product launch deadline looming, I built a tiny Next.js proxy endpoint. It sits on Vercel, keeps API credentials server-side, fetches only the traits we request, and returns browser-safe JSON. This is the story of why it exists and how it works.
 
-What I saw was an `analytics` object in the browser and assumed this had some kind of real-time connection. But it doesn’t. It exists as a local payload that gets updated each time you send fresh data to Segment.
+## Why This Glue Is Necessary
 
-Basically, “what data have we just sent” rather than “what’s live on this user’s account”.
+When we first started with Segment, I made a classic mistake: I skim-read the docs (in my defense, they're pretty dull). I saw an `analytics` object in the browser and assumed it had some real-time connection to Segment's computed data.
 
-The data we actually want is computed server-side by Segment (i.e. anonymous user matches these traits), meaning our only option was to use the Profile API to request it.
+It doesn't…
 
-- Analytics.js does persist identifiers and traits that you set via identify() in the browser, typically in cookies/localStorage. That’s not the same as reading Segment-computed traits. Segment+1
-- Computed traits and other profile data live behind the Profiles API. You query them server-side (or via a trusted proxy), often using the include= query to fetch only the fields you need. Segment
-- Calling that API directly from the browser would expose secrets and still be blocked by CORS unless explicitly allowed. A server shim is the sane route. MDN Web Docs
+The browser analytics object is a local payload that gets updated each time you *send* fresh data to Segment. It's "what data have we just sent" rather than "what's live on this user's profile."
 
-Anyway, that’s the backdrop. Here’s the endpoint and how it works.
+The data we actually wanted - audience membership calculated server-side by Segment - lives behind the Profiles API. You can only query it server-side with authentication, and calling it directly from the browser would expose secrets and still be blocked by CORS.
 
-## What I built (at a glance)
+## What I Built
 
-- A Next.js Route Handler (app/…/route.ts) that accepts an idType (anonymous_id by default), an idValue, and a list of trait names.
-- It makes one authenticated request to Segment’s Profiles API with include= to keep payloads tiny.
-- It returns a tidy JSON shape for each trait: value, exists, and a ready-to-use boolean.
+A Next.js Route Handler (`app/.../route.ts`) that:
+- Accepts an `idType` (defaults to `anonymous_id`), an `idValue`, and a list of trait names
+- Makes one authenticated request to Segment's Profiles API using `include=` to keep payloads tiny
+- Returns a tidy JSON shape for each trait: `value`, `exists`, and a ready-to-use `boolean`
 
-### runtime and environment
+![A snapshot of the endpoint I built](./_assets/segment-endpoint.png)
+
+## Runtime and Environment
+
 ```typescript
 export const runtime = 'nodejs';
 
@@ -48,11 +50,12 @@ const TOKEN = process.env.SEGMENT_PROFILE_TOKEN!;
 const ALLOW = process.env.ALLOW_ORIGIN || '*';
 ```
 
-I force the Node.js runtime to guarantee full Node APIs and predictable behaviour. Secrets live in environment variables - easy locally, safer in Vercel, and no risk of leaking to the browser. The ALLOW origin lets me tighten CORS per environment. Next.js+2Next.js+2
+I force the Node.js runtime to guarantee full Node APIs and predictable behavior. Secrets live in environment variables - easy locally, safer in Vercel, zero risk of leaking to the browser. The `ALLOW` origin lets me tighten CORS per environment.
 
-## Making the browser call safe
+## Making the Browser Call Safe
 
-### CORS and preflight
+Browsers send a preflight OPTIONS check before the real request. I answer it explicitly:
+
 ```typescript
 function corsHeaders() {
   return {
@@ -68,11 +71,12 @@ export async function OPTIONS() {
 }
 ```
 
-Browsers often send a preflight OPTIONS check before the real request. I answer it explicitly and set consistent JSON headers everywhere. It’s boring by design - no surprises when a product page asks the question.
+Boring by design - no surprises when a product page makes the request.
 
-## Small helpers that avoid footguns
+## Safe Object Handling
 
-### Safe object checks and nested lookup
+Segment's response shape varies by workspace - sometimes `{ traits: {...} }`, sometimes a bare object. I detect both safely:
+
 ```typescript
 function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null;
@@ -82,7 +86,6 @@ function hasTraitsKey(v: unknown): v is { traits: unknown } {
   return isRecord(v) && 'traits' in v;
 }
 
-/** Safe nested getter with dot-path support */
 function getByPath<T = unknown>(obj: unknown, path: string): T | undefined {
   if (!path) return undefined;
   const keys = path.split('.');
@@ -97,9 +100,11 @@ function getByPath<T = unknown>(obj: unknown, path: string): T | undefined {
 }
 ```
 
-Segment’s response shape can be either { traits: {...} } or a bare object, depending on the workspace. I detect both, and I walk nested objects safely so customer.loyaltyTier or account.tier won’t crash if something is missing.
+This walks nested objects safely so `customer.loyaltyTier` or `account.tier` won't crash if something is missing.
 
-Parsing requested traits and normalising booleans
+## Flexible Query String Parsing
+
+```typescript
 function parseRequestedTraits(url: URL): string[] {
   const singles = url.searchParams.getAll('trait').map(s => s.trim()).filter(Boolean);
   const multi = (url.searchParams.get('traits') || '')
@@ -107,17 +112,19 @@ function parseRequestedTraits(url: URL): string[] {
     .map(s => s.trim())
     .filter(Boolean);
   const list = [...singles, ...multi];
-  return list.length ? Array.from(new Set(list)) : ['is_affluent']; // harmless default
+  return list.length ? Array.from(new Set(list)) : ['is_affluent'];
 }
 
 function toBooleanish(v: unknown) {
   return v === true || v === 'true' || v === 1 || v === '1';
 }
+```
 
-This keeps the query string flexible - ?trait=is_affluent&trait=has_recent_purchase or ?traits=is_affluent,has_recent_purchase. If you forget to pass anything, it defaults to is_affluent, which made our smoke testing easy.
+This accepts `?trait=is_affluent&trait=has_recent_purchase` or `?traits=is_affluent,has_recent_purchase`. If nothing is passed, it defaults to `is_affluent`, which made smoke testing trivial.
 
-The core GET handler
-Choosing the ID and early exit
+## The Core GET Handler
+
+```typescript
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -138,9 +145,7 @@ export async function GET(req: Request) {
       });
     }
 
-I default to anonymous_id because we need this before sign-in. There’s a legacy anonymousId param for older code. If there’s no id, I still return 200 with ok: false, so the browser has one parsing path and clear semantics.
-making one precise call to Segment
-   const requestedTraits = parseRequestedTraits(url);
+    const requestedTraits = parseRequestedTraits(url);
 
     const auth =
       typeof btoa === 'function'
@@ -149,23 +154,26 @@ making one precise call to Segment
 
     const baseApi = `https://profiles.segment.com/v1/spaces/${SPACE}/collections/users/profiles/${idType}:${encodeURIComponent(idValue)}/traits`;
 
-    // Single, focused call using include=...
     const u = new URL(baseApi);
     u.searchParams.set('include', requestedTraits.join(','));
 
-    const r = await fetch(u.toString(), { headers: { Authorization: `Basic ${auth}` } });
+    const r = await fetch(u.toString(), {
+      headers: { Authorization: `Basic ${auth}` }
+    });
+```
 
-Two important choices here:
-include= requests only the fields we care about - is_affluent plus any friends - so responses stay small and quick.
+Two critical decisions here:
+- `include=` requests only the fields we care about, keeping responses small and fast
+- Auth lives server-side and is added just-in-time - the Profiles API token never touches the browser
 
+## Handling 404s and API Errors
 
-Auth lives server-side and is added just-in-time. (Profiles API access requires a token; don’t ship it to the browser.) Segment+1
-
-
-Handling 404s, API errors, and success
-   if (r.status === 404) {
+```typescript
+    if (r.status === 404) {
       const results: Record<string, { value: unknown; exists: boolean; boolean: boolean }> = {};
-      for (const t of requestedTraits) results[t] = { value: null, exists: false, boolean: false };
+      for (const t of requestedTraits)
+        results[t] = { value: null, exists: false, boolean: false };
+      
       return new Response(
         JSON.stringify({
           ok: true,
@@ -175,7 +183,10 @@ Handling 404s, API errors, and success
           traitsRequested: requestedTraits,
           results,
         }),
-        { status: 200, headers: { ...corsHeaders(), 'Cache-Control': 'public, max-age=120' } }
+        {
+          status: 200,
+          headers: { ...corsHeaders(), 'Cache-Control': 'public, max-age=120' }
+        }
       );
     }
 
@@ -187,16 +198,19 @@ Handling 404s, API errors, and success
           reason: 'api_error',
           httpStatus: r.status,
           statusText: r.statusText,
-          api: u.toString(),
           body: body.slice(0, 400),
         }),
         { status: 200, headers: { ...corsHeaders(), 'Cache-Control': 'no-store' } }
       );
     }
+```
 
-If Segment has no profile yet, I return a calm success (ok: true, reason: 'not_found') with short caching. If it’s some other error, I surface a compact error object and mark it no-store so we don’t cache mistakes.
-Shaping the response
-   const raw: unknown = await r.json();
+If Segment has no profile yet, I return a calm success (`ok: true`, `reason: 'not_found'`) with 120-second caching. If there's an API error, I surface a compact error object marked `no-store` so we don't cache mistakes.
+
+## Shaping the Response
+
+```typescript
+    const raw: unknown = await r.json();
 
     const traits: Record<string, unknown> =
       hasTraitsKey(raw) && isRecord(raw.traits)
@@ -228,94 +242,77 @@ Shaping the response
       }
     );
   } catch {
-    return new Response(JSON.stringify({ ok: false, reason: 'error' }), {
-      status: 200,
-      headers: { ...corsHeaders(), 'Cache-Control': 'no-store' },
-    });
+    return new Response(
+      JSON.stringify({ ok: false, reason: 'error' }),
+      { status: 200, headers: { ...corsHeaders(), 'Cache-Control': 'no-store' } }
+    );
   }
 }
+```
 
 Three fields per trait:
-value — the raw trait value
-exists — present vs missing; helpful for deciding whether to retry or fall back.
-boolean — ready for instant UI branching
-I set shared cache headers so the good path stays snappy under load.
+- `value`  -  the raw trait value
+- `exists`  -  present vs missing; helpful for deciding whether to retry or fall back
+- `boolean`  -  ready for instant UI branching
 
-How the page uses it (the launch wiring)
-For our skincare launch, the page did something like:
-// Pseudocode on the product page
+I set shared cache headers so the happy path stays snappy under load.
+
+## How the Page Uses It
+
+For our launch, the product page did something like:
+
+```typescript
 const url = new URL('/api/traits', location.origin);
 url.searchParams.set('idType', 'anonymous_id');
-url.searchParams.set('idValue', window.analytics?.user().anonymousId()); // or your stored anon id
-url.searchParams.set('traits', 'is_affluent'); // default anyway
+url.searchParams.set('idValue', window.analytics?.user().anonymousId());
+url.searchParams.set('traits', 'is_affluent');
 
 const res = await fetch(url.toString(), { method: 'GET', credentials: 'omit' });
 const data = await res.json();
 
 if (data.ok && data.results?.is_affluent?.boolean) {
-  // Show premium popup: 2 luxury gifts + 30% off
-  showPremiumOffer();
+  showPremiumOffer(); // 2 luxury gifts + 30% off
 } else {
-  // Alternative: sample kit nudge or free-shipping progress bar
-  showGentleNudge();
+  showGentleNudge(); // Sample kit or free-shipping progress bar
 }
+```
 
-Simple rule: check the boolean, act, move on. No extra parsing, and no fragile dance with cross-site calls.
+Simple rule: check the boolean, act, move on. No extra parsing, no fragile cross-site calls.
 
-why Next.js on Vercel for a non-React task?
-Route Handlers: one file, first-class GET/OPTIONS, web-standard Request/Response. Easy to reason about and test. Next.js
+## Why Next.js on Vercel for a Non-React Task?
 
+**Route Handlers**: One file, first-class GET/OPTIONS support, web-standard Request/Response. Easy to reason about and test.
 
-Runtime control: export const runtime = 'nodejs' gives you the full Node surface when you need it. Next.js
+**Runtime control**: `export const runtime = 'nodejs'` gives you the full Node surface when you need it.
 
+**Deploy & scale**: Vercel Functions handle traffic bursts when a campaign goes live. I didn't manage servers; I shipped code.
 
-Deploy & scale: Vercel Functions handle the “burst” when a campaign goes live. I didn’t manage servers; I shipped code. Vercel+1
+Is it odd to use Next.js with zero React? A little. But as a packaging format for server endpoints, it's excellent.
 
+## Trade-offs I Made
 
-Is it odd to use Next with zero React? A little. But as a packaging format for server endpoints, it’s excellent.
+**Always 200 with an `ok` flag.** The browser has one parsing path - handle state, not transport drama.
 
-trade-offs I chose
-Always 200 with an ok flag. The browser has one parsing path. Handle state, not transport drama.
+**Short negative caching (120s)** smooths the early minutes when brand-new visitors' traits haven't settled.
 
+**Configurable origins.** Started permissive for QA across preview domains, then locked down to live storefronts.
 
-Short negative caching (120s) smooths the early minutes of brand-new visitors whose traits haven’t settled.
+**Legacy param support** kept older code working during rollout.
 
+**Default `is_affluent`** kept smoke tests simple and matched the launch goal.
 
-Configurable origins. I started permissive for QA across preview domains, then locked down to live storefronts.
+## What This Achieved
 
+**Premium offer at the right time.** If `is_affluent` was true, we showed the luxury bundle straight away.
 
-Legacy param support kept older code working during rollout.
+**Margin protection.** For that cohort, we suppressed generic discounts that weren't needed to convert.
 
-
-Default is_affluent kept smoke tests and dashboards simple—and matched the launch goal.
-
-
-
-What this let us achieve
-Premium offer at the right time. If is_affluent was true, we showed the luxury bundle with “two gifts + 30% off” straight away.
-
-
-Margin protection. For that cohort, we suppressed generic discounts that weren’t needed to convert.
-
-
-Gentle alternatives. If the trait was missing or false, we nudged towards a sample kit or free-shipping progress - helpful, not pushy.
-
+**Gentle alternatives.** If the trait was missing or false, we nudged towards a sample kit or free-shipping progress - helpful, not pushy.
 
 The effect was practical: higher first-order value for the right shoppers, and a calmer experience for everyone else.
 
-## What I learned (and what I read)
+## What I Learned
 
-I’m not a CDP specialist. This was a fast education in how Segment’s browser library differs from its Profiles API, and why a tiny server (“Javascript glue”) is often helpful. The resources I leaned on:
-Next.js Route Handlers & runtime — how to build a one-file HTTP handler and force nodejs. Next.js+1
+I'm not a CDP specialist. This was a fast education in how Segment's browser library differs from its Profiles API, and why a tiny server proxy is often the right answer. The pattern is simple: hide upstream complexity, expose only what the page needs, keep secrets server-side.
 
-- Vercel Functions — why serverless can be perfectly fine for a small endpoint. Vercel+1
-- CORS & preflight — how to return the right headers and make browsers relax. MDN Web Docs+1
-- Segment behaviour — analytics.js persists identifiers/traits you set client-side, but computed traits belong behind the Profiles API. Segment+2Segment+2
-
-Avoiding client exposure — third-party guides that recommend a Next/Vercel proxy to call the Segment Profile API without exposing keys. Uniform DXP Documentation
-
-## Closing thoughts
-
-This wasn’t all that complicated. It was just some careful glue under pressure: one server file that hid the upstream quirks and gave the page usable information - “does this shopper look affluent?”.
-
-Marketing got the moment they wanted; the site stayed lean; secrets stayed server-side; Segment remained the source of truth.
+Marketing got the personalization moment they wanted. The site stayed lean. Segment remained the source of truth. Sometimes the best infrastructure is just careful glue under pressure.
