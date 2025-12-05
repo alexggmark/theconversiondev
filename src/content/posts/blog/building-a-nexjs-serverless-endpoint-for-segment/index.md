@@ -1,6 +1,6 @@
 ---
 title: 'Getting CDP data back to the browser with a proxy'
-pubDate: '2025-06-12'
+pubDate: '2025-05-02'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
 ---

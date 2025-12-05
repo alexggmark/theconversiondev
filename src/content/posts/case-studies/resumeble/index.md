@@ -1,6 +1,6 @@
 ---
 title: 'Resumeble'
-pubDate: '2025-07-10'
+pubDate: '2024-05-10'
 tags: ['case-study']
 result: '+108% CVR'
 ---

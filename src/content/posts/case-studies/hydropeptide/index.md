@@ -1,6 +1,6 @@
 ---
 title: 'HydroPeptide'
-pubDate: '2025-07-10'
+pubDate: '2025-09-10'
 tags: ['case-study']
 result: '+32.4% RPV'
 ---

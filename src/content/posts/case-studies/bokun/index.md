@@ -1,6 +1,6 @@
 ---
 title: 'Bokun.io'
-pubDate: '2025-07-10'
+pubDate: '2023-11-04'
 tags: ['case-study']
 result: '+29.3% CVR'
 ---

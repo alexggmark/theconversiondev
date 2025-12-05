@@ -1,6 +1,6 @@
 ---
 title: 'Building a Headless Shopify store with Next.js & DatoCMS'
-pubDate: '2025-06-12'
+pubDate: '2025-09-15'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
 ---
