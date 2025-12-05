@@ -240,11 +240,11 @@ Another benefit of ASP.NET is that we can use "partials" like components - so co
 
 One of my core principles is to optimise as early as possible in a project. With this stack, that meant:
 
-Leveraging component libraries like [Pines UI](https://devdojo.com/pines). Why build everything from scratch when 50% of the logic already exists? I could focus on the unique business requirements while using battle-tested components for standard patterns.
+- Leveraging component libraries like [Pines UI](https://devdojo.com/pines). Why build everything from scratch when 50% of the logic already exists? I could focus on the unique business requirements while using battle-tested components for standard patterns.
 
-Pushing our UX designer toward UI kits. I picked [FlowBite V3 Figma library](https://www.figma.com/community/file/1522519996630594183/flowbite-design-system-pro-v3-0) because it gave us everything we needed for an enterprise-level eComm project. No more trying to create every button, form, and card component. No more inconsistent spacing values that become a nightmare to implement.
+- Pushing our UX designer toward UI kits. I picked [FlowBite V3 Figma library](https://www.figma.com/community/file/1522519996630594183/flowbite-design-system-pro-v3-0) because it gave us everything we needed for an enterprise-level eComm project. No more trying to create every button, form, and card component. No more inconsistent spacing values that become a nightmare to implement.
 
-Working with the backend, I pushed hard to keep all data consistent. The backend could be upgraded to ASP.NET Core without changing data patterns or names on the frontend. This meant I could build UI knowing the ground wouldn't shift underneath me.
+- Working with the backend, I pushed hard to keep all data consistent. The backend could be upgraded to ASP.NET Core without changing data patterns or names on the frontend. This meant I could build UI knowing the ground wouldn't shift underneath me.
 
 ## Masking performance problems
 
