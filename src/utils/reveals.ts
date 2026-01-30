@@ -197,7 +197,7 @@ export function initReveals(config?: RevealConfig[]) {
 
     // Selector-based config (for markdown content)
     config?.forEach(({ selector, type = "words", stagger = 0 }) => {
-      document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in)`).forEach((el, index) => {
+      document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in):not(.mobile-only):not(.desktop-only)`).forEach((el, index) => {
         el.dataset.syReveal = type;
         if (stagger > 0) {
           el.dataset.syDelay = String(index * stagger);
