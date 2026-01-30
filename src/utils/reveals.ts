@@ -93,14 +93,18 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
  * Duplicates element: original for mobile (static), clone for desktop (animated)
  */
 function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void {
+  console.log('[reveals] animateLinesWithMarks called, class:', el.className);
   // Guard: skip if already processed (prevents double-processing on page transitions)
   if (el.classList.contains("mobile-only") || el.classList.contains("desktop-only")) {
+    console.log('[reveals] animateLinesWithMarks SKIPPED (has mobile-only or desktop-only)');
     return;
   }
   // Also check for DOM evidence of processing (line-mask children)
   if (el.querySelector(".line-mask")) {
+    console.log('[reveals] animateLinesWithMarks SKIPPED (has .line-mask)');
     return;
   }
+  console.log('[reveals] animateLinesWithMarks PROCEEDING with animation');
 
   // Clone the element before any processing (preserves original HTML with <mark>)
   const mobileEl = el.cloneNode(true) as HTMLElement;
@@ -138,8 +142,10 @@ function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void 
 
 // Word animation (existing functionality)
 function animateWords(el: HTMLElement) {
+  console.log('[reveals] animateWords called, class:', el.className);
   // Guard: skip if already processed (check for i-mask children)
   if (el.querySelector(".i-mask")) {
+    console.log('[reveals] animateWords SKIPPED (has .i-mask)');
     return;
   }
 
@@ -198,20 +204,32 @@ export interface RevealConfig {
 }
 
 export function initReveals(config?: RevealConfig[]) {
+  console.log('[reveals] initReveals called');
+
   document.fonts.ready.then(() => {
     // Elements with data-sy-reveal="words" attribute
-    document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)').forEach((el) => {
+    const wordsEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)');
+    console.log('[reveals] data-sy-reveal="words" matched:', wordsEls.length);
+    wordsEls.forEach((el) => {
+      console.log('[reveals] - words element:', el.className);
       wordsObserver.observe(el);
     });
 
     // Elements with data-sy-reveal="lines" attribute
-    document.querySelectorAll<HTMLElement>('[data-sy-reveal="lines"]:not(.is-in)').forEach((el) => {
+    const linesEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="lines"]:not(.is-in)');
+    console.log('[reveals] data-sy-reveal="lines" matched:', linesEls.length);
+    linesEls.forEach((el) => {
+      console.log('[reveals] - lines element:', el.className);
       linesObserver.observe(el);
     });
 
     // Selector-based config (for markdown content)
     config?.forEach(({ selector, type = "words", stagger = 0 }) => {
-      document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in):not(.mobile-only):not(.desktop-only)`).forEach((el, index) => {
+      const fullSelector = `${selector}:not(.is-in):not(.mobile-only):not(.desktop-only)`;
+      const elements = document.querySelectorAll<HTMLElement>(fullSelector);
+      console.log(`[reveals] config selector "${selector}" (${type}) matched:`, elements.length);
+      elements.forEach((el, index) => {
+        console.log(`[reveals] - config element ${index}:`, el.className, '|', el.textContent?.slice(0, 40));
         el.dataset.syReveal = type;
         if (stagger > 0) {
           el.dataset.syDelay = String(index * stagger);
