@@ -12,7 +12,7 @@ const {
   imageSrc = '/assets/alex-logo-the-conversion-dev.png',
   // text = 'ALEX GRONMARK • CONVERSION • ',
   text = 'THE CONVERSION DEV • THE CONVERSION DEV • ',
-  size = 160,
+  size = 110,
   duration = 32
 } = Astro.props;
 
@@ -100,7 +100,7 @@ const svgSize = size + 40;
   define:vars={{
     contentWidth: themeConfig.general.contentWidth,
     centeredLayout: themeConfig.general.centeredLayout,
-    toc: themeConfig.post.toc
+    logo: themeConfig.general.activeLogo
   }}
 >
   ;(function () {
@@ -121,15 +121,15 @@ const svgSize = size + 40;
       const widthValue = Math.min(contentWidthValue, 50)
       const shouldUseCustomWidth = widthValue > 25
       const finalWidthValue = shouldUseCustomWidth ? widthValue : 25
-      const margin = (pageWidth - finalWidthValue * 16) / 2
+      const margin = (pageWidth - finalWidthValue * 12) / 2
       const baseMinSpace = 14 * 16 // More space needed for avatar
-      const minSpace = toc ? baseMinSpace + 52 : baseMinSpace + 12
+      const minSpace = logo ? baseMinSpace + 52 : baseMinSpace + 12
 
       // Position avatar fixed on the left if there's enough space
       if (margin >= minSpace) {
         avatar.classList.add('fixed-position')
         const basePosition = margin - baseMinSpace
-        const leftPosition = toc ? basePosition - 40 : basePosition
+        const leftPosition = logo ? basePosition - 40 : basePosition
         avatar.style.left = `${leftPosition}px`
       } else {
         avatar.classList.remove('fixed-position')
@@ -181,7 +181,7 @@ const svgSize = size + 40;
 
   .circular-text {
     font-family: var(--sans);
-    font-size: 0.57rem;
+    font-size: 0.54rem;
     font-weight: var(--font-weight-regular);
     letter-spacing: 0.15em;
     text-transform: uppercase;

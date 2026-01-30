@@ -17,7 +17,8 @@ export const themeConfig: ThemeConfig = {
     themeToggle: false, // Show theme toggle button (uses system theme by default)
     postListDottedDivider: false, // Show dotted divider in post list
     footer: true, // Show footer
-    fadeAnimation: true // Enable fade animations
+    fadeAnimation: true, // Enable fade animations
+    activeLogo: true
   },
 
   // DATE SETTINGS ///////////////////////////////////////////////////////////////////////////////////////

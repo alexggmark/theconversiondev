@@ -22,7 +22,8 @@ export interface GeneralSettings {
   themeToggle: boolean
   postListDottedDivider: boolean
   footer: boolean
-  fadeAnimation: boolean
+  fadeAnimation: boolean,
+  activeLogo: boolean
 }
 
 // Date settings configuration type
