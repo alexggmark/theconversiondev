@@ -33,7 +33,7 @@ function animateLines(el: HTMLElement) {
   gsap.fromTo(
     st.lines,
     { rotateX: 45, yPercent: 120 },
-    { rotateX: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05 }
+    { rotateX: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05, delay: 0.4 }
   );
 }
 

@@ -1,8 +1,6 @@
 [data-sy-reveal="lines"],
 [data-sy-reveal="words"] {
   opacity: 0;
-  font-kerning: none;
-  text-rendering: optimizespeed;
 }
 
 [data-sy-reveal="lines"].is-in,
@@ -12,9 +10,10 @@
 
 [data-sy-reveal="lines"] .i-mask,
 [data-sy-reveal="words"] .i-mask {
-  display: inline-block;
+  display: inline-flex;
   clip-path: inset(8% -10% -8%);
   font-size: inherit !important;
+  vertical-align: baseline;
 }
 
 [data-sy-reveal="lines"] .i,
@@ -23,6 +22,7 @@
   will-change: transform;
   transform: translateZ(0);
   font-size: inherit !important;
+  white-space: pre;
 }
 
 [data-sy-reveal="lines"].u-heading .i-mask,
@@ -34,7 +34,15 @@
   display: block;
 }
 
-/* ugly fix for nested split-type styling */
+/* Override split-type inline styles */
+[data-sy-reveal] .word,
+[data-sy-reveal] .line {
+  font-kerning: auto !important;
+  letter-spacing: inherit !important;
+  word-spacing: inherit !important;
+}
+
+/* Fix for nested elements */
 [data-sy-reveal] mark,
 [data-sy-reveal] a,
 [data-sy-reveal] strong,
