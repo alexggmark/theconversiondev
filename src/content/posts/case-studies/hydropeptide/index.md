@@ -1,5 +1,5 @@
 ---
-title: 'HydroPeptide'
+title: 'Premium Skincare eCommerce'
 pubDate: '2025-09-10'
 tags: ['case-study']
 result: '+32.4% RPV'

@@ -1,5 +1,5 @@
 ---
-title: 'Resumeble'
+title: 'Professional CV writing platform'
 pubDate: '2024-05-10'
 tags: ['case-study']
 result: '+108% CVR'

@@ -1,5 +1,5 @@
 ---
-title: 'Bokun.io'
+title: 'TripAdvisor-owned B2B SaaS'
 pubDate: '2023-11-04'
 tags: ['case-study']
 result: '+29.3% CVR'
