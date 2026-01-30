@@ -47,10 +47,23 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 
     <script>
       import { initReveals } from '@/utils/reveals';
-      initReveals([
-        { selector: '.about h1', type: 'words' },
-        { selector: '.about p', type: 'lines' },
-      ]);
+
+      const revealConfig = [
+        { selector: '.about h1', type: 'words' as const },
+        { selector: '.about p', type: 'lines' as const },
+      ];
+
+      // Handle View Transitions navigation
+      document.addEventListener('astro:page-load', () => {
+        initReveals(revealConfig);
+      });
+
+      // Fallback for initial load (in case astro:page-load doesn't fire)
+      if (document.readyState === 'complete') {
+        initReveals(revealConfig);
+      } else {
+        window.addEventListener('load', () => initReveals(revealConfig), { once: true });
+      }
     </script>
   </body>
 </html>

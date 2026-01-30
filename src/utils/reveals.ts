@@ -2,8 +2,10 @@ import gsap from "gsap";
 import SplitType from "split-type";
 
 const stagger = 100;
-const toReveal: { elem: HTMLElement; shouldReveal: boolean }[] = [];
+let toReveal: { elem: HTMLElement; shouldReveal: boolean }[] = [];
 const splitMap = new WeakMap<HTMLElement, SplitType>();
+const observedElements = new WeakSet<HTMLElement>();
+let initPromise: Promise<void> | null = null;
 
 const fns = {
   words(el: HTMLElement) {
@@ -105,11 +107,21 @@ export interface RevealConfig {
 }
 
 export function initReveals(additionalSelectors?: RevealConfig[]) {
-  document.fonts.ready.then(() => {
+  // Prevent double-initialization on same page
+  if (initPromise) return initPromise;
+
+  // Reset state for re-initialization (e.g., after page transitions)
+  toReveal = [];
+  revealIndex = 0;
+
+  initPromise = document.fonts.ready.then(() => {
     // Handle data-attribute based reveals
     document.querySelectorAll<HTMLElement>("[data-sy-reveal]").forEach((elem) => {
       const type = elem.dataset.syReveal;
-      if (type === "words" || type === "lines") {
+      if ((type === "words" || type === "lines") && !observedElements.has(elem)) {
+        // Reset element state if it was previously animated
+        elem.classList.remove("is-in");
+        observedElements.add(elem);
         observer.observe(elem);
       }
     });
@@ -118,14 +130,21 @@ export function initReveals(additionalSelectors?: RevealConfig[]) {
     if (additionalSelectors) {
       additionalSelectors.forEach(({ selector, type }) => {
         document.querySelectorAll<HTMLElement>(selector).forEach((elem) => {
-          if (!elem.dataset.syReveal) {
+          if (!observedElements.has(elem)) {
             elem.dataset.syReveal = type;
+            elem.classList.remove("is-in");
+            observedElements.add(elem);
             observer.observe(elem);
           }
         });
       });
     }
+
+    // Reset initPromise after a short delay to allow re-init on next navigation
+    setTimeout(() => { initPromise = null; }, 100);
   });
+
+  return initPromise;
 }
 
 export function manualRevealIn(elem: HTMLElement) {

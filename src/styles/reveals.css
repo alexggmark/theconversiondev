@@ -33,3 +33,13 @@
 [data-sy-reveal="lines"] .i-mask {
   display: block;
 }
+
+/* ugly fix for nested split-type styling */
+[data-sy-reveal] mark,
+[data-sy-reveal] a,
+[data-sy-reveal] strong,
+[data-sy-reveal] em,
+[data-sy-reveal] code {
+  display: inline !important;
+  position: static !important;
+}
