@@ -5,6 +5,7 @@ import { ClientRouter } from 'astro:transitions'
 import FaviconThemeSwitcher from '@/components/ui/FaviconThemeSwitcher.astro'
 import TransitionWrapper from '@/components/layout/TransitionWrapper.astro'
 import type { LayoutProps } from '@/types'
+import '@/styles/reveals.css'
 
 type Props = LayoutProps
 
@@ -43,6 +44,14 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
         </div>
       )
     }
+
+    <script>
+      import { initReveals } from '@/utils/reveals';
+      initReveals([
+        { selector: '.about h1', type: 'words' },
+        { selector: '.about p', type: 'lines' },
+      ]);
+    </script>
   </body>
 </html>
 
