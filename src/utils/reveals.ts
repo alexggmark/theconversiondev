@@ -15,25 +15,7 @@ function animateWords(el: HTMLElement) {
   gsap.fromTo(
     st.words,
     { opacity: 1, rotate: 5, yPercent: 120 },
-    { rotate: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05 }
-  );
-}
-
-function animateLines(el: HTMLElement) {
-  const st = new SplitType(el, { types: "lines" });
-
-  st.lines?.forEach((line) => {
-    const mask = document.createElement("div");
-    mask.className = "i-mask";
-    line.classList.add("i");
-    line.parentNode?.insertBefore(mask, line);
-    mask.appendChild(line);
-  });
-
-  gsap.fromTo(
-    st.lines,
-    { rotateX: 45, yPercent: 120 },
-    { rotateX: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05, delay: 0.4 }
+    { rotate: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05, delay: 0.2 }
   );
 }
 
@@ -42,11 +24,7 @@ const observer = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const el = entry.target as HTMLElement;
-        const type = el.dataset.syReveal;
-
-        if (type === "words") animateWords(el);
-        if (type === "lines") animateLines(el);
-
+        animateWords(el);
         el.classList.add("is-in");
         observer.unobserve(el);
       }
@@ -57,20 +35,19 @@ const observer = new IntersectionObserver(
 
 export interface RevealConfig {
   selector: string;
-  type: "words" | "lines";
 }
 
 export function initReveals(config?: RevealConfig[]) {
   document.fonts.ready.then(() => {
-    // Elements with data-sy-reveal attribute
-    document.querySelectorAll<HTMLElement>("[data-sy-reveal]:not(.is-in)").forEach((el) => {
+    // Elements with data-sy-reveal="words" attribute
+    document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)').forEach((el) => {
       observer.observe(el);
     });
 
     // Selector-based config (for markdown content)
-    config?.forEach(({ selector, type }) => {
+    config?.forEach(({ selector }) => {
       document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in)`).forEach((el) => {
-        el.dataset.syReveal = type;
+        el.dataset.syReveal = "words";
         observer.observe(el);
       });
     });
