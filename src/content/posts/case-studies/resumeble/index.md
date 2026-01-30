@@ -3,6 +3,7 @@ title: 'Professional CV writing platform'
 pubDate: '2024-05-10'
 tags: ['case-study']
 result: '+108% CVR'
+postImg: './_assets/resumeble-splash-image.png'
 ---
 
 [Resumable](https://www.resumeble.com/) is an ATS-compliant resume writing service. I joined them as a CRO consultant back in 2023 and helped fix friction points in their user journey - creating wireframes, messaging, and new offers.

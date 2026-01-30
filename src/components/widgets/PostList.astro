@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import FormattedDate from '@/components/widgets/FormattedDate.astro'
 import type { PostListProps } from '@/types'
 import { themeConfig } from '@/config'
@@ -34,6 +35,17 @@ const { title } = Astro.props
               </p>
             )}
           </div>
+          {post.data.postImg && (
+            <div class="post-img-wrapper">
+              <Image
+                src={post.data.postImg}
+                alt={post.data.title}
+                widths={[800, 1200, 1600]}
+                sizes="(max-width: 768px) 100vw, 800px"
+                class="post-img"
+              />
+            </div>
+          )}
         </a>
       </li>
     ))
@@ -180,5 +192,71 @@ const { title } = Astro.props
 
   .placeholder {
     height: 3rem;
+  }
+
+  .post-img-wrapper {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .post-img-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba(28, 28, 28, 0.15);
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .post-img-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets/specklednoise.png');
+    background-repeat: repeat;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover .post-img-wrapper::before {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .post-img-wrapper::before {
+      display: none;
+    }
+  }
+
+  .post-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease-out, height 0.3s ease-out, filter 0.3s ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .post-img {
+      height: 150px;
+      /* filter: grayscale(0.8); */
+    }
+
+    a:hover .post-img {
+      height: 220px;
+      transform: scale(1.05);
+      /* filter: grayscale(0); */
+    }
   }
 </style>

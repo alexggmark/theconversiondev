@@ -3,6 +3,7 @@ title: 'TripAdvisor-owned B2B SaaS'
 pubDate: '2023-11-04'
 tags: ['case-study']
 result: '+29.3% CVR'
+postImg: './_assets/bokun-splash-image.png'
 ---
 
 [Bokun](https://www.bokun.io/) is a B2B booking SaaS based in Iceland that helps tour operators manage and sell bookings. After being acquired by TripAdvisor, they wanted to scale their acquisition. I joined as CRO consultant to rework their signup funnel, and 3 months post-launch <mark>CVR increased 29.3%</mark>.

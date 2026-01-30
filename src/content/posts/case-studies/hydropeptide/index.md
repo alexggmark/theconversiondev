@@ -3,6 +3,7 @@ title: 'Premium Skincare eCommerce'
 pubDate: '2025-09-10'
 tags: ['case-study']
 result: '+32.4% RPV'
+postImg: './_assets/hp-splash-image.png'
 ---
 
 I led a complete rebuild and ongoing optimisation program for [HydroPeptide UK](https://hydropeptide.co.uk/), transitioning from an unmaintainable legacy Shopify theme to a modern, test-ready platform.
