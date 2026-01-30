@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "WebFetch(domain:gsap.com)",
+      "WebSearch",
+      "WebFetch(domain:www.thecodecreative.com)",
+      "WebFetch(domain:frontend.horse)",
+      "Bash(pnpm exec tsc:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)"
     ]
   }
 }

@@ -50,7 +50,10 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 
       // Runs on initial load and after View Transitions
       document.addEventListener('astro:page-load', () => {
-        initReveals([{ selector: '.about h1' }]);
+        initReveals([
+          { selector: '.about h1', type: 'words' },
+          { selector: '.about p:has(mark)', type: 'lines' }
+        ]);
       });
     </script>
   </body>

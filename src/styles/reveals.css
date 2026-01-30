@@ -1,3 +1,7 @@
+/* ===========================================
+   Word Animation Styles
+   =========================================== */
+
 [data-sy-reveal="words"] {
   opacity: 0;
 }
@@ -31,7 +35,72 @@
   word-spacing: inherit !important;
 }
 
-/* Fix for nested elements */
+/* ===========================================
+   Line Animation Styles
+   =========================================== */
+
+[data-sy-reveal="lines"] {
+  opacity: 0;
+}
+
+[data-sy-reveal="lines"].is-in {
+  opacity: 1;
+}
+
+[data-sy-reveal="lines"] .line-mask {
+  display: block;
+  overflow: hidden;
+  clip-path: inset(-5% -10% -10%);
+  font-size: inherit !important;
+}
+
+[data-sy-reveal="lines"] .line {
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+  font-size: inherit !important;
+}
+
+/* Override split-type inline styles for lines */
+[data-sy-reveal="lines"] .line {
+  font-kerning: auto !important;
+  letter-spacing: inherit !important;
+  word-spacing: inherit !important;
+}
+
+/* ===========================================
+   Mark Highlight Animation Styles
+   =========================================== */
+
+.mark-wrapper {
+  display: inline-grid;
+}
+
+.mark-base,
+.mark-highlight {
+  grid-area: 1 / 1; /* Stack both in same cell */
+}
+
+.mark-base {
+  color: inherit;
+}
+
+.mark-highlight {
+  background-color: var(--mark-bg, coral);
+  color: var(--mark-color, black);
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Ensure marks are revealed after animation completes */
+[data-sy-reveal="lines"].is-revealed .mark-highlight {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ===========================================
+   Shared Styles
+   =========================================== */
+
+/* Fix for nested elements in both word and line animations */
 [data-sy-reveal] mark,
 [data-sy-reveal] a,
 [data-sy-reveal] strong,
@@ -39,4 +108,9 @@
 [data-sy-reveal] code {
   display: inline !important;
   position: static !important;
+}
+
+/* Override for mark-wrapper which needs grid display */
+[data-sy-reveal] .mark-wrapper {
+  display: inline-grid !important;
 }
