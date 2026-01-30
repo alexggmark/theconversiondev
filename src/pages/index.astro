@@ -20,7 +20,7 @@ const hiddenPosts = await getSortedFilteredPostsByTag('hidden');
     <Header />
   </div>
   <About />
-  <main>
+  <main class="main-fade-in">
     <PostList posts={caseStudyPosts} title={"Case Studies"} />
     <PostList posts={webPosts} title={"Writing"} />
     <!-- <PostList posts={artPosts} title={"Writing about Art"} /> -->
@@ -28,3 +28,23 @@ const hiddenPosts = await getSortedFilteredPostsByTag('hidden');
     <!-- <PostList posts={nonTaggedPosts} title={"Unfiltered articles"} /> -->
   </main>
 </IndexLayout>
+
+<style>
+  .main-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 1.8s forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .main-fade-in {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

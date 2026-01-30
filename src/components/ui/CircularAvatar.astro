@@ -59,31 +59,42 @@ const svgSize = size + 40;
     if (!container || !img || !svg) return;
 
     const rotationDuration = parseFloat(container.dataset.duration || '32');
+    const isMobile = window.innerWidth < 768;
 
-    // Entrance animation timeline
-    const tl = gsap.timeline();
+    if (isMobile) {
+      // Mobile: no entrance animation, just show and rotate
+      gsap.set(img, { opacity: 1 });
+      gsap.set(svg, { opacity: 1 });
+      gsap.to(svg, {
+        rotation: 360,
+        duration: rotationDuration,
+        ease: 'none',
+        repeat: -1,
+        transformOrigin: 'center center'
+      });
+    } else {
+      // Desktop: bouncy entrance animation
+      const tl = gsap.timeline();
 
-    // Image: bouncy pop in
-    tl.fromTo(img,
-      { scale: 0, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
-    );
+      tl.fromTo(img,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)', delay: 1.8 }
+      );
 
-    // SVG text: bouncy pop in (starts as image is bouncing)
-    tl.fromTo(svg,
-      { scale: 0, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' },
-      '-=0.4'
-    );
+      tl.fromTo(svg,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' },
+        '-=0.4'
+      );
 
-    // Start continuous rotation after entrance
-    tl.to(svg, {
-      rotation: 360,
-      duration: rotationDuration,
-      ease: 'none',
-      repeat: -1,
-      transformOrigin: 'center center'
-    }, '-=0.3');
+      tl.to(svg, {
+        rotation: 360,
+        duration: rotationDuration,
+        ease: 'none',
+        repeat: -1,
+        transformOrigin: 'center center'
+      }, '-=0.3');
+    }
   }
 
   if (document.readyState === 'loading') {
