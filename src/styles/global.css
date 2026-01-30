@@ -91,7 +91,8 @@ html.dark {
   --code-bg: rgba(255, 255, 255, 0.04);
   --mark: #24292e;
   --mark-text: #9ECBFF;
-  --emphasis: #F97583;
+  /* --emphasis: #F97583; */
+  --emphasis: #e6ff07;
   /* --link: #9ECBFF; */
 
   /* Syntax Theme  */

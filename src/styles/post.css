@@ -417,7 +417,8 @@
 /* Highlighted text */
 .prose mark {
   /* background-color: var(--mark); */
-  background-color: #daedff;
+  /* background-color: #daedff; */
+  background-color: var(--emphasis);
   color: #000;
   padding: 2px 1px;
   border-radius: 4px;
