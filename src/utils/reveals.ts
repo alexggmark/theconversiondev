@@ -97,6 +97,10 @@ function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void 
   if (el.classList.contains("mobile-only") || el.classList.contains("desktop-only")) {
     return;
   }
+  // Also check for DOM evidence of processing (line-mask children)
+  if (el.querySelector(".line-mask")) {
+    return;
+  }
 
   // Clone the element before any processing (preserves original HTML with <mark>)
   const mobileEl = el.cloneNode(true) as HTMLElement;
@@ -134,6 +138,11 @@ function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void 
 
 // Word animation (existing functionality)
 function animateWords(el: HTMLElement) {
+  // Guard: skip if already processed (check for i-mask children)
+  if (el.querySelector(".i-mask")) {
+    return;
+  }
+
   const st = new SplitType(el, { types: "words" });
 
   st.words?.forEach((word) => {
