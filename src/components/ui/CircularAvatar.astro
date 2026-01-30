@@ -1,0 +1,121 @@
+---
+interface Props {
+  imageSrc?: string;
+  text?: string;
+  size?: number;
+  duration?: number;
+}
+
+const {
+  imageSrc = '/assets/alex-logo-the-conversion-dev.png',
+  // text = 'ALEX GRONMARK • CONVERSION • ',
+  text = 'THE CONVERSION DEV • THE CONVERSION DEV • ',
+  size = 160,
+  duration = 32
+} = Astro.props;
+
+const textRadius = size / 2 + 10;
+const svgSize = size + 40;
+---
+
+<div class="circular-avatar" data-duration={duration} style={`--size: ${size}px; --svg-size: ${svgSize}px;`}>
+  <img
+    src={imageSrc}
+    alt="Profile"
+    class="avatar-image"
+    width={size}
+    height={size}
+  />
+  <svg
+    class="rotating-text"
+    viewBox={`0 0 ${svgSize} ${svgSize}`}
+    width={svgSize}
+    height={svgSize}
+  >
+    <defs>
+      <path
+        id="textCircle"
+        d={`M ${svgSize / 2}, ${svgSize / 2} m -${textRadius}, 0 a ${textRadius},${textRadius} 0 1,1 ${textRadius * 2},0 a ${textRadius},${textRadius} 0 1,1 -${textRadius * 2},0`}
+        fill="none"
+      />
+    </defs>
+    <text class="circular-text">
+      <textPath href="#textCircle" startOffset="0%">
+        {text}{text}
+      </textPath>
+    </text>
+  </svg>
+</div>
+
+<script>
+  import gsap from 'gsap';
+
+  function initCircularAvatar() {
+    const container = document.querySelector('.circular-avatar') as HTMLElement;
+    const svg = container?.querySelector('.rotating-text');
+    if (!container || !svg) return;
+
+    const duration = parseFloat(container.dataset.duration || '20');
+
+    gsap.to(svg, {
+      rotation: 360,
+      duration: duration,
+      ease: 'none',
+      repeat: -1,
+      transformOrigin: 'center center'
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCircularAvatar);
+  } else {
+    initCircularAvatar();
+  }
+
+  document.addEventListener('astro:page-load', initCircularAvatar);
+</script>
+
+<style>
+  .circular-avatar {
+    position: relative;
+    width: var(--svg-size);
+    height: var(--svg-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin: 0 auto 2rem auto; */
+    margin-block: 2rem;
+  }
+
+  .avatar-image {
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .rotating-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .circular-text {
+    font-family: var(--sans);
+    font-size: 0.762rem;
+    font-weight: var(--font-weight-regular);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    fill: var(--text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rotating-text {
+      animation: none !important;
+    }
+  }
+</style>
