@@ -88,9 +88,24 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
 
 /**
  * Orchestrate line + mark animation for an element
+ * Duplicates element: original for mobile (static), clone for desktop (animated)
  */
 function animateLinesWithMarks(el: HTMLElement): void {
-  // Process marks BEFORE splitting to preserve their structure
+  // Clone the element before any processing (preserves original HTML with <mark>)
+  const mobileEl = el.cloneNode(true) as HTMLElement;
+
+  // Set up mobile version: static, no animation
+  mobileEl.classList.add("mobile-only");
+  mobileEl.removeAttribute("data-sy-reveal");
+  mobileEl.classList.remove("is-in"); // Remove if present
+
+  // Set up desktop version: will be animated
+  el.classList.add("desktop-only");
+
+  // Insert mobile version before the desktop version
+  el.parentNode?.insertBefore(mobileEl, el);
+
+  // Process marks BEFORE splitting to preserve their structure (desktop only)
   processMarks(el);
 
   // Create master timeline

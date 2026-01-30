@@ -1,4 +1,26 @@
 /* ===========================================
+   Mobile/Desktop Element Visibility
+   =========================================== */
+
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* ===========================================
    Word Animation Styles
    =========================================== */
 
@@ -72,6 +94,11 @@
    Mark Highlight Animation Styles
    =========================================== */
 
+/* Desktop: hide original mark, show animation wrapper */
+.mark-original {
+  display: none !important;
+}
+
 .mark-wrapper {
   display: inline-grid;
 }
@@ -86,15 +113,29 @@
 }
 
 .mark-highlight {
-  background-color: var(--mark-bg, coral);
-  color: var(--mark-color, black);
+  /* Match .prose mark styling */
+  color: #000;
+  /* padding: 2px 1px; */
   clip-path: inset(0 100% 0 0);
+  position: relative;
+}
+
+.mark-highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--emphasis);
+  z-index: -1;
+  height: 84%;
+  top: 8%;
+  border-radius: 2px;
 }
 
 /* Ensure marks are revealed after animation completes */
 [data-sy-reveal="lines"].is-revealed .mark-highlight {
   clip-path: inset(0 0% 0 0);
 }
+
 
 /* ===========================================
    Shared Styles
