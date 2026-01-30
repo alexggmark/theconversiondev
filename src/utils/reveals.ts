@@ -93,6 +93,17 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
  * Duplicates element: original for mobile (static), clone for desktop (animated)
  */
 function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void {
+  // Skip if already processed (has desktop-only class or mobile sibling exists)
+  if (el.classList.contains("desktop-only") || el.classList.contains("mobile-only")) {
+    return;
+  }
+
+  // Check if a mobile clone already exists (sibling with same tag and mobile-only class)
+  const prevSibling = el.previousElementSibling;
+  if (prevSibling?.classList.contains("mobile-only")) {
+    return;
+  }
+
   // Clone the element before any processing (preserves original HTML with <mark>)
   const mobileEl = el.cloneNode(true) as HTMLElement;
 
@@ -103,6 +114,8 @@ function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void 
 
   // Set up desktop version: will be animated
   el.classList.add("desktop-only");
+  // Store original HTML for cleanup/restoration on page transitions
+  el.dataset.originalHtml = el.innerHTML;
 
   // Insert mobile version before the desktop version
   el.parentNode?.insertBefore(mobileEl, el);
@@ -183,7 +196,38 @@ export interface RevealConfig {
   stagger?: number; // Delay between elements in seconds
 }
 
+/**
+ * Clean up any stale animation artifacts from previous page loads
+ * This handles Astro View Transitions restoring cached DOM state
+ */
+function cleanupReveals(): void {
+  // Remove mobile-only clones (they'll be recreated if needed)
+  document.querySelectorAll<HTMLElement>(".mobile-only").forEach((el) => {
+    el.remove();
+  });
+
+  // Restore desktop-only elements to original HTML and reset state
+  document.querySelectorAll<HTMLElement>(".desktop-only").forEach((el) => {
+    const originalHTML = el.dataset.originalHtml;
+    if (originalHTML) {
+      el.innerHTML = originalHTML;
+      delete el.dataset.originalHtml;
+    }
+    el.classList.remove("desktop-only", "is-in", "is-revealed");
+    // Clear any inline styles added by GSAP
+    el.style.cssText = "";
+  });
+
+  // Reset elements with is-in that might have stale state
+  document.querySelectorAll<HTMLElement>('[data-sy-reveal].is-in').forEach((el) => {
+    el.classList.remove("is-in", "is-revealed");
+  });
+}
+
 export function initReveals(config?: RevealConfig[]) {
+  // Clean up any stale state from previous navigation
+  cleanupReveals();
+
   document.fonts.ready.then(() => {
     // Elements with data-sy-reveal="words" attribute
     document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)').forEach((el) => {
