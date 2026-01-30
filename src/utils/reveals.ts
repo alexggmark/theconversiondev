@@ -93,6 +93,11 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
  * Duplicates element: original for mobile (static), clone for desktop (animated)
  */
 function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void {
+  // Guard: skip if already processed (prevents double-processing on page transitions)
+  if (el.classList.contains("mobile-only") || el.classList.contains("desktop-only")) {
+    return;
+  }
+
   // Clone the element before any processing (preserves original HTML with <mark>)
   const mobileEl = el.cloneNode(true) as HTMLElement;
 
