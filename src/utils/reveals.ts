@@ -60,6 +60,7 @@ function animateLines(el: HTMLElement): gsap.core.Timeline {
       ease: "power3.out",
       duration: 0.6,
       stagger: 0.08,
+      delay: 0.8
     }
   );
 
@@ -81,6 +82,7 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
     ease: "power2.inOut",
     duration: 0.5,
     stagger: 0.1,
+    delay: 0.1
   });
 
   return tl;
@@ -90,7 +92,7 @@ function animateMarks(el: HTMLElement): gsap.core.Timeline {
  * Orchestrate line + mark animation for an element
  * Duplicates element: original for mobile (static), clone for desktop (animated)
  */
-function animateLinesWithMarks(el: HTMLElement): void {
+function animateLinesWithMarks(el: HTMLElement, elementDelay: number = 0): void {
   // Clone the element before any processing (preserves original HTML with <mark>)
   const mobileEl = el.cloneNode(true) as HTMLElement;
 
@@ -108,8 +110,9 @@ function animateLinesWithMarks(el: HTMLElement): void {
   // Process marks BEFORE splitting to preserve their structure (desktop only)
   processMarks(el);
 
-  // Create master timeline
+  // Create master timeline with element-level delay
   const master = gsap.timeline({
+    delay: elementDelay,
     onComplete: () => {
       el.classList.add("is-revealed");
     },
@@ -139,7 +142,7 @@ function animateWords(el: HTMLElement) {
   gsap.fromTo(
     st.words,
     { opacity: 1, rotate: 5, yPercent: 120 },
-    { rotate: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.05, delay: 0.2 }
+    { rotate: 0, yPercent: 0, ease: "power3.out", duration: 0.5, stagger: 0.03, delay: 0.2 }
   );
 }
 
@@ -164,7 +167,8 @@ const linesObserver = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const el = entry.target as HTMLElement;
-        animateLinesWithMarks(el);
+        const elementDelay = parseFloat(el.dataset.syDelay || "0");
+        animateLinesWithMarks(el, elementDelay);
         el.classList.add("is-in");
         linesObserver.unobserve(el);
       }
@@ -176,6 +180,7 @@ const linesObserver = new IntersectionObserver(
 export interface RevealConfig {
   selector: string;
   type?: "words" | "lines";
+  stagger?: number; // Delay between elements in seconds
 }
 
 export function initReveals(config?: RevealConfig[]) {
@@ -191,9 +196,12 @@ export function initReveals(config?: RevealConfig[]) {
     });
 
     // Selector-based config (for markdown content)
-    config?.forEach(({ selector, type = "words" }) => {
-      document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in)`).forEach((el) => {
+    config?.forEach(({ selector, type = "words", stagger = 0 }) => {
+      document.querySelectorAll<HTMLElement>(`${selector}:not(.is-in)`).forEach((el, index) => {
         el.dataset.syReveal = type;
+        if (stagger > 0) {
+          el.dataset.syDelay = String(index * stagger);
+        }
         if (type === "lines") {
           linesObserver.observe(el);
         } else {
