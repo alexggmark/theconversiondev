@@ -1,4 +1,14 @@
 /* ===========================================
+   Hide About Content Before JS Initializes
+   =========================================== */
+
+/* Prevent flash of unstyled content - these elements will be animated */
+.about h1,
+.about p {
+  opacity: 0;
+}
+
+/* ===========================================
    Mobile/Desktop Element Visibility
    =========================================== */
 
