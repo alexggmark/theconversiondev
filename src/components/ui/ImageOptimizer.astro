@@ -1,4 +1,5 @@
 <style is:global>
+  /* Prose image wrapper */
   .prose-img-wrapper {
     position: relative;
     display: block;
@@ -12,6 +13,8 @@
     margin: 0;
   }
 
+  /* Shared spinner styles */
+  .img-spinner,
   .prose-img-spinner {
     position: absolute;
     top: 50%;
@@ -22,21 +25,23 @@
     border: 2px solid var(--text-tertiary, rgba(255, 255, 255, 0.24));
     border-top-color: var(--text-primary, rgba(255, 255, 255, 0.9));
     border-radius: 50%;
-    animation: proseImgSpin 0.8s linear infinite;
+    animation: imgSpin 0.8s linear infinite;
     z-index: 0;
     opacity: 1;
     transition: opacity 0.3s ease-out;
   }
 
+  .post-img-wrapper.is-loaded .img-spinner,
   .prose-img-wrapper.is-loaded .prose-img-spinner {
     opacity: 0;
   }
 
-  @keyframes proseImgSpin {
+  @keyframes imgSpin {
     to { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .img-spinner,
     .prose-img-spinner {
       animation: none;
     }
@@ -44,8 +49,25 @@
 </style>
 
 <script is:inline>
-  // Global handler: Wrap prose images and add loading spinners
-  function handleProseImages() {
+  // Global handler for all image loading spinners
+  function handleImageSpinners() {
+    // Handle PostList images (.post-img-wrapper with .img-spinner)
+    document.querySelectorAll('.post-img-wrapper').forEach(function (wrapper) {
+      if (wrapper.classList.contains('is-loaded')) return;
+
+      var img = wrapper.querySelector('.post-img');
+      if (!img) return;
+
+      if (img.complete) {
+        wrapper.classList.add('is-loaded');
+      } else {
+        img.addEventListener('load', function () {
+          wrapper.classList.add('is-loaded');
+        });
+      }
+    });
+
+    // Handle prose images (wrap and add spinner)
     document.querySelectorAll('.prose img').forEach(function (img) {
       // Skip if already wrapped
       if (img.parentElement && img.parentElement.classList.contains('prose-img-wrapper')) {
@@ -79,9 +101,9 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleProseImages);
+    document.addEventListener('DOMContentLoaded', handleImageSpinners);
   } else {
-    handleProseImages();
+    handleImageSpinners();
   }
-  document.addEventListener('astro:page-load', handleProseImages);
+  document.addEventListener('astro:page-load', handleImageSpinners);
 </script>
