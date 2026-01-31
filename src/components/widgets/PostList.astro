@@ -121,6 +121,12 @@ const { title } = Astro.props
     gap: 0.75rem;
   }
 
+  @media (max-width: 768px) {
+    .post-item {
+      gap: 0.5rem;
+    }
+  }
+
   .post-item.date-left {
     justify-content: flex-start;
   }
@@ -167,11 +173,22 @@ const { title } = Astro.props
 
   .divider {
     flex: 1 1 auto;
-    min-width: 2.6rem;
+    /* min-width: 2.6rem; */
+    min-width: 0;
     /* min-width: 0; */
     margin: 0 0.25rem;
     height: 0.5px;
     background-color: var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .divider {
+      margin: 0;
+    }
+
+    .date :global(.date-rest) {
+      display: none;
+    }
   }
 
   .dotted-divider {

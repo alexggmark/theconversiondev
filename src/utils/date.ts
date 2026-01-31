@@ -38,22 +38,22 @@ export function formatDate(date: Date, format?: string): string {
 
   switch (formatStr) {
     case 'YYYY-MM-DD':
-      return `${year}${separator}${pad(month)}${separator}${pad(day)}`
+      return `<span class="date-year">${year}</span><span class="date-rest">${separator}${pad(month)}${separator}${pad(day)}</span>`
 
     case 'MM-DD-YYYY':
-      return `${pad(month)}${separator}${pad(day)}${separator}${year}`
+      return `<span class="date-rest">${pad(month)}${separator}${pad(day)}${separator}</span><span class="date-year">${year}</span>`
 
     case 'DD-MM-YYYY':
-      return `${pad(day)}${separator}${pad(month)}${separator}${year}`
+      return `<span class="date-rest">${pad(day)}${separator}${pad(month)}${separator}</span><span class="date-year">${year}</span>`
 
     case 'MONTH DAY YYYY':
-      return `<span class="month">${monthName}</span> ${day} ${year}`
+      return `<span class="date-rest"><span class="month">${monthName}</span> ${day} </span><span class="date-year">${year}</span>`
 
     case 'DAY MONTH YYYY':
-      return `${day} <span class="month">${monthName}</span> ${year}`
+      return `<span class="date-rest">${day} <span class="month">${monthName}</span> </span><span class="date-year">${year}</span>`
 
     default:
-      return `${year}${separator}${pad(month)}${separator}${pad(day)}`
+      return `<span class="date-year">${year}</span><span class="date-rest">${separator}${pad(month)}${separator}${pad(day)}</span>`
   }
 }
 
