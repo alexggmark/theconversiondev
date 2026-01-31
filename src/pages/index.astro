@@ -39,26 +39,61 @@ const combinedposts = await [...webPosts, ...webPosts];
   @media (min-width: 769px) {
     .main-fade-in {
       opacity: 0;
-      animation: fadeIn 0.6s ease-out 1.8s forwards;
+      transition: opacity 0.6s ease-out;
     }
 
-    /* On navigation, skip animation (uses body class set by BaseLayout inline script) */
+    .main-fade-in.is-visible {
+      opacity: 1;
+    }
+
+    /* On navigation, skip animation */
     body.is-navigation .main-fade-in {
       opacity: 1;
-      animation: none;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      transition: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .main-fade-in {
       opacity: 1;
-      animation: none;
+      transition: none;
     }
   }
 </style>
+
+<script>
+  function initMainFadeIn() {
+    const main = document.querySelector('.main-fade-in');
+    if (!main) return;
+
+    // Skip if navigation (already visible via CSS)
+    if (document.body.classList.contains('is-navigation')) {
+      main.classList.add('is-visible');
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Delay to sync with other page animations
+            setTimeout(() => {
+              entry.target.classList.add('is-visible');
+            }, 1800); // note to me: I pulled this number from old CSS delay, this should line up with reveal anims
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(main);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMainFadeIn);
+  } else {
+    initMainFadeIn();
+  }
+  document.addEventListener('astro:page-load', initMainFadeIn);
+</script>

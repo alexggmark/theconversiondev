@@ -3,14 +3,11 @@
 // Shows a simple spinner until fonts/content are ready
 ---
 
-{/* Inline critical CSS - renders before external stylesheets */}
 <style is:inline>
-  /* Hide content until ready */
   .layout-wrapper {
     opacity: 0;
   }
 
-  /* Loader overlay */
   .page-loader {
     position: fixed;
     inset: 0;
@@ -27,7 +24,6 @@
     pointer-events: none;
   }
 
-  /* Simple spinner */
   .loader-spinner {
     width: 24px;
     height: 24px;
@@ -41,12 +37,10 @@
     to { transform: rotate(360deg); }
   }
 
-  /* When loaded, show content */
   .is-loaded .layout-wrapper {
     opacity: 1;
   }
 
-  /* Skip loader on navigation (internal links) */
   .is-navigation .page-loader {
     display: none;
   }
@@ -67,7 +61,6 @@
 </div>
 
 <script is:inline>
-  // Detect navigation immediately (before DOMContentLoaded)
   (function() {
     function isNavigation() {
       var navEntries = performance.getEntriesByType('navigation');
@@ -87,7 +80,6 @@
       return false;
     }
 
-    // Set navigation class immediately if navigating
     if (isNavigation()) {
       document.body.classList.add('is-navigation');
     }
@@ -95,31 +87,25 @@
 </script>
 
 <script>
-  // Hide loader when fonts are loaded and DOM is ready
   async function hideLoader() {
-    // Skip if navigating (loader already hidden via CSS)
     if (document.body.classList.contains('is-navigation')) {
       document.body.classList.add('is-loaded');
       return;
     }
 
-    // Wait for fonts
     await document.fonts.ready;
 
-    // Small delay to ensure layout is stable
     requestAnimationFrame(() => {
       document.body.classList.add('is-loaded');
 
       const loader = document.querySelector('.page-loader');
       if (loader) {
         loader.classList.add('is-hidden');
-        // Remove from DOM after transition
         setTimeout(() => loader.remove(), 300);
       }
     });
   }
 
-  // Run immediately if DOM already loaded, otherwise wait
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', hideLoader);
   } else {
