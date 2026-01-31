@@ -205,62 +205,51 @@ export interface RevealConfig {
   stagger?: number; // Delay between elements in seconds
 }
 
-export function initReveals(config?: RevealConfig[]) {
-  console.log('[reveals] initReveals called');
-
+export function initReveals(config?: RevealConfig[], isFirstLoad: boolean = true) {
   // Disconnect observers to clear any stale state from View Transitions
   wordsObserver.disconnect();
   linesObserver.disconnect();
-  console.log('[reveals] Observers disconnected');
 
   // Small delay to let View Transitions finish morphing the DOM
   requestAnimationFrame(() => {
-    console.log('[reveals] After rAF');
-
-    // Debug: show ALL .about elements before filtering
-    const allAboutP = document.querySelectorAll('.about p');
-    console.log('[reveals] TOTAL .about p elements:', allAboutP.length);
-    allAboutP.forEach((el, i) => {
-      console.log(`[reveals] .about p[${i}]:`, el.className || '(no class)');
-    });
-
     document.fonts.ready.then(() => {
-    // Elements with data-sy-reveal="words" attribute
-    const wordsEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)');
-    console.log('[reveals] data-sy-reveal="words" matched:', wordsEls.length);
-    wordsEls.forEach((el) => {
-      console.log('[reveals] - words element:', el.className);
-      wordsObserver.observe(el);
-    });
+      // Elements with data-sy-reveal="words" attribute - always animate
+      const wordsEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)');
+      wordsEls.forEach((el) => wordsObserver.observe(el));
 
-    // Elements with data-sy-reveal="lines" attribute
-    const linesEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="lines"]:not(.is-in)');
-    console.log('[reveals] data-sy-reveal="lines" matched:', linesEls.length);
-    linesEls.forEach((el) => {
-      console.log('[reveals] - lines element:', el.className);
-      linesObserver.observe(el);
-    });
-
-    // Selector-based config (for markdown content)
-    config?.forEach(({ selector, type = "words", stagger = 0 }) => {
-      const fullSelector = `${selector}:not(.is-in):not(.mobile-only):not(.desktop-only)`;
-      const elements = document.querySelectorAll<HTMLElement>(fullSelector);
-      console.log(`[reveals] config selector "${selector}" (${type}) matched:`, elements.length);
-      elements.forEach((el, index) => {
-        console.log(`[reveals] - config element ${index}:`, el.className, '|', el.textContent?.slice(0, 40));
-        el.dataset.syReveal = type;
-        if (stagger > 0) {
-          el.dataset.syDelay = String(index * stagger);
-        }
-        if (type === "lines") {
-          console.log('[reveals] OBSERVING for lines:', el.className || '(no class)');
+      // Elements with data-sy-reveal="lines" attribute
+      const linesEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="lines"]:not(.is-in)');
+      linesEls.forEach((el) => {
+        if (isFirstLoad) {
           linesObserver.observe(el);
         } else {
-          console.log('[reveals] OBSERVING for words:', el.className || '(no class)');
-          wordsObserver.observe(el);
+          // Navigation: just show content like mobile does
+          el.classList.add("is-in");
         }
+      });
+
+      // Selector-based config (for markdown content)
+      config?.forEach(({ selector, type = "words", stagger = 0 }) => {
+        const fullSelector = `${selector}:not(.is-in):not(.mobile-only):not(.desktop-only)`;
+        const elements = document.querySelectorAll<HTMLElement>(fullSelector);
+        elements.forEach((el, index) => {
+          el.dataset.syReveal = type;
+          if (stagger > 0) {
+            el.dataset.syDelay = String(index * stagger);
+          }
+          if (type === "lines") {
+            if (isFirstLoad) {
+              linesObserver.observe(el);
+            } else {
+              // Navigation: just show content like mobile does
+              el.classList.add("is-in");
+            }
+          } else {
+            // Words: always animate (works well on navigation)
+            wordsObserver.observe(el);
+          }
+        });
       });
     });
   });
-  }); // close requestAnimationFrame
 }

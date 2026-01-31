@@ -8,6 +8,12 @@
   .about p {
     opacity: 0;
   }
+
+  /* On navigation, show content immediately (like mobile) */
+  body.is-navigation .about h1,
+  body.is-navigation .about p {
+    opacity: 1;
+  }
 }
 
 /* ===========================================

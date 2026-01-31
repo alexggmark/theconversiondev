@@ -48,13 +48,23 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
     <script>
       import { initReveals } from '@/utils/reveals';
 
+      // Module variable persists across View Transitions navigations
+      let hasInitialized = false;
+
+      // Only fires on View Transitions navigation, never on initial load
+      document.addEventListener('astro:after-swap', () => {
+        document.body.classList.add('is-navigation');
+      });
+
       // Runs on initial load and after View Transitions
       document.addEventListener('astro:page-load', () => {
-        console.log('[base] astro:page-load fired, pathname:', window.location.pathname);
+        const isFirstLoad = !hasInitialized;
+        hasInitialized = true;
+
         initReveals([
           { selector: '.about h1', type: 'words' },
           { selector: '.about p', type: 'lines', stagger: 0.5 }
-        ]);
+        ], isFirstLoad);
       });
     </script>
   </body>

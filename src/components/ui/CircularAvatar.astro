@@ -52,6 +52,9 @@ const svgSize = size + 40;
 <script>
   import gsap from 'gsap';
 
+  // Module variable persists across View Transitions navigations
+  let hasInitialized = false;
+
   function initCircularAvatar() {
     const container = document.querySelector('.circular-avatar') as HTMLElement;
     const img = container?.querySelector('.avatar-image') as HTMLElement;
@@ -60,9 +63,11 @@ const svgSize = size + 40;
 
     const rotationDuration = parseFloat(container.dataset.duration || '32');
     const isMobile = window.innerWidth < 768;
+    const isFirstLoad = !hasInitialized;
+    hasInitialized = true;
 
-    if (isMobile) {
-      // Mobile: no entrance animation, just show and rotate
+    if (isMobile || !isFirstLoad) {
+      // Mobile or navigation: no entrance animation, just show and rotate
       gsap.set(img, { opacity: 1 });
       gsap.set(svg, { opacity: 1 });
       gsap.to(svg, {
@@ -73,7 +78,7 @@ const svgSize = size + 40;
         transformOrigin: 'center center'
       });
     } else {
-      // Desktop: bouncy entrance animation
+      // Desktop first load: bouncy entrance animation
       const tl = gsap.timeline();
 
       tl.fromTo(img,
