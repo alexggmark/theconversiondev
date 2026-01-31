@@ -208,14 +208,23 @@ export interface RevealConfig {
 export function initReveals(config?: RevealConfig[]) {
   console.log('[reveals] initReveals called');
 
-  // Debug: show ALL .about elements before filtering
-  const allAboutP = document.querySelectorAll('.about p');
-  console.log('[reveals] TOTAL .about p elements:', allAboutP.length);
-  allAboutP.forEach((el, i) => {
-    console.log(`[reveals] .about p[${i}]:`, el.className || '(no class)');
-  });
+  // Disconnect observers to clear any stale state from View Transitions
+  wordsObserver.disconnect();
+  linesObserver.disconnect();
+  console.log('[reveals] Observers disconnected');
 
-  document.fonts.ready.then(() => {
+  // Small delay to let View Transitions finish morphing the DOM
+  requestAnimationFrame(() => {
+    console.log('[reveals] After rAF');
+
+    // Debug: show ALL .about elements before filtering
+    const allAboutP = document.querySelectorAll('.about p');
+    console.log('[reveals] TOTAL .about p elements:', allAboutP.length);
+    allAboutP.forEach((el, i) => {
+      console.log(`[reveals] .about p[${i}]:`, el.className || '(no class)');
+    });
+
+    document.fonts.ready.then(() => {
     // Elements with data-sy-reveal="words" attribute
     const wordsEls = document.querySelectorAll<HTMLElement>('[data-sy-reveal="words"]:not(.is-in)');
     console.log('[reveals] data-sy-reveal="words" matched:', wordsEls.length);
@@ -253,4 +262,5 @@ export function initReveals(config?: RevealConfig[]) {
       });
     });
   });
+  }); // close requestAnimationFrame
 }
