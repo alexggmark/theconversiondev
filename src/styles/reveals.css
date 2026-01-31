@@ -2,10 +2,12 @@
    Hide About Content Before JS Initializes
    =========================================== */
 
-/* Prevent flash of unstyled content - these elements will be animated */
-.about h1,
-.about p {
-  opacity: 0;
+/* Prevent flash of unstyled content - only on desktop where animations run */
+@media (min-width: 769px) {
+  .about h1,
+  .about p {
+    opacity: 0;
+  }
 }
 
 /* ===========================================
