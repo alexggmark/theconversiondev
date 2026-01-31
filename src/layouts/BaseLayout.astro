@@ -1,6 +1,6 @@
 ---
 import { themeConfig } from '@/config'
-// import ThemeManager from '@/components/ui/ThemeManager.astro'
+import ThemeManager from '@/components/ui/ThemeManager.astro'
 import FaviconThemeSwitcher from '@/components/ui/FaviconThemeSwitcher.astro'
 import PageLoader from '@/components/ui/PageLoader.astro'
 import '@/styles/reveals.css'
@@ -14,7 +14,7 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 
 <html lang={language}>
   <head>
-    <!-- <ThemeManager /> -->
+    <ThemeManager />
     <slot name="head" />
   </head>
   <body
