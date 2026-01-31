@@ -1,20 +1,87 @@
+<style is:global>
+  .prose-img-wrapper {
+    position: relative;
+    display: block;
+    margin: 2em 0;
+    background: var(--code-bg);
+    min-height: 100px;
+    border-radius: 8px;
+  }
+
+  .prose-img-wrapper img {
+    margin: 0;
+  }
+
+  .prose-img-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-tertiary, rgba(255, 255, 255, 0.24));
+    border-top-color: var(--text-primary, rgba(255, 255, 255, 0.9));
+    border-radius: 50%;
+    animation: proseImgSpin 0.8s linear infinite;
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .prose-img-wrapper.is-loaded .prose-img-spinner {
+    opacity: 0;
+  }
+
+  @keyframes proseImgSpin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prose-img-spinner {
+      animation: none;
+    }
+  }
+</style>
+
 <script is:inline>
-  // Global handler: Automatically remove the img-placeholder class after images are loaded
-  function removeImgPlaceholder() {
-    document.querySelectorAll('img.img-placeholder').forEach(function (img) {
+  // Global handler: Wrap prose images and add loading spinners
+  function handleProseImages() {
+    document.querySelectorAll('.prose img').forEach(function (img) {
+      // Skip if already wrapped
+      if (img.parentElement && img.parentElement.classList.contains('prose-img-wrapper')) {
+        return;
+      }
+
+      // Create wrapper
+      var wrapper = document.createElement('div');
+      wrapper.className = 'prose-img-wrapper';
+
+      // Create spinner
+      var spinner = document.createElement('div');
+      spinner.className = 'prose-img-spinner';
+
+      // Wrap the image
+      img.parentNode.insertBefore(wrapper, img);
+      wrapper.appendChild(spinner);
+      wrapper.appendChild(img);
+
+      // Handle load state
       if (img.complete) {
-        img.classList.remove('img-placeholder')
+        wrapper.classList.add('is-loaded');
+        img.classList.remove('img-placeholder');
       } else {
         img.addEventListener('load', function () {
-          img.classList.remove('img-placeholder')
-        })
+          wrapper.classList.add('is-loaded');
+          img.classList.remove('img-placeholder');
+        });
       }
-    })
+    });
   }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', removeImgPlaceholder)
+    document.addEventListener('DOMContentLoaded', handleProseImages);
   } else {
-    removeImgPlaceholder()
+    handleProseImages();
   }
-  document.addEventListener('astro:page-load', removeImgPlaceholder)
+  document.addEventListener('astro:page-load', handleProseImages);
 </script>
