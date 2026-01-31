@@ -19,7 +19,6 @@ export interface SiteInfo {
 export interface GeneralSettings {
   contentWidth: string
   centeredLayout: boolean
-  themeToggle: boolean
   postListDottedDivider: boolean
   footer: boolean
   fadeAnimation: boolean,

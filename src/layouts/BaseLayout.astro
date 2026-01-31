@@ -1,8 +1,8 @@
 ---
 import { themeConfig } from '@/config'
-import ThemeManager from '@/components/ui/ThemeManager.astro'
 import FaviconThemeSwitcher from '@/components/ui/FaviconThemeSwitcher.astro'
 import PageLoader from '@/components/ui/PageLoader.astro'
+import { initReveals } from '@/utils/reveals';
 import '@/styles/reveals.css'
 
 const language = themeConfig.site.language || 'en-US'
@@ -14,7 +14,6 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 
 <html lang={language}>
   <head>
-    <ThemeManager />
     <slot name="head" />
   </head>
   <body
@@ -34,35 +33,8 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
     <script>
       import { initReveals } from '@/utils/reveals';
 
-      // Detect if this is internal navigation vs fresh/refresh load
-      function isNavigation(): boolean {
-        const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-        if (navEntries.length > 0) {
-          const navType = navEntries[0].type;
-          // Refresh should show animations (treat as first load)
-          if (navType === 'reload') return false;
-          // Back/forward is navigation
-          if (navType === 'back_forward') return true;
-        }
-        // Internal link click: same-origin referrer but different page
-        if (document.referrer) {
-          try {
-            const ref = new URL(document.referrer);
-            if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
-              return true;
-            }
-          } catch {}
-        }
-        return false;
-      }
-
-      // Initialize on DOMContentLoaded
       document.addEventListener('DOMContentLoaded', () => {
-        const isFirstLoad = !isNavigation();
-
-        if (!isFirstLoad) {
-          document.body.classList.add('is-navigation');
-        }
+        const isFirstLoad = !document.body.classList.contains('is-navigation');
 
         initReveals([
           { selector: '.about h1', type: 'words' },

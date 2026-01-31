@@ -52,24 +52,6 @@ const svgSize = size + 40;
 <script>
   import gsap from 'gsap';
 
-  function isNavigation(): boolean {
-    const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-    if (navEntries.length > 0) {
-      const navType = navEntries[0].type;
-      if (navType === 'reload') return false;
-      if (navType === 'back_forward') return true;
-    }
-    if (document.referrer) {
-      try {
-        const ref = new URL(document.referrer);
-        if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
-          return true;
-        }
-      } catch {}
-    }
-    return false;
-  }
-
   function initCircularAvatar() {
     const container = document.querySelector('.circular-avatar') as HTMLElement;
     const img = container?.querySelector('.avatar-image') as HTMLElement;
@@ -78,10 +60,9 @@ const svgSize = size + 40;
 
     const rotationDuration = parseFloat(container.dataset.duration || '32');
     const isMobile = window.innerWidth < 768;
-    const isFirstLoad = !isNavigation();
+    const isFirstLoad = !document.body.classList.contains('is-navigation');
 
     if (isMobile || !isFirstLoad) {
-      // Mobile or navigation: no entrance animation, just show and rotate
       gsap.set(img, { opacity: 1 });
       gsap.set(svg, { opacity: 1 });
       gsap.to(svg, {
@@ -92,7 +73,6 @@ const svgSize = size + 40;
         transformOrigin: 'center center'
       });
     } else {
-      // Desktop first load: bouncy entrance animation
       const tl = gsap.timeline();
 
       tl.fromTo(img,
@@ -136,24 +116,21 @@ const svgSize = size + 40;
       const avatar = document.querySelector('.circular-avatar')
       if (!avatar) return
 
-      // If not using centered layout, remove fixed positioning
       if (!centeredLayout) {
         avatar.classList.remove('fixed-position')
         avatar.style.left = ''
         return
       }
 
-      // Calculate available margin space for positioning
       const pageWidth = window.innerWidth
       const contentWidthValue = parseFloat(contentWidth)
       const widthValue = Math.min(contentWidthValue, 50)
       const shouldUseCustomWidth = widthValue > 25
       const finalWidthValue = shouldUseCustomWidth ? widthValue : 25
       const margin = (pageWidth - finalWidthValue * 12) / 2
-      const baseMinSpace = 14 * 16 // More space needed for avatar
+      const baseMinSpace = 14 * 16 // more space for avatar
       const minSpace = logo ? baseMinSpace + 52 : baseMinSpace + 12
 
-      // Position avatar fixed on the left if there's enough space
       if (margin >= minSpace) {
         avatar.classList.add('fixed-position')
         const basePosition = margin - baseMinSpace
