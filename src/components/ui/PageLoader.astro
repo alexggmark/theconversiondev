@@ -1,0 +1,128 @@
+---
+// Inline loader that prevents FOUC
+// Shows a simple spinner until fonts/content are ready
+---
+
+{/* Inline critical CSS - renders before external stylesheets */}
+<style is:inline>
+  /* Hide content until ready */
+  .layout-wrapper {
+    opacity: 0;
+  }
+
+  /* Loader overlay */
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg, #1c1c1c);
+    transition: opacity 0.3s ease-out;
+  }
+
+  .page-loader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Simple spinner */
+  .loader-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-tertiary, rgba(255, 255, 255, 0.24));
+    border-top-color: var(--text-primary, rgba(255, 255, 255, 0.9));
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* When loaded, show content */
+  .is-loaded .layout-wrapper {
+    opacity: 1;
+  }
+
+  /* Skip loader on navigation (internal links) */
+  .is-navigation .page-loader {
+    display: none;
+  }
+
+  .is-navigation .layout-wrapper {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loader-spinner {
+      animation: none;
+    }
+  }
+</style>
+
+<div class="page-loader" aria-hidden="true">
+  <div class="loader-spinner"></div>
+</div>
+
+<script is:inline>
+  // Detect navigation immediately (before DOMContentLoaded)
+  (function() {
+    function isNavigation() {
+      var navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0) {
+        var navType = navEntries[0].type;
+        if (navType === 'reload') return false;
+        if (navType === 'back_forward') return true;
+      }
+      if (document.referrer) {
+        try {
+          var ref = new URL(document.referrer);
+          if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
+            return true;
+          }
+        } catch(e) {}
+      }
+      return false;
+    }
+
+    // Set navigation class immediately if navigating
+    if (isNavigation()) {
+      document.body.classList.add('is-navigation');
+    }
+  })();
+</script>
+
+<script>
+  // Hide loader when fonts are loaded and DOM is ready
+  async function hideLoader() {
+    // Skip if navigating (loader already hidden via CSS)
+    if (document.body.classList.contains('is-navigation')) {
+      document.body.classList.add('is-loaded');
+      return;
+    }
+
+    // Wait for fonts
+    await document.fonts.ready;
+
+    // Small delay to ensure layout is stable
+    requestAnimationFrame(() => {
+      document.body.classList.add('is-loaded');
+
+      const loader = document.querySelector('.page-loader');
+      if (loader) {
+        loader.classList.add('is-hidden');
+        // Remove from DOM after transition
+        setTimeout(() => loader.remove(), 300);
+      }
+    });
+  }
+
+  // Run immediately if DOM already loaded, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideLoader);
+  } else {
+    hideLoader();
+  }
+</script>

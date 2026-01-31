@@ -2,6 +2,7 @@
 import { themeConfig } from '@/config'
 // import ThemeManager from '@/components/ui/ThemeManager.astro'
 import FaviconThemeSwitcher from '@/components/ui/FaviconThemeSwitcher.astro'
+import PageLoader from '@/components/ui/PageLoader.astro'
 import '@/styles/reveals.css'
 
 const language = themeConfig.site.language || 'en-US'
@@ -23,6 +24,7 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
       ${shouldUseCustomWidth ? `--content-width: ${widthValue}rem;` : ''}
     `}
   >
+    <PageLoader />
     <FaviconThemeSwitcher />
 
     <div class="layout-wrapper">
