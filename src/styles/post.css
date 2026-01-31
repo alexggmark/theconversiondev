@@ -7,7 +7,14 @@
 
 /* Main content container */
 .prose {
-  margin-bottom: 8rem;
+  /* margin-bottom: 8rem; */
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .prose {
+    margin-bottom: 0;
+  }
 }
 
 /* Post title section */
