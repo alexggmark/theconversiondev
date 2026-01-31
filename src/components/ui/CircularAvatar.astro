@@ -52,8 +52,23 @@ const svgSize = size + 40;
 <script>
   import gsap from 'gsap';
 
-  // Module variable persists across View Transitions navigations
-  let hasInitialized = false;
+  function isNavigation(): boolean {
+    const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntries.length > 0) {
+      const navType = navEntries[0].type;
+      if (navType === 'reload') return false;
+      if (navType === 'back_forward') return true;
+    }
+    if (document.referrer) {
+      try {
+        const ref = new URL(document.referrer);
+        if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
+          return true;
+        }
+      } catch {}
+    }
+    return false;
+  }
 
   function initCircularAvatar() {
     const container = document.querySelector('.circular-avatar') as HTMLElement;
@@ -63,8 +78,7 @@ const svgSize = size + 40;
 
     const rotationDuration = parseFloat(container.dataset.duration || '32');
     const isMobile = window.innerWidth < 768;
-    const isFirstLoad = !hasInitialized;
-    hasInitialized = true;
+    const isFirstLoad = !isNavigation();
 
     if (isMobile || !isFirstLoad) {
       // Mobile or navigation: no entrance animation, just show and rotate
@@ -107,8 +121,6 @@ const svgSize = size + 40;
   } else {
     initCircularAvatar();
   }
-
-  document.addEventListener('astro:page-load', initCircularAvatar);
 </script>
 
 <script
@@ -155,9 +167,6 @@ const svgSize = size + 40;
 
     adjustAvatarPosition()
 
-    document.addEventListener('astro:page-load', () => {
-      adjustAvatarPosition()
-    })
     document.addEventListener('DOMContentLoaded', () => {
       adjustAvatarPosition()
     })

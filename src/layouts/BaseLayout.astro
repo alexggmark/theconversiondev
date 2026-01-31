@@ -1,18 +1,11 @@
 ---
 import { themeConfig } from '@/config'
-import { ClientRouter } from 'astro:transitions'
 // import ThemeManager from '@/components/ui/ThemeManager.astro'
 import FaviconThemeSwitcher from '@/components/ui/FaviconThemeSwitcher.astro'
-import TransitionWrapper from '@/components/layout/TransitionWrapper.astro'
-import type { LayoutProps } from '@/types'
 import '@/styles/reveals.css'
 
-type Props = LayoutProps
-
-const { type = 'page' } = Astro.props
 const language = themeConfig.site.language || 'en-US'
 const contentWidth = themeConfig.general.contentWidth
-const fadeAnimation = themeConfig.general.fadeAnimation
 const widthValue = Math.min(parseFloat(contentWidth), 50)
 const shouldUseCustomWidth = widthValue > 25
 const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
@@ -21,7 +14,6 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 <html lang={language}>
   <head>
     <!-- <ThemeManager /> -->
-    {fadeAnimation && <ClientRouter />}
     <slot name="head" />
   </head>
   <body
@@ -33,33 +25,42 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
   >
     <FaviconThemeSwitcher />
 
-    {
-      fadeAnimation ? (
-        <TransitionWrapper type={type} class="layout-wrapper">
-          <slot />
-        </TransitionWrapper>
-      ) : (
-        <div class="layout-wrapper">
-          <slot />
-        </div>
-      )
-    }
+    <div class="layout-wrapper">
+      <slot />
+    </div>
 
     <script>
       import { initReveals } from '@/utils/reveals';
 
-      // Module variable persists across View Transitions navigations
-      let hasInitialized = false;
+      // Detect if this is internal navigation vs fresh/refresh load
+      function isNavigation(): boolean {
+        const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+        if (navEntries.length > 0) {
+          const navType = navEntries[0].type;
+          // Refresh should show animations (treat as first load)
+          if (navType === 'reload') return false;
+          // Back/forward is navigation
+          if (navType === 'back_forward') return true;
+        }
+        // Internal link click: same-origin referrer but different page
+        if (document.referrer) {
+          try {
+            const ref = new URL(document.referrer);
+            if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
+              return true;
+            }
+          } catch {}
+        }
+        return false;
+      }
 
-      // Only fires on View Transitions navigation, never on initial load
-      document.addEventListener('astro:after-swap', () => {
-        document.body.classList.add('is-navigation');
-      });
+      // Initialize on DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', () => {
+        const isFirstLoad = !isNavigation();
 
-      // Runs on initial load and after View Transitions
-      document.addEventListener('astro:page-load', () => {
-        const isFirstLoad = !hasInitialized;
-        hasInitialized = true;
+        if (!isFirstLoad) {
+          document.body.classList.add('is-navigation');
+        }
 
         initReveals([
           { selector: '.about h1', type: 'words' },
