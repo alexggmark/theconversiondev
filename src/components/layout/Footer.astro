@@ -3,7 +3,17 @@ import { themeConfig } from '@/config'
 const today = new Date()
 ---
 
-<footer>
+<footer class="footer-reveal">
+  <div class="contact-section">
+    <h2>Want to get in contact?</h2>
+    <a href="/contact" class="contact-cta">
+      Get in touch
+      <span class="cta-avatar-wrapper">
+        <img src="/assets/alex-logo-the-conversion-dev.png" alt="" class="cta-avatar" />
+      </span>
+    </a>
+  </div>
+
   <div class="footer-content">
     <div class="copyright">
       <span class="date">
@@ -24,8 +34,82 @@ const today = new Date()
     font-weight: var(--font-weight-light);
     line-height: 1.75;
     color: var(--text-secondary);
-    opacity: 0.75;
     margin-top: 4rem;
+  }
+
+  .contact-section {
+    position: relative;
+    background-image: url('/assets/gradient-5.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .contact-section {
+      background-position: top;
+    }
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* background: rgba(255,255,255, 0.4); */
+    pointer-events: none;
+  }
+
+  .contact-section h2 {
+    position: relative;
+    color: black;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .contact-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: transparent;
+    color: black;
+    padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+    border: 2px solid black;
+    border-radius: 9999px;
+    font-weight: var(--font-weight-bold);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+
+  .cta-avatar-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid black;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cta-avatar {
+    width: 112%;
+    height: 112%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .contact-cta:hover {
+    background: black;
+    border-color: black;
+    color: white;
   }
 
   .footer-content {
@@ -46,13 +130,64 @@ const today = new Date()
     opacity: 1;
   }
 
-  footer a {
+  .footer-content a {
     color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.2s ease-out;
   }
 
-  footer a:hover {
+  .footer-content a:hover {
     color: var(--text-primary);
   }
+
+  /* Fade-in reveal */
+  .footer-reveal {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+
+  .footer-reveal.is-visible {
+    opacity: 0.75;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-reveal {
+      opacity: 0.75;
+      transform: none;
+      transition: none;
+    }
+  }
 </style>
+
+<script is:inline>
+  (function() {
+    function initFooterReveal() {
+      var footer = document.querySelector('.footer-reveal');
+      if (!footer) return;
+
+      // Reset for navigation
+      footer.classList.remove('is-visible');
+
+      var observer = new IntersectionObserver(
+        function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(footer);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFooterReveal);
+    } else {
+      initFooterReveal();
+    }
+    document.addEventListener('astro:page-load', initFooterReveal);
+  })();
+</script>

@@ -12,6 +12,8 @@ const webPosts = await getSortedFilteredPostsByTag('web');
 const artPosts = await getSortedFilteredPostsByTag('art');
 const hiddenPosts = await getSortedFilteredPostsByTag('hidden');
 // const nonTaggedPosts = await getSortedFilteredPostsByTag(true);
+
+const combinedposts = await [...webPosts, ...webPosts];
 ---
 
 <IndexLayout title={themeConfig.site.title} description={themeConfig.site.description}>
@@ -22,7 +24,7 @@ const hiddenPosts = await getSortedFilteredPostsByTag('hidden');
   <About />
   <main class="main-fade-in">
     <PostList posts={caseStudyPosts} title={"Case Studies"} />
-    <PostList posts={webPosts} title={"Writing"} />
+    <PostList posts={combinedposts} title={"Writing"} />
     <!-- <PostList posts={artPosts} title={"Writing about Art"} /> -->
     <!-- <PostList posts={hiddenPosts} title={"Hidden articles"} /> -->
     <!-- <PostList posts={nonTaggedPosts} title={"Unfiltered articles"} /> -->
