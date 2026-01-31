@@ -184,9 +184,11 @@ const wordsObserver = new IntersectionObserver(
 // Observer for lines animation
 const linesObserver = new IntersectionObserver(
   (entries) => {
+    console.log('[reveals] linesObserver fired with', entries.length, 'entries');
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const el = entry.target as HTMLElement;
+        console.log('[reveals] linesObserver entry:', el.className || '(no class)', '| isConnected:', el.isConnected);
         const elementDelay = parseFloat(el.dataset.syDelay || "0");
         animateLinesWithMarks(el, elementDelay);
         el.classList.add("is-in");
@@ -205,6 +207,13 @@ export interface RevealConfig {
 
 export function initReveals(config?: RevealConfig[]) {
   console.log('[reveals] initReveals called');
+
+  // Debug: show ALL .about elements before filtering
+  const allAboutP = document.querySelectorAll('.about p');
+  console.log('[reveals] TOTAL .about p elements:', allAboutP.length);
+  allAboutP.forEach((el, i) => {
+    console.log(`[reveals] .about p[${i}]:`, el.className || '(no class)');
+  });
 
   document.fonts.ready.then(() => {
     // Elements with data-sy-reveal="words" attribute
@@ -235,8 +244,10 @@ export function initReveals(config?: RevealConfig[]) {
           el.dataset.syDelay = String(index * stagger);
         }
         if (type === "lines") {
+          console.log('[reveals] OBSERVING for lines:', el.className || '(no class)');
           linesObserver.observe(el);
         } else {
+          console.log('[reveals] OBSERVING for words:', el.className || '(no class)');
           wordsObserver.observe(el);
         }
       });
