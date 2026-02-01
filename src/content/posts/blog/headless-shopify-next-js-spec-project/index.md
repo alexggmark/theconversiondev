@@ -7,7 +7,9 @@ tags: ["web"]
 
 After working with Shopify's metafield system for 5+ years, I realised I’ve probably spent more time fighting with it than enjoying it. Even shiny new metaobjects feel pretty restrictive and clunky to use.
 
-This friction drove me to explore headless commerce, to understand if there was a better way to build.
+(Fun fact: you still can't export metafield definitions! I spent 4 hours the other day having to recreate each one by hand while cloning a store…)
+
+This friction drove me to explore headless commerce, to understand if there was a better way to build. (And maybe a little just to spite Shopify)
 
 You can see full code on [GitHub](https://github.com/alexggmark/neurosalt-shopify-headless) and demo site on [Vercel](https://neurosalt-shopify-headless-ti1p.vercel.app/).
 
