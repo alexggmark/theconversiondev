@@ -1,5 +1,5 @@
 ---
-title: 'Legacy ASP.NET, Alpine and Tailwind'
+title: 'How I''m modernising a legacy ASP.NET frontend'
 pubDate: '2025-12-05'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
@@ -19,7 +19,7 @@ The platform I’m working with has been serving people for 10+ years. It was bu
 
 The backend team was in the process of upgrading to ASP.NET Core and migrating to _[REDACTED]_ for ERP - this wasn't just a web project, it's a full biz opp overhaul.
 
-My role as the frontend developer was to figure out how to modernise the user experience while the backend underwent its own transformation.
+My role as the developer/CRO guy was to figure out how to modernise the user experience while the backend underwent its own transformation.
 
 But… the existing codebase was challenging. Some CSHTML files stretched to <mark>5,000+ lines</mark>. jQuery handled every single form interaction - repetitive code everywhere. But, the actual ASP logic wasn’t overly complex and worked fine. It just needed to look and feel better.
 

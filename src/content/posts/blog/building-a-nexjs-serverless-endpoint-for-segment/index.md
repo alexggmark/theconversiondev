@@ -25,7 +25,9 @@ The data existed. The frontend just couldn't ask for it safely…
 
 ## The Fix
 
-After researching a few options, I decided to build a small proxy - not something I'd had to do before, but not too complex. A Next.js route handler on Vercel that sits between the page and Segment's Profiles API - accepts an anonymous ID and a list of trait names, makes one authenticated request, and hands back a clean JSON response the browser can actually use.
+After researching a few options, I decided to build a small proxy - not something I'd had to do before, but nothing too complex.
+
+A Next.js route handler on Vercel that sits between the page and Segment's Profiles API - accepts an anonymous ID and a list of trait names, makes one authenticated request, and hands back a clean JSON response.
 
 On the page side, it's dead simple:
 
