@@ -11,7 +11,7 @@ You end up hitting a gap that nobody's built a connector for. When that happens,
 
 We use Segment as our CDP. It takes in browsing behaviour, builds audiences, and forwards them to marketing tools. The system works well - until you need that data back in the browser.
 
-![Rough diagram showing flow of data using Vercel endpoint as "glue"](./_assets/graph-vercel-segment-flow.png)
+![Spoiler: solution using Vercel endpoint as "glue"](./_assets/graph-vercel-segment-flow.png)
 
 ## The Problem
 

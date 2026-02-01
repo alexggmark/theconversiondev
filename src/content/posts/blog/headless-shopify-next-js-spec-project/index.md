@@ -23,6 +23,8 @@ The core challenge: recreating Shopify's block-based editing while splitting con
 
 Here's the switch statement I used to compose pages:
 
+(<mark>Note</mark>: yes - there's definitely a cleaner way to loop over these, but I didn't spend enough time standardising names)
+
 ```tsx
 // page.tsx
 import { getHomepageQuery } from "@/lib/dato/queries/getHomepage";
@@ -68,7 +70,7 @@ export default async function Home() {
 }
 ```
 
-In the above, DatoCMS controls which blocks appear and in what order, while components handle the rendering. There's definitely a cleaner way to loop over these, but I didn't spend enough time standardising names - so this is just an example.
+In the above, DatoCMS controls which blocks appear and in what order, while components handle the rendering.
 
 ![Block controls in DatoCMS, fully editable](./_assets/datocms-backend.png)
 
@@ -114,7 +116,7 @@ export default function HeroBanner({ data }: Props) {
 
 One of my priorities was end-to-end type safety. But this meant implementing GraphQL codegen for both Shopify and DatoCMS. Initially, I tried combining them into a single setup, but quickly discovered this wasn't best practice - each system needs its own schema and generated types.
 
-The Shopify codegen configuration:
+The Shopify codegen configuration (DatoCMS codegen basically identical, so use your imagination):
 
 ```tsx
 // codegen.shopify.ts
@@ -143,36 +145,9 @@ const config: CodegenConfig = {
 export default config;
 ```
 
-The DatoCMS codegen configuration:
+This generates types from Shopify's Storefront API, making sure all queries match the schema exactly. When Shopify updates their API, types regenerate automatically.
 
-```tsx
-// codegen.datocms.ts
-import 'dotenv/config';
-import type { CodegenConfig } from '@graphql-codegen/cli';
-
-const config: CodegenConfig = {
-  overwrite: true,
-  schema: [
-    {
-      'https://graphql.datocms.com/': {
-        headers: {
-          Authorization: `Bearer ${process.env.DATOCMS_API_TOKEN}`,
-        },
-      },
-    }
-  ],
-  documents: 'src/lib/dato/**/*.{ts,tsx}',
-  generates: {
-    'src/lib/dato/graphql-types.ts': {
-      plugins: ['typescript', 'typescript-operations'],
-    },
-  },
-};
-
-export default config;
-```
-
-This generates types from Shopify's Storefront API, making sure all queries match the schema exactly. When Shopify updates their API, types regenerate automatically. (Which is good, because Shopify’s developer docs are pretty rough…)
+(Which is good, because Shopify’s developer docs are pretty *rough*…)
 
 ## State Management
 
@@ -304,53 +279,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 Framer Motion handles the complex choreography of height animations and unmounting, letting me focus on the user experience rather than animation math.
 
-## Tailwind 4: A Mixed Experience
-
-This project uses Tailwind 4, which moves configuration from tailwind.config.js to plain CSS files. I’m so used to a JS config file, this transition felt strange - it felt like losing some granular controls. That said, you can apparently still include a config file if needed (I need to confirm this).
-
-```tsx
-@import "tailwindcss";
-@theme {
-  --font-sans: var(--font-dm-sans), sans-serif;
-  --color-brand-grey: #F0F0F0;
-  --color-brand-grey-dark: #E2E2E2;
-
-  --text-base: 16px;
-  --text-lg: 19.2px;
-  --text-xl: 22px;
-  --text-2xl: 26px;
-
-  --text-3xl: 40px;
-  --text-2\.5xl: 48px;
-  --text-4xl: 60px;
-
-  --tracking-tighter: -0.08em;
-  --tracking-tight: -0.04em;
-
-  --leading-1: 1;
-  --leading-1\.25: 1.25;
-  --leading-1\.5: 1.5;
-  --leading-1\.75: 1.75;
-  --leading-2: 2;
-}
-```
-
-I assume this new approach simplifies setup for teams less comfortable with JS configuration, but if it feels limiting to someone used to a bit of programmatic control.
-
 ## What I Learned
 
-Headless isn't always the answer. For most Shopify projects, the platform's built-in theming system is enough. Headless adds complexity - separate deployments, API management, preview environments - that only makes sense at scale or with specific technical requirements.
+For most Shopify projects, the platform's built-in theming system is enough. Headless adds complexity - separate deployments, API management, preview environments - that only makes sense at scale or with specific technical requirements.
 
-Type safety is worth the setup cost. GraphQL codegen caught numerous issues during development that would've been runtime errors otherwise. The upfront configuration pays dividends.
+However, for headless, type safety is worth the setup cost. GraphQL codegen caught a bunch of issues during development that would've silently failed on the frontend otherwise…
 
-Respect library solutions. I could've built custom animation hooks, but Framer Motion is battle-tested and handles edge cases I wouldn't have considered. Developer time is valuable - spend it on unique problems.
-
-Architecture should mirror mental models. The block-based content system works because it's familiar to anyone who's used Shopify's theme editor. Good architecture doesn't introduce unnecessary conceptual overhead.
+Finally, data architecture should mirror existing mental models. The block-based content system works because it's familiar to anyone who's used Shopify's theme editor. No conceptual overhead, etc etc…
 
 ## Current State
 
 The homepage is fully functional with all sections rendering dynamically. The product page successfully pulls price data and images from Shopify's Storefront API. What's missing: mutations - add to cart, checkout, etc.
 
-![It's technically a working product page](./_assets/product-page.png)
+![Look, it's technically a working product page okay…](./_assets/product-page.png)
 
-Will I finish this? Probably not. The exercise achieved its goal: proving I could build a headless Shopify store from scratch while understanding the trade-offs. For actual client work, I'd likely stick with Dawn or Horizon unless requirements specifically justified the headless complexity (and the team on the other end was super competent).
+Will I finish this? Probably not. The exercise achieved its goal: proving I could build a headless Shopify store from scratch while understanding the trade-offs.
+
+For actual client work, I'd likely stick with Dawn or Horizon unless requirements specifically justified the headless complexity (and the team on the other end was super competent).
