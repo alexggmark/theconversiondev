@@ -7,6 +7,7 @@ import BaseHead from '@/components/layout/BaseHead.astro'
 import Footer from '@/components/layout/Footer.astro'
 import BackButton from '@/components/ui/BackButton.astro'
 import TableOfContents from '@/components/ui/TableOfContents.astro'
+import ReadingProgress from '@/components/ui/ReadingProgress.astro'
 import GradientMask from '@/components/ui/GradientMask.astro'
 import ImageOptimizer from '@/components/ui/ImageOptimizer.astro'
 import ImageViewer from '@/components/ui/ImageViewer.astro'
@@ -36,6 +37,7 @@ const ogImage = `/open-graph/${postSlug}.png`
     ogImage={ogImage}
     slot="head"
   />
+  <ReadingProgress />
   <div class="post-container">
     <main>
       <div class="prose">
