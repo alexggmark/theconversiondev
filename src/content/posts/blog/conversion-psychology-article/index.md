@@ -5,17 +5,17 @@ description: "Discover how establishing a daily prayer routine can bring peace a
 tags: ["web"]
 ---
 
-I'm a developer who got tired of building UIs that never converted, so I <mark>decided to change things</mark>.
+I'm a developer who got tired of building UIs that never converted, so I decided to change things:
 
-About 2 years into my career, I worked on a web project for *American Golf*. The bosses were happy with how the new pages looked. But on launch, the needle barely moved - no extra conversions…
+About one year into my career, I worked on a web project for *American Golf*. The bosses were happy with how the new pages looked. But on launch, the needle barely moved - no conversion increase…
 
-That's when I first learned there's a huge difference between knowing how to build and knowing what to build. So I went down the rabbit hole on conversion psychology, persuasion, UX, and marketing funnels.
+That's when I first learned there's a huge difference between knowing how to build and <mark>knowing what to build</mark>. So I went down the rabbit hole on conversion psychology, persuasion, UX, and marketing funnels.
 
 How deep did I go? *(Spoiler: pretty deep!)*
 
 ![A portion of my Obsidian notes on marketing and UX](./_assets/obsidian-notes-ux-and-marketing.png)
 
-Now, this topic is huge, and most blog posts only focus on a narrow slice of the pie (UX tactics, copy formulas)…
+Now, this topic is huge, and most blog posts only focus on a narrow slice of the pie (UX tips, copy formulas, generic frameworks)…
 
 So in this guide, I'm going to break the whole thing down by the resources I learned from directly - probably easier and more useful.
 
@@ -346,7 +346,7 @@ The LIFT model also helps me communicate with stakeholders. Instead of arguing a
 
 This is something I feel qualified to give my honest opinion on…
 
-<mark>For 90% of businesses, UX design is irrelevant</mark> - or at least - handled very, very poorly. This is in part because most UX training is rigidly methodical (*‘Double Diamond Process’*, *‘Design Thinking’*, *‘Atomic Design’*…etc).
+<mark>For 90% of websites, UX design is irrelevant</mark> - or at least - handled very, very poorly. This is in part because most UX training is rigidly methodical (*‘Double Diamond Process’*, *‘Design Thinking’*, *‘Atomic Design’*…etc).
 
 A junior UX person gets into the industry, learns about “cognitive load” / "mental models” (i.e. understand what customers expect and design accordingly so you don't freak them out)…
 
