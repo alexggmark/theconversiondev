@@ -340,6 +340,7 @@ For example, if I'm auditing a product page with strong reviews (low anxiety) bu
 
 The LIFT model also helps me communicate with stakeholders. Instead of arguing about subjective design preferences, we can discuss objective conversion factors: "This design increases distraction" or "This change improves clarity."
 
+---
 
 ## 6. Conversion Design (UX)
 
