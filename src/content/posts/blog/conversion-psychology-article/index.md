@@ -9,7 +9,7 @@ I'm a developer who got tired of building UIs that never converted, so I <mark>d
 
 About 2 years into my career, I worked on a web project for *American Golf*. The bosses were happy with how the new pages looked. But on launch, the needle barely moved - no extra conversions…
 
-That's when I first learned there's a huge difference between knowing how to build and knowing what to build. So I went down a rabbit hole of conversion psychology, persuasion, UX, and marketing funnels.
+That's when I first learned there's a huge difference between knowing how to build and knowing what to build. So I went down the rabbit hole on conversion psychology, persuasion, UX, and marketing funnels.
 
 How deep did I go? *(Spoiler: pretty deep!)*
 
@@ -275,7 +275,7 @@ The perceived benefit of your offer. What's the complete value exchange you're p
 
 Does the content match what people expected to see? If someone clicks an ad about "organic dog food" and lands on a page about pet accessories, relevance is broken. Does your value proposition match their needs and search intent?
 
-This also applies to message match between ad copy and landing page copy. If your ad promises "free shipping" but the landing page doesn't mention it, you've lost relevance.
+This also applies to <mark>message match</mark> between ad copy and landing page copy. If your ad promises "free shipping" but the landing page doesn't mention it, you've lost relevance.
 
 ### 3. Clarity
 
@@ -286,13 +286,13 @@ Is your value proposition obvious? Can someone understand what you're offering w
 - Buried key information
 - Jargon or insider language
 
-I see clarity problems constantly in SaaS and B2B. Companies assume people understand their product category or what they do. They don't. Be explicit.
+I see clarity problems constantly in SaaS and B2B. Companies assume people understand their product category or what they do. They don't, so be a little obvious.
 
 ### 4. Anxiety
 
 Do elements on the page create uncertainty or doubt? Common anxiety triggers:
 
-- No trust signals (SSL, security badges)
+- No <mark>trust signals</mark> (SSL, security badges)
 - No social proof
 - Asking for too much information upfront
 - Unclear pricing or hidden costs
@@ -345,11 +345,13 @@ The LIFT model also helps me communicate with stakeholders. Instead of arguing a
 
 This is something I feel qualified to give my honest opinion on…
 
-For 90% of businesses, UX design is irrelevant - or at least - handled very, very poorly. This is in part because most UX training is rigidly methodical (*‘Double Diamond Process’*, *‘Design Thinking’*, *‘Atomic Design’*…etc).
+<mark>For 90% of businesses, UX design is irrelevant</mark> - or at least - handled very, very poorly. This is in part because most UX training is rigidly methodical (*‘Double Diamond Process’*, *‘Design Thinking’*, *‘Atomic Design’*…etc).
 
-A junior UX person gets into the industry, learns about “cognitive load” / "mental models” (i.e. understand what your customers expect and design accordingly so you don't freak them out)…
+A junior UX person gets into the industry, learns about “cognitive load” / "mental models” (i.e. understand what customers expect and design accordingly so you don't freak them out)…
 
-…and they'll drag a simple eComm store through a laborious full UX process, with user interviews, convergent/divergent thinking, ethnographic studies, user personas……*blah, blah, blah*
+…and they'll drag a simple eComm store through a laborious full-UX process, with user interviews, convergent/divergent thinking, ethnographic studies, user personas……*blah, blah, blah*
+
+![Odds on, you think this might be overkill for a site selling nappies…?](./_assets/double-diamond.png)
 
 **This isn't just expensive time-wise, it's also semi-useless:**
 
