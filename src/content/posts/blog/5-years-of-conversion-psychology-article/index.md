@@ -1,5 +1,5 @@
 ---
-title: '8+ years of UX & Conversion Psychology in one article'
+title: '8+ years of Conversion Psychology in one article'
 pubDate: '2026-01-11'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
@@ -19,13 +19,15 @@ Now, this topic is huge, and most blog posts only focus on a narrow slice of the
 
 So in this guide, I'm going to break the whole thing down by the resources I learned from directly - probably easier and more useful.
 
-<mark>Warning:</mark> my takes in [7. Conversion Design (UX)](#7-conversion-design-ux) might be controversial, so if you're an *"eCommerce UX designer"* - look away now.
+<mark>Warning:</mark> my takes in [6. Conversion Design (UX)](#6-conversion-design-ux) might be controversial, so if you're an *"eCommerce UX designer"* - look away now.
 
 ***
 
 ## **1. Customer Awareness**
 
 Before you can optimise something, you need to understand where your visitor is in their journey. Eugene Schwartz's _Breakthrough Advertising_ breaks this down into five stages of awareness, and it's the single most useful framework for structuring conversion-focused pages.
+
+![The bible of modern marketing (a bit longwinded frankly)](./_assets/breakthrough-advertising.png)
 
 ### The 5 Stages of Customer Awareness:
 
@@ -43,6 +45,8 @@ When I audit landing pages or product pages, this is the first question I ask: _
 
 ### How this changes the content:
 
+![The problem-aware page has to work a lot harder as an earlier touchpoint](./_assets/problem-most-aware.png)
+
 - **Unaware/Problem Aware**: Long-form content, education-heavy, problem-focused headlines, stories and scenarios
 - **Solution Aware**: Comparison-focused, "Why us?" positioning, feature differentiation
 - **Product Aware**: Benefits, proof, objection handling, detailed specifications
@@ -58,6 +62,8 @@ Once you know where someone is in their awareness journey, you need to understan
 
 
 ### Life Force 8 + Secondary Wants
+
+![The other bible of modern marketing (less sleazy than it sounds)](./_assets/cashvertising.png)
 
 Drew Eric Whitman's _Cashvertising_ breaks down human motivation into the "Life Force 8" - biological, hardwired desires that drive decisions:
 
@@ -82,6 +88,8 @@ Example: A premium skincare brand shouldn't lead with "Contains peptides and hya
 
 If you don’t know him, Kyle Milligan is a big deal finance copywriter (imagine: extremely long landing pages with tons of emotion and social proof with a few Lamborghini shots thrown in).
 
+![Created in the finance world, this framework is applicable everywhere](./_assets/kyle-milligan.jpg)
+
 But I’ve found his framework works in basically any industry: only four emotions drive sales - **New, Easy, Safe, Big**.
 
 This is incredibly useful when a client doesn't have a clear differentiator or when you're trying to reframe an existing offer.
@@ -94,6 +102,8 @@ This is incredibly useful when a client doesn't have a clear differentiator or w
 When I'm explaining conversion strategy to clients who don't have strong product differentiation, this is the framework I use. We map out: which of these four angles can we credibly own? Then we build messaging and page structure around that.
 
 ### **Cialdini's 7 Principles of Influence**
+
+![Okay, there's a few "bibles" in marketing, here's a third](./_assets/influence-cialdini.png)
 
 Robert Cialdini's principles are the universal psychological triggers that work across all contexts:
 
@@ -140,6 +150,8 @@ Understanding this lets you diagnose conversion problems more accurately. If you
 
 Although I won't go into full detail, Mark Joyner's book *Irresistible Offers* is a great starting point if you want to learn more. But it can also confuse the topic by throwing multiple frameworks at you (something this article is probably already guilty of).
 
+![An interesting read, but a bit complex for this article](./_assets/irresistible-offer-book.png)
+
 I'll quickly break it down here, to give you an idea.
 
 **The 4 questions every buyer asks:**
@@ -160,7 +172,7 @@ Again, a lot of these are retreads of existing ideas on this page, but it's a bo
 ***
 
 
-## **5. Marketing Strategy In 3 Steps**
+## 4. Marketing Strategy In 3 Steps
 
 Here's where we zoom out from individual offers to overall conversion strategy. Most "marketing strategy" resources make this seem more complicated than it is - usually because complexity sells consulting services.
 
@@ -183,6 +195,8 @@ Every buyer journey, regardless of industry or business model, has three core st
 
 3. <mark>Prospect accepts offer</mark> - Goal: Remove friction from acquisition. This is UX, checkout optimisation, form design - making conversion easy.
 
+![The entirey of "Marketing" in one image (really)](./_assets/copythat-marketing-course-3-steps-of-buyer-journey.png)
+
 That's it. Everything else is a variation or subset of these three steps.
 
 When conversion rates are low, you can diagnose which step is failing:
@@ -198,6 +212,8 @@ When conversion rates are low, you can diagnose which step is failing:
 
 <mark>Micro strategy</mark> is the space between micro-offers and micro-conversions that lead toward the main conversion. This is where CRO lives.
 
+![Showing where micro strategy sits inside macro strategy](./_assets/copythat-marketing-course-micro-macro-strategy.png)
+
 **The key question for micro strategy:** "What's stopping the prospect from accepting the main offer right now?"
 
 Maybe they don't understand the product (needs education). Maybe they don't trust you (needs social proof). Maybe the price feels risky (needs guarantee or trial). Each of these barriers requires a micro-conversion: watching a demo video, reading reviews, seeing the return policy.
@@ -207,6 +223,8 @@ This is how I prioritize CRO tests. I map out the macro conversion goal, identif
 ### High-Ticket vs. Impulse Purchases
 
 One of the biggest mistakes I see (and have been guilty of myself) is treating all products the same way. A £15 picture frame and a £1,500 course require completely different conversion strategies.
+
+![Ripped from course: comparing complex and simple funnels](./_assets/copythat-marketing-course-types-of-funnel.png)
 
 Story time: I read a Reddit thread once about a marketer who tried to sell house paint with a lead funnel… (“10X House Painting - The Ultimate PDF Guide!”).
 
@@ -234,9 +252,11 @@ Over-explaining a simple impulse buy creates unnecessary friction. Under-explain
 
 ***
 
-## 6. The LIFT Model
+## 5. The LIFT Model
 
 This is the framework I use on every single CRO project. It was developed by WiderFunnel (now part of Conversion.com) and it's the most practical, comprehensive model I've found for diagnosing conversion issues.
+
+![The 6 steps of diagnosing conversion issues](./_assets/lift-model-cro.png)
 
 LIFT stands for *six conversion factors*, and the model treats your Value Proposition as the sum of all these elements.
 
@@ -308,6 +328,8 @@ Urgency is often overused or used dishonestly (fake countdown timers, false scar
 
 ### How I Apply LIFT in Practice
 
+![Example of me doing LIFT analysis early in project](./_assets/lift-breakdown-example.png)
+
 When I audit a page, I score it on each of these six factors. Then I prioritize improvements based on:
 
 1. Which factors are weakest
@@ -319,15 +341,15 @@ For example, if I'm auditing a product page with strong reviews (low anxiety) bu
 The LIFT model also helps me communicate with stakeholders. Instead of arguing about subjective design preferences, we can discuss objective conversion factors: "This design increases distraction" or "This change improves clarity."
 
 
-## **7. Conversion Design (UX)**
+## 6. Conversion Design (UX)
 
-Warning: this topic <mark>might be controversial</mark>, but it’s something I feel qualified to give my honest opinion on…
+This is something I feel qualified to give my honest opinion on…
 
 For 90% of businesses, UX design is irrelevant - or at least - handled very, very poorly. This is in part because most UX training is rigidly methodical (*‘Double Diamond Process’*, *‘Design Thinking’*, *‘Atomic Design’*…etc).
 
 A junior UX person gets into the industry, learns about “cognitive load” / "mental models” (i.e. understand what your customers expect and design accordingly so you don't freak them out)…
 
-…and they'll drag a simple eComm store through a laborious full UX process, with user interviews, convergent/divergent thinking, ethnographic studies, user personas……*etc, etc, etc*
+…and they'll drag a simple eComm store through a laborious full UX process, with user interviews, convergent/divergent thinking, ethnographic studies, user personas……*blah, blah, blah*
 
 **This isn't just expensive time-wise, it's also semi-useless:**
 
@@ -337,6 +359,8 @@ Most websites just need a few data-backed, conversion-focused improvements, **no
 
 That's why, I'm going to skip the *‘Double Diamond Process’*, and instead recommend…
 
+![Unbounce's article is one of the cleanest intros to this I've seen](./_assets/conversion-design-7-principles-unbounce.png)
+
 Unbounce's *"7 Principles of Conversion-Centered Design"*. A particularly solid and accessible overview of how UX concepts actually apply to conversion optimisation:
 
 
@@ -345,6 +369,8 @@ Unbounce's *"7 Principles of Conversion-Centered Design"*. A particularly solid 
 Analysis paralysis is real. When faced with too many choices, people often choose nothing. In UX terms, this is "cognitive load" - the mental effort required to process information and make decisions.
 
 The goal is to achieve a <mark>1\:1 attention ratio</mark>: the number of things you can do should match the number of things you should do.
+
+![CVR is often directly tied to how many options there are on a page](./_assets/conversion-design-11-attention.webp)
 
 **How this applies:**
 
@@ -359,7 +385,9 @@ When I audit pages with low conversion rates, excess choice is often the culprit
 
 <mark>Information hierarchy</mark> determines how people process and understand your page. The order of information should be logical and follow a narrative that moves people toward conversion.
 
-This connects directly to awareness stages (Section 1) and offer anatomy (Section 4). Your structure should match where people are in their journey and answer their questions in sequence.
+![Wireframes I built: flow + logic is more important than look](./_assets/conversion-breakdown-wireframes.png)
+
+This connects directly to awareness stages ([Section 1](#1-customer-awareness)) and offer anatomy ([Section 4](#3-what-are-offers)). Your structure should match where people are in their journey and answer their questions in sequence.
 
 **Typical high-converting structure:**
 
@@ -391,7 +419,7 @@ I've seen conversion rates drop significantly when ad copy promises one thing an
 
 ### 4. Show Benefits
 
-This connects to the Life Force 8 concept from Section 2. People don't buy features - they buy <mark>outcomes</mark> and transformations.
+This connects to the Life Force 8 concept from [Section 2](#2-what-drives-human-decisions). People don't buy features - they buy <mark>outcomes</mark> and transformations.
 
 But here's the key: **visual proof lets the brain infer its own benefits**. You can keep copy tight and focused without exhaustively listing results, if you show rather than tell.
 
@@ -409,6 +437,8 @@ Not all page elements are equally important. Your design should direct attention
 **Negative space**: Also called whitespace. It's not wasted space - it's breathing room that directs focus. Premium brands use this well. Cluttered pages create cognitive load; spacious pages create clarity.
 
 **Visual hierarchy**: Size, weight, color, and position all signal importance. Your primary CTA should be the most visually prominent element in its section.
+
+![Understanding how people physically read content helps design pages](./_assets/conversion-design-f-z-patterns.jpg)
 
 People scan pages in predictable patterns (F-pattern, Z-pattern). Understanding these patterns helps you position key information where people naturally look first.
 
@@ -444,7 +474,7 @@ The key is identifying unnecessary friction versus necessary friction. Asking fo
 
 ***
 
-## 8. The Technical Implementation
+## 7. The Technical Implementation
 
 This is where conversion psychology meets actual development work. Understanding the principles is one thing - knowing how to test and implement them is another.
 
@@ -453,7 +483,7 @@ This is where conversion psychology meets actual development work. Understanding
 
 *(Noticed a "one" theme in this article yet?)*
 
-When testing landing page variations for different audiences, focus on **one idea, one offer, one action, one ideal customer** per variation.
+When testing landing page variations for different audiences, I focus on <mark>one idea, one offer, one action, one ideal customer</mark> per variation.
 
 This principle prevents muddy test results. If you change the headline, the CTA, and the hero image all at once, you won't know which change drove the result. If you try to speak to multiple customer segments in one page, your messaging becomes generic.
 
@@ -463,76 +493,13 @@ This principle prevents muddy test results. If you change the headline, the CTA,
 - Each landing page targets one customer segment
 - Each page has one primary conversion goal
 
-When you need to speak to multiple audiences, create separate pages with tailored messaging. The incremental effort is worth the conversion lift.
-
-
-### **Form Optimisation by Industry**
-
-Forms are a common conversion bottleneck, but the optimisation approach varies by context.
-
-**eCommerce checkout:**
-
-- Minimize fields (name, email, payment, shipping)
-- Guest checkout option (don't force account creation)
-- Auto-fill and validation
-- Clear error messaging
-- Progress indicators for multi-step
-- Mobile-optimised input types
-
-**SaaS signup:**
-
-- Progressive profiling (collect info over time, not all upfront)
-- Social login options to reduce friction
-- Clear value exchange ("Why we're asking for this")
-- Trial without credit card when possible
-
-**Lead generation:**
-
-- Align fields with offer value (high-value resource = more fields acceptable)
-- Use conditional logic to show relevant fields only
-- Consider multi-step for long forms
-- Make optional fields truly optional
-
-The principle: ask for the minimum information needed at this stage. You can always collect more later.
-
-
-### Specificity in Proof Adds Credibility
-
-Vague claims don't convert. Specific claims with specific proof do.
-
-**Weak:** "Studies show this works" **Strong:** "New animal studies from Stanford University show 40% improvement"
-
-**Weak:** "Thousands of happy customers" **Strong:** "2,847 five-star reviews from verified buyers"
-
-**Weak:** "Fast shipping" **Strong:** "Ships same-day if ordered before 2pm EST"
-
-When I'm reviewing copy or testimonials, I look for opportunities to add specificity. Numbers, timeframes, sources, details - all increase believability. This connects back to Joyner's framework: specificity is part of making your offer credible.
-
-### Why Inertia Matters for UX Decisions
-
-Physics principle: objects at rest tend to stay at rest. Human behavior is the same.
-
-**It's much easier to do nothing than to do something.** This is why:
-
-- Default options are so powerful (people stick with them)
-- Saving payment info increases repeat purchases
-- Subscriptions persist unless actively canceled
-- Exit popups sometimes work (one last chance to break inertia)
-
-For CRO/UX, this means:
-
-1. The path to conversion must be compelling enough to overcome inertia
-2. The process must be frictionless enough that inertia doesn't win
-3. Consider what defaults encourage your desired behavior
-
-If your conversion rate is low, often it's not because people actively decided against you - they just didn't have enough motivation to overcome doing nothing.
-
+When you need to speak to multiple audiences, create separate pages with tailored messaging. (As I type this, I'm running a test with <mark>6 variations</mark> of a simple PDP targeting different groups and traffic types)
 
 ### Implementation Philosophy
 
 Here's what I've learned from implementing these principles across dozens of projects: **start with the offer, then optimise around it.**
 
-No amount of A/B testing, design polish, or technical optimisation will fix a fundamentally weak offer. But a strong offer can succeed despite mediocre design. Your priority should be:
+No amount of A/B testing, design polish, or technical optimisation will fix a fundamentally weak offer. But <mark>a strong offer can succeed despite mediocre everything else</mark>. Your priority should be:
 
 1. **Offer strength**: Is the value proposition compelling?
 2. **Message clarity**: Do people understand it quickly?
@@ -554,4 +521,4 @@ The biggest shift in my thinking: **conversion isn't about tricks. It's about ps
 
 These frameworks work because they're based on how humans actually make decisions - not how we think they make decisions.
 
-The businesses who win aren't always the ones with the best product. They're the ones who understand these principles and implement them consistently.
+The businesses who win aren't always the ones with the best product. They're the ones <mark>who understand these principles</mark> and implement them consistently.
