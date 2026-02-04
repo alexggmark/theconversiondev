@@ -10,8 +10,8 @@ export default function remarkTOC() {
     visit(tree, 'heading', (node) => {
       const level = node.depth
 
-      // Only process h1, h2, h3
-      if (level > 3) return
+      // Only process h1, h2
+      if (level > 2) return
 
       // Skip the first h1
       if (level === 1 && headingIndex === 0) {
