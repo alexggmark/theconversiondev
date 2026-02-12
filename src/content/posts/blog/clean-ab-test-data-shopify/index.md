@@ -11,6 +11,8 @@ The first kind are *visual tools* - AB Tasty, VWO, Optimizely. These are so expe
 
 The second are newer *Shopify-native apps* like Shoplift or Elevate. These solve the flicker problem by duplicating theme templates instead of injecting DOM changes. But they're built around whole-template swaps - no granularity possible.
 
+![This is my hedgehog. There are many like it, but this one is mine.](./_assets/posthog-mascot-screenshot.png)
+
 Neither of these did what I needed. So I built a third option, using <mark>PostHog's feature flags</mark>. This article is about how they work, and why you want them.
 
 ---
