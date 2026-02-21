@@ -10,8 +10,9 @@ const logos = [
 ];
 ---
 
-<div class="logo-scroll">
-  <div class="logo-scroll__track">
+<div class="logo-scroll-wrapper">
+  <div class="logo-scroll">
+    <div class="logo-scroll__track">
     {logos.map((logo) => (
       <div class="logo-scroll__item">
         <img src={logo.src} alt={logo.alt} />
@@ -22,37 +23,24 @@ const logos = [
         <img src={logo.src} alt="" />
       </div>
     ))}
+    </div>
   </div>
 </div>
 
 <style>
-  .logo-scroll {
-    position: relative;
-    width: 100%;
+  .logo-scroll-wrapper {
+    background-image: url('/assets/gradient-5.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    padding: 1rem 0;
     overflow: hidden;
     margin-bottom: 2rem;
-    opacity: 0.4;
   }
 
-  .logo-scroll::before,
-  .logo-scroll::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .logo-scroll::before {
-    left: 0;
-    background: linear-gradient(to right, var(--bg, #1c1c1c), transparent);
-  }
-
-  .logo-scroll::after {
-    right: 0;
-    background: linear-gradient(to left, var(--bg, #1c1c1c), transparent);
+  .logo-scroll {
+    width: 100%;
+    overflow: hidden;
   }
 
   .logo-scroll__track {
@@ -66,7 +54,7 @@ const logos = [
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 68px;
+    height: 78px;
     margin-right: 2rem;
   }
 
@@ -74,7 +62,7 @@ const logos = [
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: invert(1) brightness(2);
+    filter: brightness(0);
   }
 
   @keyframes scroll {
