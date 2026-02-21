@@ -1,0 +1,98 @@
+---
+const logos = [
+  { src: '/assets/logos/logo-americangolf.png', alt: 'American Golf' },
+  { src: '/assets/logos/logo-davidaustin.png', alt: 'David Austin' },
+  { src: '/assets/logos/logo-debeers.png', alt: 'De Beers' },
+  { src: '/assets/logos/logo-deskpro.png', alt: 'Deskpro' },
+  { src: '/assets/logos/logo-ford.png', alt: 'Ford' },
+  { src: '/assets/logos/logo-vodafone.png', alt: 'Vodafone' },
+  { src: '/assets/logos/logo-nealsyard.png', alt: 'Neals Yard' },
+];
+---
+
+<div class="logo-scroll">
+  <div class="logo-scroll__track">
+    {logos.map((logo) => (
+      <div class="logo-scroll__item">
+        <img src={logo.src} alt={logo.alt} />
+      </div>
+    ))}
+    {logos.map((logo) => (
+      <div class="logo-scroll__item" aria-hidden="true">
+        <img src={logo.src} alt="" />
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .logo-scroll {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    opacity: 0.4;
+  }
+
+  .logo-scroll::before,
+  .logo-scroll::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .logo-scroll::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg, #1c1c1c), transparent);
+  }
+
+  .logo-scroll::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg, #1c1c1c), transparent);
+  }
+
+  .logo-scroll__track {
+    display: flex;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+
+  .logo-scroll__item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 68px;
+    margin-right: 2rem;
+  }
+
+  .logo-scroll__item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: invert(1) brightness(2);
+  }
+
+  @keyframes scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .logo-scroll__item {
+      height: 58px;
+      margin-right: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-scroll__track {
+      animation: none;
+    }
+  }
+</style>

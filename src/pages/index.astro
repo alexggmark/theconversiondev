@@ -4,6 +4,7 @@ import CircularAvatar from '@/components/ui/CircularAvatar.astro'
 import Header from '@/components/layout/Header.astro'
 import About from '@/components/widgets/About.astro'
 import PostList from '@/components/widgets/PostList.astro'
+import LogoScroll from '@/components/widgets/LogoScroll.astro'
 import { themeConfig } from '@/config'
 import { getSortedFilteredPostsByTag } from '@/utils/draft';
 
@@ -23,6 +24,7 @@ const hiddenPosts = await getSortedFilteredPostsByTag('hidden');
   </div>
   <About />
   <main class="main-fade-in">
+    <LogoScroll />
     <PostList posts={caseStudyPosts} title={"Case Studies"} />
     <PostList posts={webPosts} title={"Writing"} />
     <!-- <PostList posts={artPosts} title={"Writing about Art"} /> -->
