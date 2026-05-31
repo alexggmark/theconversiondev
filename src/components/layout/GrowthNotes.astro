@@ -1,0 +1,102 @@
+---
+---
+
+<section class="growth-notes">
+  <div class="growth-notes-text">
+    <h2>Read my growth notes</h2>
+    <a href="https://growthnotes.online" target="_blank" class="growth-notes-cta">Start reading</a>
+  </div>
+  <div class="growth-notes-image">
+    <img src="/assets/growth-notes-papers.png" alt="Growth notes" />
+  </div>
+</section>
+
+<style>
+  .growth-notes {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    /* background: #0a2540; */
+    background: linear-gradient(303deg, #104982, transparent);
+    color: white;
+    border-radius: 1rem;
+    padding: 2rem 2.5rem 0;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+
+  .growth-notes-text {
+    padding-bottom: 2rem;
+  }
+
+  .growth-notes-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .growth-notes h2 {
+    color: white;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+  }
+
+  .growth-notes-cta {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 9999px;
+    font-weight: var(--font-weight-bold);
+    font-size: 1rem;
+    text-decoration: none;
+    transition:
+      background 0.2s ease-out,
+      color 0.2s ease-out;
+  }
+
+  .growth-notes-cta:hover {
+    background: white;
+    color: #0a2540;
+  }
+
+  .growth-notes-image {
+    flex-shrink: 0;
+  }
+
+  .growth-notes-image img {
+    display: block;
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    /* transform: scale(1.2) translateY(-0.5rem); */
+    transform: scale(1.4) translate(1rem, 0rem);
+  }
+
+  @media (max-width: 768px) {
+    .growth-notes {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .growth-notes-text {
+      align-items: center;
+      padding-bottom: 0;
+    }
+
+    .growth-notes-image {
+      display: none;
+    }
+  }
+</style>

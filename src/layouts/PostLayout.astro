@@ -5,6 +5,7 @@ import FormattedDate from '@/components/widgets/FormattedDate.astro'
 import FootnoteScroll from '@/components/widgets/FootnoteScroll.astro'
 import BaseHead from '@/components/layout/BaseHead.astro'
 import Footer from '@/components/layout/Footer.astro'
+import GrowthNotes from '@/components/layout/GrowthNotes.astro'
 import BackButton from '@/components/ui/BackButton.astro'
 import TableOfContents from '@/components/ui/TableOfContents.astro'
 import GradientMask from '@/components/ui/GradientMask.astro'
@@ -67,6 +68,7 @@ const ogImage = `/open-graph/${postSlug}.png`
     <NeoDBCard />
     {themeConfig.post.imageViewer && <ImageViewer />}
     {themeConfig.post.linkCard && <LinkCard />}
+    {themeConfig.general.footer && <GrowthNotes />}
     {themeConfig.general.footer && <Footer />}
   </div>
 </BaseLayout>
