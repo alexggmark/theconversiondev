@@ -27,3 +27,6 @@ pnpm-debug.log*
 # Netlify build output
 .netlify/
 
+
+# Local article drafts (kept out of the content collection)
+drafts/

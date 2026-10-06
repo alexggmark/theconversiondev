@@ -1,0 +1,30 @@
+<script>
+  // Enhance ::video embeds with Plyr. The library is only fetched on pages that contain a video.
+  async function init() {
+    const videos = document.querySelectorAll<HTMLVideoElement>('video.js-plyr:not([data-plyr-ready])')
+    if (videos.length === 0) {
+      return
+    }
+
+    const [{ default: Plyr }] = await Promise.all([import('plyr'), import('plyr/dist/plyr.css')])
+
+    videos.forEach((video) => {
+      video.dataset.plyrReady = 'true'
+      new Plyr(video, {
+        // Self-hosted copy of node_modules/plyr/dist/plyr.svg (Plyr defaults to its CDN)
+        iconUrl: '/assets/plyr.svg',
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+      })
+    })
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init)
+  } else {
+    init()
+  }
+
+  // Re-initialize on Astro page loads
+  document.addEventListener('astro:page-load', init)
+</script>

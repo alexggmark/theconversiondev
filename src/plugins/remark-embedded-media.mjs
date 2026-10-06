@@ -2,7 +2,7 @@ import { visit } from 'unist-util-visit'
 
 /**
  * A remark plugin that converts custom directives to embedded media HTML elements
- * Supports: link cards, Spotify, YouTube, Bilibili, X posts, and GitHub repository cards
+ * Supports: link cards, Spotify, YouTube, self-hosted video, Bilibili, X posts, and GitHub repository cards
  */
 const embedHandlers = {
   // Link Card
@@ -96,6 +96,23 @@ const embedHandlers = {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
+    </figure>
+    `
+  },
+
+  // Self-hosted video (enhanced by Plyr in VideoPlayer.astro)
+  video: (node) => {
+    const src = node.attributes?.src ?? ''
+    const poster = node.attributes?.poster ?? ''
+    if (!src) {
+      return false
+    }
+
+    return `
+    <figure class="video-player">
+      <video class="js-plyr" controls playsinline preload="none"${poster ? ` poster="${poster}"` : ''}>
+        <source src="${src}" type="video/mp4" />
+      </video>
     </figure>
     `
   },
