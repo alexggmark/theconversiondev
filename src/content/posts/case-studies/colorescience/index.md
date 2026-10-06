@@ -1,7 +1,7 @@
 ---
 title: 'Mineral Sunscreen Brand CRO'
 pubDate: '2026-02-10'
-tags: ['case-study']
+tags: ['hidden']
 result: '+41.3% CVR'
 postImg: './_assets/cs-splash-image.png'
 ---
