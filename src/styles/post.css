@@ -1,5 +1,5 @@
-/* Base styles for all elements */
-.prose * {
+/* Base styles for all elements (Plyr excluded: in production its CSS loads before this and would lose) */
+.prose *:where(:not(.plyr, .plyr *)) {
   margin: 0;
   padding: 0;
   /* font-size: var(--font-size-m); */
