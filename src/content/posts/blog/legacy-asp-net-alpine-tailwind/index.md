@@ -2,7 +2,7 @@
 title: 'How I''m modernising a legacy ASP.NET frontend'
 pubDate: '2025-12-05'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
-tags: ["web"]
+tags: ["hidden"]
 ---
 
 I’m currently working on a genuinely challenging project that I thought was worth sharing: modernising a decade-old ASP.NET eComm platform that handles millions in revenue. (Key details NDA, sorry!)

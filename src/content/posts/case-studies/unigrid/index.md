@@ -14,6 +14,8 @@ It's still WIP, but it's pretty damn close to the editor I've wanted on every Sh
 
 You edit the real page, <mark>every block stays exactly where you put it</mark> (on desktop or mobile), any page layout can be <mark>A/B tested without flicker</mark>, and everything is saved to Shopify metaobjects.
 
+👉 **[Try the editor yourself](https://unigrid.unigrid.workers.dev/editor)**
+
 *Hydrogen · React Router 7 · TypeScript · Cloudflare Workers · dnd-kit · Shopify Admin & Storefront APIs*
 
 ![](./_assets/unigrid-splash-hero.jpg)
