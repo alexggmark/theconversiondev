@@ -1,5 +1,5 @@
 ---
-title: 'How I actually use AI: an analyst, not an oracle'
+title: 'How I actually use AI for CRO'
 pubDate: '2026-10-07'
 description: "I'm suspicious of people who brag about token counts. Here's how I actually use Claude Code for CRO analysis: a structured repo, written rules, and a clear line between spotting patterns and deciding what to build."
 tags: ["web"]
@@ -25,6 +25,8 @@ All my analysis lives in one repo, opened in VS Code, with Claude Code working d
 - **Every session starts from the same place.** The rules and current facts load automatically, with no handoff summaries
 - **Every change is reviewable.** Claude's edits show up as diffs, and nothing goes in until I've read it
 - **Version control proves the order of events.** A git commit timestamp shows a test's method was fixed *before* its data came in
+
+![Claude Code in VS Code: dated raw exports in folders on left, and analysis in terminal](./_assets/ai-analysis.png)
 
 One important caveat: <mark>the repo never goes near GitHub</mark>. Even anonymised, it's real business data, so it stays local, with git used purely for history. Version control doesn't have to mean a remote.
 
@@ -95,6 +97,8 @@ I'll automate once the tracking is trustworthy enough for a proper warehouse. No
 
 As someone who used to do voice-of-customer analysis completely by hand, this is where I've felt the biggest difference. I learned VoC through CXL's growth marketing approach: copy each review or snippet into a Google Form, tag it, and let the responses build a pivot table in Google Sheets. It works, but it's slow, and by review 300 you're skimming.
 
+![VoC report built with Python and Claude Code from Stamped reviews: product objections ranked by raw count and weighted towards low-star reviews](./_assets/ai-voc.png)
+
 The difference now is night and day. It's not just faster. Patterns are much easier to spot, because nothing gets skimmed and every theme comes with counts.
 
 Review analysis is stable and repetitive, so it gets a small Python pipeline built with Claude Code:
@@ -132,12 +136,14 @@ Three real examples, showing both what it caught and where it got things wrong.
 - Scroll data showed two-thirds of paid social visitors on mobile left within the top 10% of the page. A heatmap capture showed why: the cookie banner sat right over the product name
 - So the problem moved from checkout to the first screen
 
-### It talked me out of reacting to a bad peek
+### Restarting a test for the right reason
 
-- **The setup:** a test of a mobile-only design change. Claude suggested limiting it to mobile screens. I said 95% of our traffic is mobile, so why bother? Claude agreed, working from that same 95% figure
-- **The peek:** three days in, I peeked at the results and saw checkout conversion down **34%**. Claude's answer: our main metric is add to cart, and that's only down 1%. The checkout figure rests on 10–15 orders per variant, which is noise. Don't touch it
-- **What we'd both missed:** the test only counts visitors who accept cookies, and desktop visitors accept them more often. So desktop made up far more of the *test* than of the site, and it added to cart at a higher rate, too. Showing a mobile design change to desktop users would water down a real +15% lift to about +12.5%, and make the test run a fifth to a quarter longer
-- **The fix:** we restarted it, limited to mobile in the theme code, with the method committed *before* launch this time. The log records that the peek played no part
+![Control vs test: the test moves price, shade swatches and Add to Cart onto the first mobile screen](./_assets/ai-article-mobile-cta-test.png)
+
+- **The setup:** a mobile-only design test, shown to all screen sizes because 95% of our traffic is mobile. Claude agreed
+- **The peek:** three days in, checkout conversion was down **34%**. My instinct was to pull it. Claude: the main metric (add to cart) is only down 1%, and the checkout figure rests on 10–15 orders. That's noise
+- **The real problem:** the test only counts visitors who accept cookies, and desktop visitors accept more often. So desktop was over-represented, watering down the result and making the test run up to a quarter longer
+- **The restart:** we restarted, limited to mobile, because the setup was flawed, not because of the peek. Now the test measures only the people the change was designed for, and its result will actually mean something
 
 **It's also good at:** reconciling GA4, Shopify and PostHog; splitting a conversion drop into "colder traffic" vs "worse site"; and turning hundreds of reviews into counted themes.
 
