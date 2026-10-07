@@ -164,7 +164,7 @@ What I *could* do from my side, I did: removed a category list that was fetched 
 
 **Measure before you argue.** "The backend is slow" is an opinion. A `Server-Timing` header showing 1.5 seconds of API time on a privacy policy page is a fact, and it holds up in any meeting.
 
-**Prefer additive global layers over call-site edits.** In a codebase where the markup is the API, the fewer places you touch, the fewer things you break.
+**Fix it once, not a thousand times.** In a codebase where the markup is the API, the fewer places you touch, the fewer things you break.
 
 **Some walls aren't yours to move, but you can make them visible.** I couldn't fix the backend, get a dev environment, or freeze the designs. What I could do was make the constraints clear enough that the next decision (agency, rebuild, or neither) gets made with the full picture.
 
