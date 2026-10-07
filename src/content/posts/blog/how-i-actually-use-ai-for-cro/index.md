@@ -7,7 +7,7 @@ tags: ["web"]
 
 I've talked to a lot of senior developers this year who tell me they burn through <mark>millions of tokens a day</mark>.
 
-So I ask what they're actually doing with it. The answer is usually: summarising documents, rewording emails, reading files they could have skimmed. Useful, sure. But it sounds less like a workflow and more like someone trying to hit a quota.
+So I ask what they're actually doing with it. The answer is usually: summarising documents, rewording emails, reading files they could have skimmed. It all sounds less like a workflow and more like someone trying to hit a quota.
 
 I only want to use AI where it's genuinely better than me. And after a year of trying, that's a fairly specific place: AI is excellent at reading lots of data and spotting patterns. It's much weaker at producing the concrete thing you should do about it.
 
@@ -103,34 +103,37 @@ Review analysis is stable and repetitive, so it gets a small Python pipeline bui
 Two things I'm pleased with:
 
 - **It runs inside Claude Code, not the API.** The corpus is tens of thousands of tokens; there's no point paying separately for a model to read short reviews
-- **Every quote is checked against the original review**, character by character, because these end up as on-page copy. On one store that caught 21 bad quotes and snapped 131 back to the customer's exact wording. [check clearance on counts]
+- **Every quote is checked against the original review**, character by character, because these end up as on-page copy. On one store that caught 21 bad quotes and snapped 131 back to the customer's exact wording.
 
-It also caught things I hadn't anticipated, like the fact that only ~4% of one store's on-site reviews were actually from UK customers. The rest were syndicated from the US brand. [check clearance]
+It also caught things I hadn't anticipated, like the fact that only about 1 in 18 of the reviews showing on one store actually belonged to it. The rest were syndicated from the US brand's account.
 
 ---
 
 ## Where Claude is strong
 
-Three examples, all following the same shape: data → pattern → pre-registered test.
+Three examples. Not all of them flatter Claude, which is sort of the point.
 
-### The purchase decision was below the first screen [confirm]
+### The purchase decision was below the first screen
 
-- Claude joined PostHog scroll depth to add-to-cart, mapped against where price and Add to Cart sit on a mobile screen
-- **Pattern:** Add to Cart was below the first screen. First-screen leavers added to cart at 2.3%; visitors who scrolled just past the button, 42% [check clearance]
-- Claude itself flagged this as <mark>correlational</mark> (people who scroll are more interested anyway), which is exactly why it became a test, not a straight ship
+- Claude joined PostHog scroll depth to add-to-cart for ~12,900 mobile visitors on one best-selling product page, and mapped it against where the price and Add to Cart button sit on a phone
+- **Pattern:** Add to Cart sat below the first screen. Visitors who never scrolled past it added to cart at **2.3%**. Visitors who scrolled just past the button: **42%**
+- Claude flagged it as <mark>correlational</mark> (people who scroll are keener anyway), which is exactly why it became a pre-registered test rather than a straight ship
 
-### The leak wasn't where we thought [confirm]
+### Claude's own mistake, caught by Claude's own method
 
-- We assumed paid social visitors were dropping out in checkout, because add to basket looked healthy at ~22%
-- Claude rebuilt the funnel by *users* instead of events: **6%**. Each user fired about six add-to-cart events [check clearance]
-- Combined with scroll data and a screenshot of the cookie banner covering the product name, the problem moved from checkout to the first screen
-- The wrong 22% had come from earlier that day, and the correction was written into the file in the open
+- One product page gets almost all our paid social traffic. Claude saw that **22%** of those visits added to basket, but only about 1% bought, and concluded people were getting lost in checkout
+- The catch: GA4 was counting add-to-basket *clicks*, not people. Tap the button three times and you count three times
+- Before digging further, we wrote down the method and committed it: count people, not clicks, and compare each step of the funnel for paid social against everyone else
+- Fifteen minutes later, the answer: counted by people, only **6%** added to basket. 94% left the page without adding anything, and the few who did weren't doing any worse in checkout than anyone else
+- Scroll data showed two-thirds of paid social visitors on mobile left within the top 10% of the page. A heatmap capture showed why: the cookie banner sat right over the product name
+- So the problem moved from checkout to the first screen. Claude's words: *"It shows I was wrong."* The correction sits in the file, in the open
 
-### A flaw in our own test [confirm]
+### It talked me out of a bad peek
 
-- A mobile-only test was enrolling every screen size, which would dilute the result and run ~25% longer
-- We restarted it as v2, gated to mobile in the theme code
-- The log records that peeking at v1's numbers played no part in stopping it
+- Before launch, Claude told me to limit a mobile-only test to mobile screens. I said 95% of our traffic is mobile, so why bother. It agreed it wouldn't bias the result, but underestimated the cost because it was working from the wrong desktop share
+- Three days in, I peeked: **−34%** checkout conversion. Claude's answer: the primary metric is add to cart, and that's −1%. The checkout number rests on 10–15 orders per variant. Don't touch it
+- The same morning I realised desktop visitors were enrolled. Claude agreed we should restart, mainly because it gave us a test that was properly pre-registered *before* launch. Desktop was also diluting a real +15% lift to about +12.5%, which would have made it run a fifth to a quarter longer
+- We restarted it, gated to mobile in the theme code. The log records that the peek played no part
 
 **It's also good at:** reconciling GA4, Shopify and PostHog; splitting a conversion drop into "colder traffic" vs "worse site"; and turning hundreds of reviews into counted themes.
 
@@ -147,8 +150,6 @@ Its suggestions drift towards generic best practice and long hedged lists, blind
 - brand tone and compliance
 - what stakeholders will sign off
 - what's already been tried
-
-[ALEX: one or two of your own examples. The suggestion, why it was impractical, and what you built instead.]
 
 So the split is simple:
 
