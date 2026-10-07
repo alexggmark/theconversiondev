@@ -7,26 +7,32 @@ tags: ["web"]
 
 I've talked to a lot of senior developers this year who tell me they burn through <mark>millions of tokens a day</mark>.
 
-So I ask what they're actually doing with it. The answer is usually: summarising documents, rewording emails, reading files they could have skimmed. It all sounds less like a workflow and more like someone trying to hit a quota.
+So I ask how they're doing that. The answer is usually: summarising documents, rewording emails, reading files they could have skimmed. It all sounds less like a workflow and more like someone trying to hit a quota.
 
-I only want to use AI where it's genuinely better than me. And after a year of trying, that's a fairly specific place: AI is excellent at reading lots of data and spotting patterns. It's much weaker at producing the concrete thing you should do about it.
+(You'd be surprised how common this is…)
+
+I only want to use AI where it's genuinely useful. And after a year of trying, that's a fairly specific place: AI is excellent at reading lots of data and spotting patterns. It's much weaker at producing the concrete thing you should do about it.
 
 For me, that place is **CRO analysis**. I do CRO and web development for a few premium skincare Shopify stores (PostHog, GA4, lots of CSVs). Here's how Claude Code fits in.
 
 ---
 
-## Why chat didn't work
+## Why I use Claude Code in a repo
 
-I started by pasting CSVs into a chat. The answers sounded great, but:
+All my analysis lives in one repo, opened in VS Code, with Claude Code working directly on the files. That gives me a few things I'd want from any analyst:
 
-- **Numbers drifted** as they got retold across a conversation
-- **Nothing had a source**: which export did that figure come from?
-- **Every new chat needed a handoff summary**, written by the same model
-- **Nothing stopped the method changing** after the results came in
+- **Every number has a source.** Claude reads the exports itself and runs scripts, so figures are computed, not remembered
+- **Every session starts from the same place.** The rules and current facts load automatically, with no handoff summaries
+- **Every change is reviewable.** Claude's edits show up as diffs, and nothing goes in until I've read it
+- **Version control proves the order of events.** A git commit timestamp shows a test's method was fixed *before* its data came in
 
-Fluent, confident and forgetful is about the worst combination you could design for an analyst.
+One important caveat: <mark>the repo never goes near GitHub</mark>. Even anonymised, it's real business data, so it stays local, with git used purely for history. Version control doesn't have to mean a remote.
 
-So I moved everything into one repo in VS Code, with Claude Code working directly on the files. It reads every export itself, runs scripts instead of recalling numbers, loads the same rules every session, and every edit shows up as a diff I review before committing.
+---
+
+## On security
+
+Every export is anonymised before it's committed: personal identifiers are stripped and free-text fields blanked, and reviews are identified by a numeric ID only. Claude only ever sees what it needs to spot a pattern, and a pattern never needs to know who someone is.
 
 ---
 
@@ -68,10 +74,8 @@ These live in `CLAUDE.md`. Each one exists because something went wrong without 
 - **Recompute from `Raw/`, never recall.** This one line killed number drift.
 - **Flag your own mistakes plainly.** In writing, in the file.
 - **Label post-hoc checks as post-hoc.**
-- **Build the promotion calendar from order data, never memory.** This one was for *me*: I "remembered" a June sale that never happened.
+- **Build the promotion calendar from order data, never memory.** (This one was for *me*: I "remembered" a June sale that never happened…)
 - **Ask for the minimum data the decision needs.** Claude once asked me for order-level rows, VAT details and a three-way reconciliation to confirm a conclusion that was already visible in the first file.
-- **Same statistics every time:** Wilson intervals, beta-binomial for tests, one primary metric, read once at the end.
-- **I commit, never the AI.** A hook blocks it outright. My commit timestamp is the proof a test's method came before its data.
 
 ---
 
@@ -111,7 +115,7 @@ It also caught things I hadn't anticipated, like the fact that only about 1 in 1
 
 ## Where Claude is strong
 
-Three examples. Not all of them flatter Claude, which is sort of the point.
+Three real examples, showing both what it caught and where it got things wrong.
 
 ### The purchase decision was below the first screen
 
@@ -126,7 +130,7 @@ Three examples. Not all of them flatter Claude, which is sort of the point.
 - Before digging further, we wrote down the method and committed it: count people, not clicks, and compare each step of the funnel for paid social against everyone else
 - Fifteen minutes later, the answer: counted by people, only **6%** added to basket. 94% left the page without adding anything, and the few who did weren't doing any worse in checkout than anyone else
 - Scroll data showed two-thirds of paid social visitors on mobile left within the top 10% of the page. A heatmap capture showed why: the cookie banner sat right over the product name
-- So the problem moved from checkout to the first screen. Claude's words: *"It shows I was wrong."* The correction sits in the file, in the open
+- So the problem moved from checkout to the first screen
 
 ### It talked me out of a bad peek
 
