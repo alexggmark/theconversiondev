@@ -1,7 +1,7 @@
 ---
-title: 'PostHog CRO: Cheap A/B Tests for Shopify'
+title: 'Granular A/B tests on Shopify with PostHog feature flags'
 pubDate: '2026-01-13'
-description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
+description: "Visual A/B tools flicker and Shopify-native apps only swap whole templates. Here's how I use PostHog feature flags to run component-level tests on Shopify instead."
 tags: ["web"]
 ---
 

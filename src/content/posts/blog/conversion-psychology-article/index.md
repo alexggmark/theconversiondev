@@ -1,6 +1,6 @@
 ---
 title: '8+ years of Conversion Psychology in one article'
-pubDate: '2026-01-11'
+pubDate: '2026-05-07'
 description: "Discover how establishing a daily prayer routine can bring peace and spiritual growth to your life."
 tags: ["web"]
 ---

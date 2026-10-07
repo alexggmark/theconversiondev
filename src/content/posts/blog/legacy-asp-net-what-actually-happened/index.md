@@ -5,9 +5,9 @@ description: "I wrote an optimistic post about modernising a decade-old ASP.NET 
 tags: ["web"]
 ---
 
-About ten months ago I wrote a cheerful little post about modernising a decade-old ASP.NET eCommerce platform with Alpine.js and Tailwind. I called the stack *"TALA"*, posted a Pines UI drawer, and said things like <mark>"a genuine no brainer"</mark>.
+About ten months ago I wrote a cheery little post about modernising a decade-old ASP.NET eCommerce platform with Alpine.js and Tailwind. I called the stack *"TALA"*, talked about how great Pines UI is, and used phrases like "a genuine no brainer".
 
-I've since taken that post down, because I was wrong. Not slightly wrong, either. I was confidently, cheerfully wrong, in the way you can only be before you've actually started.
+I've since taken that post down, because <mark>I was wrong</mark>. Not slightly wrong, either. I was confidently, cheerfully wrong, in the way you can only be before you've actually started.
 
 My favourite line from it: *"the actual ASP logic wasn't overly complex and worked fine. It just needed to look and feel better."*
 
