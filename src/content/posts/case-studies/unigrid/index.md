@@ -65,7 +65,7 @@ There are two ways in: an embedded Shopify admin app, which is the real editor a
 
 Within a breakpoint the layout doesn't reflow, it zooms.
 
-::video{src="/assets/unigrid-zoom.mp4" loop caption="Resizing the window. Type, spacing and blocks scale together, and nothing moves."}
+::video{src="/assets/unigrid-zoom-2.mp4" loop caption="Resizing the window. Type, spacing and blocks scale together, and nothing moves."}
 
 The whole page scales with the grid's width, driven by one value:
 
