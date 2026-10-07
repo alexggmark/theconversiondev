@@ -1,6 +1,6 @@
 ---
 title: 'How I actually use AI for CRO'
-pubDate: '2026-10-07'
+pubDate: '2026-08-04'
 description: "I'm suspicious of people who brag about token counts. Here's how I actually use Claude Code for CRO analysis: a structured repo, written rules, and a clear line between spotting patterns and deciding what to build."
 tags: ["web"]
 ---
