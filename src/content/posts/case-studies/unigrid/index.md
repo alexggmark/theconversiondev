@@ -6,7 +6,7 @@ result: 'TOOL'
 postImg: './_assets/unigrid-splash-hero.jpg'
 ---
 
-I designed and built unigrid. It's a Shopify app that lets merchants build their store's pages by dragging and resizing blocks on a fixed grid, plus the custom Shopify theme those pages are published to.
+I designed and built **UNIGRID**. It's a Shopify app that lets merchants build their store's pages by dragging and resizing blocks on a fixed grid, plus the custom Shopify theme those pages are published to.
 
 ::video{src="/assets/unigrid-4-1.mp4" poster="/assets/unigrid-4-1-poster.jpg"}
 
@@ -36,9 +36,13 @@ This project actually started as a Horizon build. About 30% of the way in I got 
 
 The idea is **free and fixed**. Drag and resize any block on the page itself. Push gutters, padding and rounding as far as you like, but they're set once for the whole theme and measured in one unit on one grid, so the page holds together.
 
+![Dragging and resizing blocks on the page. Every drop lands on whole cells.](/assets/unigrid-animated.gif)
+
 The name comes from Massimo Vignelli, a designer I really like. "Unigrid" was his system for the US National Park Service: a handful of standard formats sharing one modular grid, with every park brochure composed on it. Hundreds of publications, one system, and none of them look the same.
 
 That's the part I like. A grid doesn't limit what you can make, it makes everything you make fit together.
+
+![The design system: the grid at each breakpoint, three button styles with square and rounded corners, and both heading faces.](./_assets/unigrid-styles.png)
 
 ***
 
@@ -53,11 +57,17 @@ That's the part I like. A grid doesn't limit what you can make, it makes everyth
 
 There are two ways in: an embedded Shopify admin app, which is the real editor and saves to the store, and a public playground running the same editor in memory.
 
+![Editing a text block in the playground. Content, alignment and size live in the sidebar.](./_assets/unigrid-1.png)
+
 ***
 
 ## One Scalar
 
-Within a breakpoint the layout doesn't reflow, it zooms. The whole page scales with the grid's width, driven by one value:
+Within a breakpoint the layout doesn't reflow, it zooms.
+
+::video{src="/assets/unigrid-zoom.mp4" loop caption="Resizing the window. Type, spacing and blocks scale together, and nothing moves."}
+
+The whole page scales with the grid's width, driven by one value:
 
 ```css
 .u-grid {
@@ -71,6 +81,8 @@ Within a breakpoint the layout doesn't reflow, it zooms. The whole page scales w
 ```
 
 Gutters, type, padding and corner radii are all multiples of `--u`, and there are no pixel values in the grid. Because `--u` is based on the grid's own width rather than the window, the editor can preview a phone just by narrowing the canvas. Theme settings are stored as multiples of `--u` too, so a merchant's gutter scales with everything else.
+
+![The grid overlaid on a real page, with theme settings measured in grid units.](./_assets/unigrid-2.png)
 
 ***
 
@@ -215,6 +227,8 @@ An empty block saves as `{"i":"x","a":[1,1]}`, and a realistic homepage comes ou
 - **Draft and published are separate.** Publish copies the *saved* draft, not what's on screen, so unsaved edits can't go live.
 - **Colours are palette slots, not hex values.** Changing a theme colour recolours every page without touching a layout.
 
+![A collection block showing real Shopify products. Mobile only offers column counts that divide the desktop one.](./_assets/unigrid-3.png)
+
 ***
 
 ## Testing the Engine
@@ -249,6 +263,8 @@ The save and publish code only depends on the few Shopify methods it actually ca
 
 On every store I've worked on, A/B tests ran in a separate tool that loads after the page and rewrites it in the browser. That means flicker, and a second place to build the variant, away from the page it's testing. So I built PostHog feature flags (my favourite tool) right into the editor.
 
+![The A/B section in the editor, and version B saved to the page's metaobject as Published B.](./_assets/unigrid-4.png)
+
 ### Whole Pages, Not Blocks
 
 Hiding a block per variant seemed obvious, but the engine never closes gaps, so a hidden block just leaves a hole. Moving blocks per variant would mean checking every variant for overlaps at every breakpoint.
@@ -266,6 +282,8 @@ flag                      the PostHog flag key
 ```
 
 A test only runs when B is published, a flag is set and the flag is on in PostHog. Otherwise everyone sees A, which also covers a mistyped key.
+
+![The matching flag in PostHog, with a 50/50 split between control (A) and test (B).](./_assets/unigrid-5.png)
 
 ### No Flicker, Because the Browser Never Decides
 
@@ -305,4 +323,4 @@ Type is sized relative to the grid, so it doesn't respond to browser zoom or a u
 
 <mark>Keep the core free of everything else.</mark> Because the engine imports nothing, it runs 25,000 layouts in plain Node in under a second, and the editor and storefront share it unchanged.
 
-unigrid ended up as a layout engine first and an editor second. Because a layout is just checked data, it can be saved, previewed and A/B tested without much risk of breaking anything.
+**UNIGRID** ended up as a layout engine first and an editor second. Because a layout is just checked data, it can be saved, previewed and A/B tested without much risk of breaking anything.

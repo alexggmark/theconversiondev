@@ -101,18 +101,26 @@ const embedHandlers = {
   },
 
   // Self-hosted video (enhanced by Plyr in VideoPlayer.astro)
+  // `loop` plays it like a GIF instead: muted, autoplaying, no controls, no Plyr
   video: (node) => {
     const src = node.attributes?.src ?? ''
     const poster = node.attributes?.poster ?? ''
+    const caption = node.attributes?.caption ?? ''
+    const loop = node.attributes?.loop !== undefined
     if (!src) {
       return false
     }
 
+    const attrs = loop
+      ? 'autoplay muted loop playsinline disablepictureinpicture'
+      : 'class="js-plyr" controls playsinline preload="none"'
+
     return `
     <figure class="video-player">
-      <video class="js-plyr" controls playsinline preload="none"${poster ? ` poster="${poster}"` : ''}>
+      <video ${attrs}${poster ? ` poster="${poster}"` : ''}>
         <source src="${src}" type="video/mp4" />
       </video>
+      ${caption ? `<figcaption class="img-caption">${caption}</figcaption>` : ''}
     </figure>
     `
   },
