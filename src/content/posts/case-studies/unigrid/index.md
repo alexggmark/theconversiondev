@@ -75,7 +75,7 @@ Gutters, type, padding and corner radii are all multiples of `--u`, and there ar
 
 ## The Layout Engine
 
-Most of the work (and nearly all of the mistakes) went into the layout engine. It had to stop you breaking a page, and still do exactly what you dragged. Getting both took a lot longer than I expected.
+Most of the work (and nearly all of the mistakes) went into the layout engine. It had to stop you breaking a page and still do exactly what you dragged.
 
 The engine is about 1,500 lines of TypeScript with no dependencies, and lint rules that stop it importing React, Shopify, the router or the DOM. I built and tested it before anything was draggable.
 
@@ -126,15 +126,13 @@ Every engine function returns a new layout rather than changing the old one, so 
 
 ## The Part I Got Wrong
 
-For the first four phases the engine did something cleverer than cutting content off. It measured text in the browser and grew a block when its copy didn't fit, pushing down whatever was below. I thought it was the best of both: a strict grid that still made room for real content.
+For the first four phases, blocks grew to fit their content. The engine measured text in the browser and, when copy didn't fit, added rows and pushed down whatever was below. A strict grid that still made room for real content seemed like the best of both.
 
-In practice it fought me the whole way. First, a block got a row taller every time I edited anything. The browser reports heights in whole pixels but grid rows aren't whole pixels, so a block that fitted exactly could measure a pixel too tall, round up to an extra row, and then measure that taller box on the next edit. Then I found the editor was saving the grown size as if the merchant had chosen it. Each fix worked, and each one turned up the next problem.
+In practice it fought me the whole way. Blocks crept a row taller on every edit, because the browser measures in whole pixels and grid rows aren't whole pixels. The editor saved grown sizes as if the merchant had chosen them. Each fix turned up the next problem.
 
-What finally ended it was the masthead. Its heading needed three rows but was set to two, so it had grown by one. Dragging its bottom edge up did nothing to it and moved everything underneath instead. Sliding it two columns sideways pushed an unrelated block down, just because they now shared a column.
+The masthead ended it. Its heading needed three rows but was set to two, so it had grown by one. Dragging its bottom edge up did nothing to it and moved everything underneath instead. Sliding it sideways pushed an unrelated block down, just because they now shared a column. All of it matched the spec, and none of it made sense to someone looking at what they'd just dragged.
 
-All of that was what the spec said should happen. None of it made sense to someone looking at what they'd just dragged, and I came to think that's the test an editor has to pass.
-
-So I deleted it. Blocks are now exactly the size you set, anything extra is cut off, and the editor flags blocks that are cutting content. The deletion was bigger than the feature had been: the measuring, the resolver, the overlay for pushed blocks mid-drag, and a split between "set size" and "shown size" that ran through the whole editor. It also removed the only place a block's type changed how it was placed, so a text block now behaves like every other block.
+So I deleted it. Blocks are now exactly the size you set, anything extra is cut off, and the editor flags blocks that are cutting content. More code came out than the feature had added, and text blocks now follow the same placement rules as every other block.
 
 ***
 
@@ -238,7 +236,7 @@ for (let seed = 0; seed < 25_000; seed++) {
 }
 ```
 
-That's over 750,000 positions checked per run, and it takes under half a second. The seed is the useful part: if it ever fails, the error names the exact seed and breakpoint, and that one layout can be rebuilt and debugged on its own. The test also checks that each generated desktop layout is clean before working anything out from it, otherwise a bug in the generator could pass for a bug in the engine, or hide one.
+That's over 750,000 positions checked per run, in under half a second. If it ever fails, the error names the seed and breakpoint, so that one layout can be rebuilt and debugged on its own. Each generated desktop layout is also checked before anything is worked out from it, so a bug in the generator can't pass for a bug in the engine.
 
 Smaller tests check that drops land on whole cells, saving and loading loses nothing, undo then redo gets back the same state, and an edit changes only the block being edited.
 
@@ -300,12 +298,10 @@ Type is sized relative to the grid, so it doesn't respond to browser zoom or a u
 
 ## Key Learnings
 
-<mark>Use it by hand as early as possible.</mark> I moved an interactive prototype ahead of saving to Shopify, so a wrong model would be cheap to change. Growth passed every test I wrote for it, and it took dragging a real masthead to see it was wrong.
+<mark>Use it by hand as early as possible.</mark> Growing blocks passed every test I wrote, and it took dragging a real masthead to see they were wrong.
 
-<mark>Not every rule in a spec matters equally.</mark> Early on I wrote keyboard-only editing into the spec in the same list as "no two blocks overlap". I didn't test it for three weeks and didn't miss it, which suggested it was never really a requirement. In a list, they looked the same.
+<mark>Not every rule in a spec matters equally.</mark> Keyboard-only editing sat in the same list as "no two blocks overlap". I didn't build it for three weeks and never missed it.
 
-<mark>Make broken states hard to create.</mark> Bad drops are refused rather than undone. A hand-placed block is one with a cell, not one with a flag beside it. The mobile column count for a collection has to divide the desktop count, so the control only offers numbers that do.
+<mark>Make broken states hard to create.</mark> Bad drops are refused rather than undone, and controls only offer values that work.
 
-<mark>Every edit should make sense when it happens.</mark> That came out of the growth mess, and it's why nothing moves except the block you grabbed.
-
-unigrid ended up as a layout engine first and an editor second. Because a layout is just checked data, it can be saved, previewed and tested against another version without much risk of breaking anything.
+unigrid ended up as a layout engine first and an editor second. Because a layout is just checked data, it can be saved, previewed and A/B tested without much risk of breaking anything.
