@@ -7,36 +7,71 @@ tags: ["web"]
 
 About ten months ago I wrote a cheerful little post about modernising a decade-old ASP.NET eCommerce platform with Alpine.js and Tailwind. I called the stack *"TALA"*, posted a Pines UI drawer, and said things like <mark>"a genuine no brainer"</mark>.
 
-I've since taken that post down. Not because it was wrong exactly, but because it was written by someone who hadn't started yet.
+I've since taken that post down, because I was wrong. Not slightly wrong, either. I was confidently, cheerfully wrong, in the way you can only be before you've actually started.
 
-This is the follow-up. The site now looks like the new designs, and I'm proud of that. But the route there looked nothing like the plan, and most of the big obstacles were things I had no way of controlling from where I sat.
+My favourite line from it: *"the actual ASP logic wasn't overly complex and worked fine. It just needed to look and feel better."*
 
-## The setup (what I knew, and what I didn't)
+Spoiler: it did not just need to look and feel better.
 
-The platform is a custom .NET eCommerce site for an aesthetics brand. It sells B2B and B2C products, offers, training courses and webinars, and it operates under strict UK regulations: who can buy what, at what price, with what credentials. That's the reason it was never on Shopify. None of it fits neatly into an off-the-shelf platform or CRM.
+I was naive. I thought this was a frontend project with a nice stack attached. It turned out to be a project about ownership, scope and expectations, and the code (which was plenty hard) was the least of it.
 
-What I had going in:
+Most of the real work happened in documents, meetings and scope conversations, and most of the obstacles were things no amount of code could fix.
 
-- A **~10-year-old ASP.NET MVC 5 frontend** on .NET Framework 4.7.2
-- A set of new designs, prototyped by me in Tailwind
-- A plan: build a clean `v2` layout alongside the old one and port pages across one at a time
+## The setup
 
-What I *thought* I understood, but didn't really:
+The platform is a custom .NET eCommerce site for an aesthetics brand. It sells B2B and B2C products, offers, training courses and webinars, and it operates under strict UK regulations: who can buy what, at what price, with which credentials. That's why it was never on Shopify. Very little of it fits neatly into an off-the-shelf platform or CRM.
 
-- **The frontend is a shell.** Orders, pricing, offers, roles, product visibility: all of it lives in a separate backend API owned by another team. I could see that API only through a Swagger page they'd generated for me.
-- **That team had no spare capacity.** They were 100% focused on migrating the business off an old custom CRM and onto a new ERP. That's a huge, business-critical job, and it was always going to take priority over a frontend refresh. Realistically, I was on my own.
+My role started as "developer and CRO person who'll modernise the frontend". It quickly became something broader, because of how the project was set up:
 
-I'd actually written all of this down in a planning doc early on. Under "Option 1: update the existing frontend" I'd estimated:
+- **I was the only technical specialist on the project.** We had a project manager and a design team, but nobody else who could look at the codebase and say what something would cost.
+- **The backend belongs to a separate team**, and their time was 100% committed to migrating the business off an old custom CRM onto a new ERP. That's a huge, business-critical job, and it rightly came first.
+- **The new designs were ambitious**, and drawn for the platform the business wanted rather than the one it had.
+- **The business wanted it done fast.** That's a reasonable thing for a business to want. It just meant someone had to keep explaining what "fast" could realistically cover.
 
-| Difficulty | Cost | Time |
-|---|---|---|
-| 2/5 | 1/5 | 2–3 months |
+So in practice, the job was three jobs: technical strategist, translator between design, leadership and the backend, and the person writing the code.
 
-The plan assumed I'd get read-only backend access, a proper dev environment with a database snapshot, and a backend migration that kept the existing data contracts stable. I got the third one, mostly by default, because the API wasn't changing for anyone.
+## Before any code: working out what we actually had
+
+My ~~toxic trait~~ first instinct was "scrap it and rebuild in Next.js". I got the backend team to generate Swagger docs, mocked up a headless frontend, planned the auth middleware, and put together a presentation on headless architecture.
+
+Then I did the less exciting thing and wrote an options paper. Three routes, roughly costed:
+
+| Option | Difficulty | Cost | Time |
+|---|---|---|---|
+| 1. Update the existing ASP.NET frontend | 2/5 | 1/5 | 2–3 months |
+| 2. New headless frontend (e.g. Next.js) on the existing backend | 5/5 | 1/5 | 6 months+ |
+| 3. Off-the-shelf ERP/commerce platform | 1/5 | 5/5 | Unknown |
+
+Option 1 had conditions attached, and I listed them as blockers in the paper:
+
+- **Backend visibility.** Read-only access to the backend code and documentation, so we could understand *why* things broke or ran slowly.
+- **A real dev environment.** Version control and a database snapshot, so changes could be tested against realistic data instead of deployed and eyeballed.
+- **Stable data contracts.** The backend migration should keep existing endpoints and data shapes, so frontend work didn't have to wait for it.
+
+A couple of months in, I followed that with a fuller platform review for leadership. The headline finding:
+
+> The website is a frontend shell. Orders, pricing, offers, roles, product visibility, ERP sync: all the real business logic lives in a separate backend API that we can't see into.
+
+That changed the conversation. A rebuild by an agency, a headless frontend and a platform migration all ran into the same wall. So the review asked three questions that I don't think had been formally asked before: *Who owns the backend code? What are our rights and SLAs if that relationship changes? And what exactly is the ERP migration changing in the API?* Its recommendation was to scope any rebuild as **frontend only, against the existing API**, because rewriting regulated business logic was a multi-year risk that nobody was resourced for.
+
+I'm still proud of that document. It's probably the most useful thing I produced on the project, and there isn't a line of code in it.
+
+## Fighting for scope
+
+The answers to those questions all pointed the same way. With no backend capacity, headless was off the table, the dev environment I'd asked for never materialised, and backend access stayed at "here's a Swagger page".
+
+That left Option 1, with none of its conditions met. From then on a big part of my week looked like this:
+
+- **Translating designs into cost.** A redesigned component that looked like a small visual change might sit on top of 1,500 lines of inline jQuery and a backend response shape I couldn't change. My job was to explain that early, and offer something achievable instead.
+- **Absorbing design changes.** When designs moved mid-build, I had to explain what that did to the timeline, every time.
+- **Resetting expectations about speed.** "Can we make the site faster?" turned out to be mostly a backend question. I needed proof before I could say so in a meeting (more on that below).
+- **Chasing the backend team** for access, answers and data fixes, knowing full well they had bigger fish to fry.
+
+None of this is anyone being unreasonable. Designers design the ideal. Leadership wants results. The backend team had a migration to land. But when you're the only person who can see all three constraints at once, you become the person who keeps saying "yes, but". That's tiring, and it doesn't appear in any commit history.
 
 ## What 10 years of Razor actually looks like
 
-The figures from my old post ("some files stretched to 5,000+ lines") massively undersold it. Here's the codebase in raw numbers:
+To make the scope argument, I needed numbers. "Some files stretch to 5,000+ lines", as I put it in the original post, massively undersold it:
 
 | Thing | Count |
 |---|---|
@@ -44,192 +79,91 @@ The figures from my old post ("some files stretched to 5,000+ lines") massively 
 | Distinct backend API routes referenced | ~1,026 |
 | `id="…"` attributes in views | **23,962** |
 | Inline `onclick=` handlers | 4,044 |
-| Inline `style="…"` | 9,586 |
 | `<script>` tags inside views | 2,756 |
 | `.modal('show'/'hide')` calls | ~1,078 |
 | `!important` in the SCSS | 1,153 |
-| Lines in the main custom stylesheet | 13,011 |
 | Hand-listed files in the `.csproj` | 3,274 |
 
-Add jQuery 2.2.4 (plus a stray copy of 1.12.4), Bootstrap 4.1.3, 726 Kendo UI widgets, and a 1,898-line master layout.
+The number that matters is the IDs. They aren't styling hooks. **The markup is the API** between Razor, inline jQuery, Kendo widgets and the backend's response shapes. Rename a `<div>` on one page and you might break a feature on a page you've never opened.
 
-The number that matters most is the IDs. They aren't styling hooks. **The markup is the API** between Razor, inline jQuery, Kendo and the shape of the backend responses. Rename a `<div>` on one page and you might break a feature on a page you've never opened.
+## Attempt #1: the clean rewrite
 
-## Attempt #1: the clean rewrite (abandoned)
+Even inside Option 1, I tried to keep a path open to something modern: a parallel `v2` layout in Tailwind and Alpine, new JSON endpoints, and pages ported one by one from my prototype. If the backend ever opened up, `v2` could become the headless frontend.
 
-The original plan was the one I described in the first post: a parallel `Views/Shared/v2/_Layout.cshtml`, Tailwind and Alpine, new JSON controller actions, and pages ported over from my prototype.
+About two months in, I made the call to stop. The reasons:
 
-It lasted about two months. I rebuilt the layout, the nav, the banners and the product page, and cloned the basket into a lightweight Alpine store. Then I stopped. A few problems added up:
+- **The data contract was frozen.** One commit message reads *"Replacing .NET banner logic with new Alpine, will eventually update models"*. "Eventually" depended on backend capacity that wasn't coming. So rebuilding the basket in Alpine didn't *improve* it; it cloned the existing behaviour, quirks and all.
+- **Alpine meant rewriting too much jQuery.** The state lived in thousands of jQuery handlers, Kendo widgets and AJAX callbacks that read and write the DOM directly. Making Alpine the source of truth meant rewriting all of them.
+- **A parallel layout doubled the surface area.** Every fix had to land in v1 *and* v2, and every new file had to be registered by hand in an old-style `.csproj`.
 
-**1. The data contract couldn't move.** One commit message from that period reads *"Replacing .NET banner logic with new Alpine, will eventually update models"*. "Eventually" depended on the backend team, and it was never going to happen. So rebuilding the basket in Alpine didn't mean *improving* it. It meant cloning the existing jQuery behaviour, quirks included, because the API underneath was fixed. Every feature now existed twice.
+That was a hard decision to make alone, two months into a project with a deadline. But continuing would have meant delivering half of two sites instead of all of one.
 
-**2. A parallel layout doubles the surface area.** Every fix had to land in v1 *and* v2. And because it's an old-style `.csproj`, every new file had to be registered by hand in Visual Studio 2019. Forget one, and it works perfectly on localhost, then silently isn't published. (Real commit: *"Manually recreating v2 files in VS19 so they're added to csproj"*.)
+## Attempt #2: change the look, never the behaviour
 
-**3. Alpine meant rewriting too much jQuery.** This was the big one. Alpine is lovely when you own the state. Here, the state was spread across thousands of jQuery handlers, Kendo widgets and AJAX callbacks that all read and write the DOM directly. Making Alpine the source of truth meant rewriting all of them. On top of that, MVC 5 won't bind JSON request bodies for these actions (a modern `fetch` with `application/json` arrives as a null model), so I needed glue code everywhere.
+The new strategy fitted on one line:
 
-**4. Two utility systems fighting.** The prototype was Tailwind. The site was Bootstrap 4 plus 1,153 `!important`s. You can guess who wins that one.
+> **Change look, never behaviour.** Preserve every `id`, `name`, JS-hook class, every `onclick`, and the DOM structure JS reads.
 
-So in April I branched off into what I called the "alternate approach".
+Restyle in place, and where possible, fix whole *categories* of problems with one global layer instead of touching hundreds of call sites. Alpine stayed only where it's genuinely the right tool: drawers, the header, the cart counter and search.
 
-## Attempt #2: whittle v1 down
+A few examples:
 
-The new rule was simple and I wrote it at the top of my notes:
-
-> **Change look, never behaviour.** Preserve every `id`, `name`, `class` used as a JS hook, every `onclick`, and the DOM structure JS reads.
-
-Restyle in place. Never move the walls. And where possible, fix whole *categories* of bugs with one global layer instead of touching hundreds of call sites.
-
-Alpine survived, but only where it's genuinely the right tool: the mobile filter drawer, the header, the cart counter, search. Seven `x-data` attributes across 729 views. That's a long way from "TALA", but it's honest.
-
-### One file instead of 1,078 edits
-
-Bootstrap 4.1.3 stacks modals badly. The second modal's backdrop ends up behind the first, and closing one modal removes the body scroll-lock even if another is still open. On top of that, the basket was a custom overlay with its own scrim, so opening a modal from the basket gave you double scrims, leftover scrims, or modals hidden behind the basket.
-
-There are roughly 1,078 `.modal()` calls across 93 views. I wasn't touching those. Instead I wrote a small coordinator that listens to Bootstrap's own events:
-
-```js
-var BASE_Z = 1110;   // above the basket overlay (1100) and its scrim (1090)
-var STEP = 20;
-
-$(doc)
-  .on('show.bs.modal', '.modal', function () {
-      modalCount++;
-      var z = BASE_Z + (modalCount - 1) * STEP;
-      $(this).css('z-index', z);
-      win.setTimeout(function () {
-          $('.modal-backdrop').not('.' + BACKDROP_FLAG)
-              .css('z-index', z - 1)
-              .addClass(BACKDROP_FLAG);
-      }, 0);
-      syncBasketScrim();
-  })
-  .on('hidden.bs.modal', '.modal', function () {
-      modalCount = Math.max(0, modalCount - 1);
-      if (modalCount > 0) $('body').addClass('modal-open');   // BS4 drops scroll-lock otherwise
-      else $('.modal-backdrop').remove();                      // sweep orphaned backdrops
-      syncBasketScrim();
-  });
-```
-
-The basket registers itself as a layer, and scrim visibility is *derived* from the state rather than toggled. That makes double or leftover scrims structurally impossible.
-
-It isn't clean. There's a global `window.wmCloseBasketAfterApply` flag in there, because a shared async function has no success callback and adding one meant editing shared legacy code. I know the proper fix (make the basket a real Bootstrap modal). I chose not to do it.
-
-The commit history from that day is a fair summary of how this felt: *"New modal system"* → *"Fix scrim error"* → *"New modal scrim control"* → *"Fix scrim error 2"* → *"Add fix to close scrim"*. And, also from that day: <mark>*"Giving up, hard fix"*</mark>.
-
-### Same trick, different problems
-
-- **Toasts.** The old site had per-page success and error banners. Rather than edit every caller, I rewired the helper functions they already called (`ShowSuccessForBasket()` and friends) to fire a single global `wmToast()`. Zero call sites changed.
-- **`:has()` as a scalpel.** About a dozen FAQ, legal and account pages used the same Bootstrap sidebar layout. One selector turned all of them into a CSS grid, old markup and new:
+- **One modal coordinator instead of 1,078 edits.** Bootstrap 4 stacks modals badly, and the basket had its own custom overlay on top. A 75-line `wm-modal.js` listens to Bootstrap's own `show`/`hidden` events, assigns z-indexes, and *derives* scrim visibility from state, so double or orphaned scrims become structurally impossible. No call sites changed.
+- **One toast system.** Instead of editing every page's success and error banners, I rewired the helper functions they already called to fire a single global `wmToast()`.
+- **One `:has()` selector.** About a dozen FAQ, legal and account pages shared a Bootstrap sidebar layout. One rule turned all of them into a CSS grid:
 
 ```scss
 .row:has(> .index) {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 0.75rem;
-    margin-left: 0;
-    margin-right: 0;
 }
 ```
 
-- **Opt-in classes with "bridge selectors".** `.nav-tabs` is used on ~23 views with different designs, so a global restyle was off the table. A new `.wm-tabs` class, plus a couple of selectors bridging pages I'd already restyled, kept everything working without editing another nine views.
+- **A written playbook.** A 10-step checklist per page, and a strict definition of "done": checked on desktop and mobile, and *every interactive control still works*.
 
-### The page-rebuild ritual
+The hardest discipline was leaving bugs alone. While restyling the order pages I found a missing `+` in a jQuery string template that had been breaking a tab for real customers. That one was a markup bug, so I fixed it. But I found plenty of others that were behaviour: pagination calling a function copy-pasted from another page, environment-specific date formats toggled by commenting out lines before deploy, and `localhost` URLs saved into production image data by an admin form. Without backend access I couldn't test fixes to those safely, so they went into a list for someone who could.
 
-For account pages (orders, patients, notifications, addresses, users) I ended up with a 10-step checklist, and a strict definition of "done": loaded the page, checked desktop and mobile, and *every interactive control still works*.
+## The speed wall, and why I measured it
 
-That last part is what costs the time. One example: the order pages build each row as a giant jQuery string template. One file had seven near-identical ones. While converting them I found this, in live code:
-
-```js
-html += '<div class="row">' +
-        '<div class="col">' + item.Name +
-        '</div>'               // ← no trailing +
-        '</div>';
-```
-
-No trailing `+`, so automatic semicolon insertion ends the statement early. The remaining closing tags become a dead expression and the browser closes the tags wherever it feels like. It was in two files and had been breaking the Cancelled tab for real customers for who knows how long. `node --check` doesn't catch it, because the JS is valid. I ended up counting `<div` vs `</div` per function with `awk`, which then turned out to be off by one because some closers were written as `'</div >'`. (About 20 minutes I won't get back.)
-
-### Bugs I found and deliberately didn't fix
-
-The hardest discipline was leaving things alone. If it was behaviour, not styling, it wasn't mine to change, because I couldn't fully test it without the backend.
-
-- Pagination on one page called a function copy-pasted from the booking page, targeting an element that doesn't exist. Page clicks did nothing. Noted, not fixed.
-- Some environment-specific behaviour is "configured" by commenting out the right line before deploy:
-
-```js
-// Use below for zeta and localhost
-//var DOB = $("#Date").val() + "-" + $("#DBMonth").val() + "-" + $("#Year").val();
-
-// Use below for beta and live
-var DOB = $("#DBMonth").val() + "-" + $("#Date").val() + "-" + $("#Year").val();
-```
-
-- Image URLs with `https://localhost:44363/` baked into them. The admin form prepends the site URL for preview, then saves the full absolute URL back to the database. Anyone who ever edited a record locally stored `localhost` in production data. The real fix is a database update plus an admin change, neither of which I could make, so the frontend now strips the host before rendering. My commit history went from *"Localhost strip on banner images"* to *"Hardcore jQuery localhost url error override"* to *"turning off"*. A small saga.
-
-## The speed wall
-
-This is the part I couldn't win.
-
-Users experience the site as slow, and the new design doesn't change that. So I measured first, and built a small diagnostics layer that adds a `Server-Timing` header to every response, splitting time spent in the backend API from time spent in our web code:
-
-```csharp
-response.Headers["Server-Timing"] = string.Format(
-  "api;desc=\"Backend API\";dur={0}, ourcode;desc=\"Web code\";dur={1}, app;desc=\"Server total\";dur={2}, apicalls;desc=\"API calls\";dur={3}",
-  apiMs, ourMs, serverMs, apiCount);
-```
-
-The results:
+The site feels slow, and leadership understandably hoped the redesign would fix that. I couldn't argue that it wouldn't without evidence, so I built a small diagnostics layer that adds a `Server-Timing` header to every response, splitting backend API time from our own web code:
 
 | Page | Time to first byte |
 |---|---|
 | Static asset | ~0.09s |
 | Privacy policy (controller literally does `return View()`) | **~1.5s** |
 | Homepage | ~1.8–1.9s |
-| First hit after the app pool idles | ~4.5s |
 | Product listing | **~5s** |
 
-Locally, a blank page renders in 44ms and the full layout adds about 11ms. The web tier is fine. A near-static page costs 1.5s in production because every page makes several **synchronous, sequential** calls to the backend before it can render:
+Locally, the full layout renders in about 55ms. In production, a near-static page costs 1.5s because every page makes several **synchronous, sequential** calls to the backend before it can render. Nothing is async, so the calls can't overlap.
 
-```csharp
-var restResponse = restClient.Execute(restRequest);   // blocks the request thread
-```
+That table did more in one meeting than weeks of "it's the backend, honestly". It also answered a question that was starting to circulate: **migrating the web tier to .NET Core wouldn't help.** That's an expensive project avoided.
 
-Nothing is async, so calls can't overlap. (The request timeout is set to 30 minutes, for the record.)
-
-The useful outcome of all that measuring was being able to say, with numbers, that **migrating the web tier to .NET Core wouldn't help**. That's a valuable thing to know before someone funds it.
-
-What I *could* do from my side:
-
-- **Kill duplicate calls.** The same category list was fetched three times per page: cached-but-unused in the layout, uncached in the nav and homepage. A caching helper already existed and was being bypassed.
-- **Cache the homepage**, so a warm homepage now makes zero backend calls.
-- **Convert images to WebP**: 548 images, 155MB → 16.5MB, about 89% lighter.
-- **Add instant.page** for hover-prefetching. That's an honest band-aid: it hides the 1.5s for anyone who hovers before clicking.
-
-My own note at the start said *"caching should be a last-minute thing, we need more foundational fixes first."* But the foundational fixes (async calls, IIS warm-up config, the 60-product query behind the listing page) all live on the other side of the wall. Caching is what's left.
+What I *could* do from my side, I did: removed a category list that was fetched three times per page, cached the homepage so a warm load makes zero backend calls, converted 548 images to WebP (155MB → 16.5MB), and added hover-prefetching to hide some of the latency. The foundational fixes stay on the other side of the wall.
 
 ## What "modernised" ended up meaning
 
 | Wanted | Got |
 |---|---|
 | New design across the site | **Yes.** Homepage, nav, listings, product pages, basket, checkout, account pages, offers, training, legal |
-| Component-based Tailwind/Alpine frontend | **No.** SCSS ports of the prototype layered over Bootstrap. Alpine in 7 places |
+| Modern Tailwind/Alpine frontend | **No.** SCSS ports of the prototype over Bootstrap, with Alpine in a handful of key places |
 | A faster site | **Partly.** Lighter images, cached homepage, perceived speed via prefetch. The 1.5s floor is backend-bound |
-| Clean data contracts | **No.** Untyped `dynamic` responses all the way up |
-| Delete the dead code | **Mostly no.** Too risky to prove anything unused without seeing the backend |
+| Clean data contracts | **No.** Out of the frontend's reach |
+| A clear long-term architecture decision | **Yes.** Frontend-only rebuild against the existing API, with the ownership questions on the table |
 | 2–3 months | **About 4 months of build**, with a full change of direction halfway through |
 
 ## What I'd tell myself ten months ago
 
-**"Modernise" can quietly mean "reskin".** If you can't change the data layer, you're doing a reskin. That's fine, and it can still be a big improvement, but scope it and call it that from day one. Mine only became honest after two months.
+**If you're the only technical person, the strategy is your job too.** Nobody else will write the options paper, ask who owns the backend, or explain why a design change costs three weeks. Do it early and in writing, and put the conditions in the document so you can point back at them later.
 
-**Find out who owns the data contract before choosing a stack.** Alpine and Tailwind weren't wrong. They were the wrong *strategy* for a frontend whose state belongs to someone else. Ask what you're allowed to change before you ask what you'd like to use.
+**Find out who owns the data contract before choosing a stack.** Alpine and Tailwind weren't the wrong tools. They were the wrong *strategy* for a frontend whose state belongs to someone else.
 
-**Instrument before you argue.** "The backend is slow" is an opinion. A `Server-Timing` header showing 1,450ms of API time on a privacy policy page is a fact, and it holds up in any meeting.
+**"Modernise" can quietly mean "reskin".** If you can't change the data layer, you're doing a reskin. That can still be a big improvement, but call it that from day one. It makes every later scope conversation easier.
 
-**Prefer additive global layers over call-site edits.** One coordinator file, one rewired helper, one `:has()` selector. In a codebase where the markup is the API, the fewer places you touch, the fewer things you break.
+**Measure before you argue.** "The backend is slow" is an opinion. A `Server-Timing` header showing 1.5 seconds of API time on a privacy policy page is a fact, and it holds up in any meeting.
 
-**Write the playbook down.** My notes file (rules, gotchas, checklists, "grep the controller's `return View()` first, because the obviously named partial is dead") saved me more time than any library did.
+**Prefer additive global layers over call-site edits.** In a codebase where the markup is the API, the fewer places you touch, the fewer things you break.
 
-**Some walls aren't yours to move.** The backend team weren't being difficult. They were doing a bigger, more important migration with the people they had. The constraint was structural, and recognising that sooner would have saved me two months of building against it.
+**Some walls aren't yours to move, but you can make them visible.** I couldn't fix the backend, get a dev environment, or freeze the designs. What I could do was make the constraints clear enough that the next decision (agency, rebuild, or neither) gets made with the full picture.
 
 For the record, I still think Alpine and Tailwind is a lovely stack. I'll use it properly one day, on a project where I own the data.
