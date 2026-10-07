@@ -21,7 +21,7 @@ const { title } = Astro.props
               </p>
             )}
             {post.data.result && (
-              <span class:list={['results', { 'results--tool': post.data.result === 'TOOL' }]}>
+              <span class:list={['results', { 'results--project': post.data.result === 'PROJECT' }]}>
                 {post.data.result}
               </span>
             )}
@@ -93,7 +93,7 @@ const { title } = Astro.props
     white-space: nowrap;
   }
 
-  .results--tool {
+  .results--project {
     color: var(--emphasis-alt);
   }
 

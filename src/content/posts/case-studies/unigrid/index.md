@@ -2,7 +2,7 @@
 title: 'Grid-based Shopify Page Editor'
 pubDate: '2026-10-04'
 tags: ['case-study']
-result: 'TOOL'
+result: 'PROJECT'
 postImg: './_assets/unigrid-splash-hero.jpg'
 ---
 
