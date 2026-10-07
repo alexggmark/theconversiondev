@@ -132,12 +132,12 @@ Three real examples, showing both what it caught and where it got things wrong.
 - Scroll data showed two-thirds of paid social visitors on mobile left within the top 10% of the page. A heatmap capture showed why: the cookie banner sat right over the product name
 - So the problem moved from checkout to the first screen
 
-### It talked me out of a bad peek
+### It talked me out of reacting to a bad peek
 
-- Before launch, Claude told me to limit a mobile-only test to mobile screens. I said 95% of our traffic is mobile, so why bother. It agreed it wouldn't bias the result, but underestimated the cost because it was working from the wrong desktop share
-- Three days in, I peeked: **−34%** checkout conversion. Claude's answer: the primary metric is add to cart, and that's −1%. The checkout number rests on 10–15 orders per variant. Don't touch it
-- The same morning I realised desktop visitors were enrolled. Claude agreed we should restart, mainly because it gave us a test that was properly pre-registered *before* launch. Desktop was also diluting a real +15% lift to about +12.5%, which would have made it run a fifth to a quarter longer
-- We restarted it, gated to mobile in the theme code. The log records that the peek played no part
+- **The setup:** a test of a mobile-only design change. Claude suggested limiting it to mobile screens. I said 95% of our traffic is mobile, so why bother? Claude agreed, working from that same 95% figure
+- **The peek:** three days in, I peeked at the results and saw checkout conversion down **34%**. Claude's answer: our main metric is add to cart, and that's only down 1%. The checkout figure rests on 10–15 orders per variant, which is noise. Don't touch it
+- **What we'd both missed:** the test only counts visitors who accept cookies, and desktop visitors accept them more often. So desktop made up far more of the *test* than of the site, and it added to cart at a higher rate, too. Showing a mobile design change to desktop users would water down a real +15% lift to about +12.5%, and make the test run a fifth to a quarter longer
+- **The fix:** we restarted it, limited to mobile in the theme code, with the method committed *before* launch this time. The log records that the peek played no part
 
 **It's also good at:** reconciling GA4, Shopify and PostHog; splitting a conversion drop into "colder traffic" vs "worse site"; and turning hundreds of reviews into counted themes.
 
