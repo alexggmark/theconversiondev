@@ -5,6 +5,8 @@ description: "I wrote an optimistic post about modernising a decade-old ASP.NET 
 tags: ["web"]
 ---
 
+> **A quick note:** this project is under NDA, so I've anonymised the client and left out screenshots. The numbers, code snippets and commit messages are real.
+
 About ten months ago I wrote a cheery little post about modernising a decade-old ASP.NET eCommerce platform with Alpine.js and Tailwind. I called the stack *"TALA"*, talked about how great Pines UI is, and used phrases like "a genuine no brainer".
 
 I've since taken that post down, because <mark>I was wrong</mark>. Not slightly wrong, either. I was confidently, cheerfully wrong, in the way you can only be before you've actually started.
