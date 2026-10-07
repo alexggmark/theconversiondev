@@ -21,6 +21,8 @@ Most of the real work happened in documents, meetings and scope conversations, a
 
 The platform is a custom .NET eCommerce site for an aesthetics brand. It sells B2B and B2C products, offers, training courses and webinars, and it operates under strict UK regulations: who can buy what, at what price, with which credentials. That's why it was never on Shopify. Very little of it fits neatly into an off-the-shelf platform or CRM.
 
+It's also not a side project. <mark>Over £10m of trade</mark> passes through the site every year, much of it from professionals who reorder regularly and rely on it working. Breaking checkout for an afternoon isn't a funny anecdote here; it's real money and real customers' clinics. That shaped every decision that follows.
+
 My role started as "developer and CRO person who'll modernise the frontend". It quickly became something broader, because of how the project was set up:
 
 - **I was the only technical specialist on the project.** We had a project manager and a design team, but nobody else who could look at the codebase and say what something would cost.
@@ -67,7 +69,7 @@ That left Option 1, with none of its conditions met. From then on a big part of 
 - **Resetting expectations about speed.** "Can we make the site faster?" turned out to be mostly a backend question. I needed proof before I could say so in a meeting (more on that below).
 - **Chasing the backend team** for access, answers and data fixes, knowing full well they had bigger fish to fry.
 
-None of this is anyone being unreasonable. Designers design the ideal. Leadership wants results. The backend team had a migration to land. But when you're the only person who can see all three constraints at once, you become the person who keeps saying "yes, but". That's tiring, and it doesn't appear in any commit history.
+None of this is anyone being unreasonable. Designers design the ideal. Leadership wants results. The backend team had a migration to land. But as the only technical person in the room, I ended up being the one who kept saying "yes, but". I didn't always say it well, or early enough, and it's a strange kind of work that never shows up in a commit history.
 
 ## What 10 years of Razor actually looks like
 
