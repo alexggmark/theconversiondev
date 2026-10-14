@@ -21,36 +21,29 @@ DRAFT — before un-hiding:
 - Deliberately left out: unpublished reviews / DMCC, refused returns, £ figures, planning-doc projections, the brand being deprioritised internally, build details already covered in the Hydropeptide case study
 -->
 
-Between summer 2025 and summer 2026, traffic to [Colorescience UK](https://colorescience.co.uk/) grew by <mark>82%</mark>, much of it from a big increase in paid social. Cold traffic like that usually drags conversion down. Here it didn't: <mark>orders grew 78% and conversion held steady</mark>.
+I run CRO and development for [Colorescience UK](https://colorescience.co.uk/), a premium mineral SPF brand. Over the past year, I helped the store take on <mark>82% more traffic without losing conversion</mark>: orders grew 78%, and CVR held steady.
 
-I run CRO and development for this premium mineral SPF brand. This case study covers what made that possible and what came next:
+Here's why that matters: most of the new traffic was paid social. Cold traffic like that usually drags conversion down, and on our product pages, Meta visitors add to cart at about a third of the rate of everyone else. Holding conversion through that growth meant the extra ad spend turned into orders.
 
-- the rebuild that gave the store a fast foundation;
-- cleaning up reporting that had been telling misleading stories;
-- an honest look at what our first year of A/B testing could and couldn't prove;
-- the opportunity the clean data turned up, and the test now running against it.
+What I did:
+
+- **Rebuilt the store** in 2025: mobile product pages went from 5s+ to ~0.5s.
+- **Fixed the reporting:** bots, seasonality and promotions were misleading the dashboard, in both directions.
+- **Reset our A/B testing:** our first programme was too small to prove its results, so I rebuilt it around fewer, properly powered tests.
+- **Found the next opportunity:** half of mobile visitors leave before seeing a price, mostly from Meta ads. A pre-registered test is now running against it.
 
 ![](./_assets/cs-splash-image.png)
 
 ***
 
-## TL;DR
-
-- **Scale:** on matched, promotion-free summer days, UK sessions were +82% and orders +78% year on year, with conversion steady (5.83% → 5.68%) while paid social scaled up.
-- **Foundation:** a research-led rebuild in 2025 took mobile product pages from 5s+ to ~0.5s.
-- **Measurement:** removed bot traffic, seasonality and promotions from reporting that had been misleading in both directions.
-- **Testing:** our first programme ran on too little traffic to prove its results. The shipped changes most likely helped (median +11%), but not provably, so I rebuilt how we test.
-- **Next:** half of mobile visitors were leaving before they saw a price, mostly from Meta ads. One pre-registered test is now running against that.
-
-***
-
 ## Business Context
 
-Colorescience sells mineral sunscreen direct to consumers. It's a premium product, and in our customer interviews the audience was 75% women, mostly professionals buying into premium, lifestyle-led brands. 94% of UK sessions are on mobile.
+Colorescience sells mineral sunscreen direct to consumers. A few things about the store shape everything below:
 
-It's also very seasonal. SPF sells in summer, and autumn traffic is around 40% of July's. That shapes everything from how you read a dashboard to how long a test has to run.
-
-It's one of several brands in our group, so development time is shared and priorities compete. That's part of why my approach moved towards fewer, bigger, more deliberate changes.
+- **Mobile:** 94% of UK sessions.
+- **Premium audience:** customer interviews put it at 75% women, mostly professionals buying into premium, lifestyle-led brands.
+- **Seasonal:** autumn traffic is around 40% of July's, so month-on-month comparisons mislead, and tests take longer in autumn.
+- **Shared resources:** it's one of several brands in our group, so development time is shared. That favours fewer, bigger changes.
 
 ***
 
