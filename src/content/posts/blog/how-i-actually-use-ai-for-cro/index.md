@@ -123,6 +123,8 @@ Three real examples, showing both what it caught and where it got things wrong.
 
 ### The purchase decision was below the first screen
 
+![Control vs test: the test moves price, shade swatches and Add to Cart onto the first mobile screen](./_assets/ai-article-mobile-cta-test.png)
+
 - Claude joined PostHog scroll depth to add-to-cart for ~12,900 mobile visitors on one best-selling product page, and mapped it against where the price and Add to Cart button sit on a phone
 - **Pattern:** Add to Cart sat below the first screen. Visitors who never scrolled past it added to cart at **2.3%**. Visitors who scrolled just past the button: **42%**
 - Claude flagged it as <mark>correlational</mark> (people who scroll are keener anyway), which is exactly why it became a pre-registered test rather than a straight ship
@@ -137,8 +139,6 @@ Three real examples, showing both what it caught and where it got things wrong.
 - So the problem moved from checkout to the first screen
 
 ### Restarting a test for the right reason
-
-![Control vs test: the test moves price, shade swatches and Add to Cart onto the first mobile screen](./_assets/ai-article-mobile-cta-test.png)
 
 - **The setup:** a mobile-only design test, shown to all screen sizes because 95% of our traffic is mobile. Claude agreed
 - **The peek:** three days in, checkout conversion was down **34%**. My instinct was to pull it. Claude: the main metric (add to cart) is only down 1%, and the checkout figure rests on 10–15 orders. That's noise
