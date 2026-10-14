@@ -11,128 +11,66 @@ DRAFT — before un-hiding:
 - [ ] Fill in the test #8 result section (read once, at the stop: first full week with ≥3,060 visitors per variant, hard stop 15 Nov)
 - [ ] Clearance from work: naming the brand, and publishing the percentages and rates below. No £, AOV, revenue or traffic totals are in here (by design)
 - [ ] Old mobile PDP load time: build_context.md says "up to 10 seconds", Alex said "5s+" in chat. Pick one, with how it was measured. Same for 0.5s and 9.1×
-- [ ] Rebuild assets: before/after mobile PDP, one slice of the competitor feature-audit doc
 - [ ] Meta spend growth as an index or multiple (e.g. "roughly 3×"), no £. Currently says "grew significantly"
 - [ ] Confirm the override was actually ticked on the live theme (settings_data.json history, or replays of control users 5–12 Feb)
-- [ ] USP C: say "reverted" only once it has shipped
+- [ ] USP C: change "recommended reverting" to "reverted" once shipped
+- [ ] Meta tags: add "fixed" once the paid media team has done it
+- [ ] Harness: add "eligibility off by default; QA override limited to the theme editor" if shipped
 - [ ] Confirm the brand URL (colorescience.co.uk is a guess)
 - [ ] Delete build_context.md from this folder before publishing (or move it to _private/): it sits inside the content collection
 - [ ] Charts (see CHART comments)
 - Deliberately left out: unpublished reviews / DMCC, refused returns, £ figures, planning-doc projections, the brand being deprioritised internally, build details already covered in the Hydropeptide case study
 -->
 
-I run CRO and development for [Colorescience UK](https://colorescience.co.uk/), a premium mineral SPF brand. Over the past year, I helped the store take on <mark>82% more traffic without losing conversion</mark>: orders grew 78%, and CVR held steady.
+I run CRO and development for [Colorescience UK](https://colorescience.co.uk/), a premium mineral SPF brand. By August, our reporting showed conversion <mark>up 71% since January</mark>, and the A/B testing programme I'd been running was getting the credit.
 
-Here's why that matters: most of the new traffic was paid social. Cold traffic like that usually drags conversion down, and on our product pages, Meta visitors add to cart at about a third of the rate of everyone else. Holding conversion through that growth meant the extra ad spend turned into orders.
+When I checked properly, most of that rise was seasonality and bot traffic, and the tests themselves were too small to prove their wins. So I rebuilt how we measure and test.
 
-What I did:
-
-- **Rebuilt the store** in 2025: mobile product pages went from 5s+ to ~0.5s.
-- **Fixed the reporting:** bots, seasonality and promotions were misleading the dashboard, in both directions.
-- **Reset our A/B testing:** our first programme was too small to prove its results, so I rebuilt it around fewer, properly powered tests.
-- **Found the next opportunity:** half of mobile visitors leave before seeing a price, mostly from Meta ads. A pre-registered test is now running against it.
+The clean numbers told a more useful story than the dashboard: traffic grew <mark>82% year on year as paid social scaled, and conversion held</mark>. They also showed where the next real gain is.
 
 ![](./_assets/cs-splash-image.png)
 
 ***
 
-## Business Context
+## Context
 
-Colorescience sells mineral sunscreen direct to consumers. A few things about the store shape everything below:
+Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of UK sessions are mobile, and it's very seasonal: autumn traffic is around 40% of July's. It's also one of several brands in our group, so development time is shared.
 
-- **Mobile:** 94% of UK sessions.
-- **Premium audience:** customer interviews put it at 75% women, mostly professionals buying into premium, lifestyle-led brands.
-- **Seasonal:** autumn traffic is around 40% of July's, so month-on-month comparisons mislead, and tests take longer in autumn.
-- **Shared resources:** it's one of several brands in our group, so development time is shared. That favours fewer, bigger changes.
+In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build. Research had shown that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark>, and the site overall is 9.1× faster.
 
-***
-
-## Part 1: The foundation
-
-When we took on the UK store, it ran on an ageing off-the-shelf theme that had slowed with every update. Mobile product pages took <mark>more than 5 seconds to load</mark>.
-
-I started out treating it as a normal CRO project: run tests, find wins. The research quickly showed that wouldn't work.
-- **GA4:** most mobile visitors dropped off on product pages without scrolling or interacting.
-- **Clarity session recordings:** pages loading slowly, then burying reviews and benefits under too much content.
-- **Customer interviews (run by our UX designer):** we were competing with premium lifestyle brands, not bargain skincare.
-
-You don't need an A/B test to tell you a page that takes 5 seconds to load is losing customers, so the rebuild became the CRO decision.
-
-<!-- IMAGE: before/after mobile PDP -->
-
-I built a competitor feature audit, breaking down how premium brands handled product pages, navigation and quick shopping, and used it to plan the new site with our UX designer. It was mobile-first throughout: swipeable carousels, thumb-friendly transactional navigation, and a quick-shop drawer. Then I built it on Dawn, launching in May 2025. In parallel, I worked with our SEO consultant to fix the technical SEO.
-
-- Mobile product pages: <mark>5s+ → ~0.5s</mark>
-- Site speed overall: <mark>9.1× faster</mark>
-
-<!-- IMAGE: slice of the competitor feature audit -->
-
-**What I don't credit the rebuild with:** a specific conversion lift. A ~16% price rise on best sellers landed in the same weeks, and Shopify's cart tracking was broken in the months around launch, so the effect of the rebuild can't be separated from the effect of the price. Its value shows up in what the store could handle next.
+A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a specific conversion lift. But it's the foundation everything below sits on.
 
 ***
 
-## Part 2: Scaling traffic without losing conversion
+## What the numbers said vs what was happening
 
-Over the following year, traffic grew a lot, and most of the growth was paid. Paid Search went from 3.5% to 20.4% of sessions, and Meta spend grew significantly.
+The +71% compared January with August. Three things were moving that number that had nothing to do with the site:
 
-Paid social is cold traffic: these people are scrolling Instagram, not searching for sunscreen. On our product pages, Meta visitors add to cart at 8%, against 26% for everyone else. Scale up a channel like that and you'd expect conversion to fall.
+- **Seasonality.** In 2024, with no testing programme, conversion rose 79% over the same months.
+- **Bots.** From mid-January, a scraper wave hit Direct traffic. In April it was ~91% of Direct sessions: non-UK, 2–5 seconds long, landing straight on SPF product pages. That month, the all-traffic purchase rate was 2.20% against 5.16% for UK visitors. The wave started the same month as the programme, so it dragged the baseline down.
+- **Promotions and spikes.** There were three major discount periods in summer 2026, and a podcast in January sent organic traffic to about 4.5× December's level. I rebuilt the promotion calendar from order data, because my memory of the dates turned out to be wrong.
 
-To check whether it did, I compared the same promotion-free summer days in both years, UK only:
+<!-- CHART: conversion by month, 2024 vs 2026 -->
 
-| Same promotion-free days, UK (12–28 Jul + 12–23 Aug) | 2025 | 2026 |
+With those removed, I compared the same promotion-free days in both years, UK only:
+
+| Matched days, UK (12–28 Jul + 12–23 Aug) | 2025 | 2026 |
 | --- | --- | --- |
-| Sessions | — | <mark>+82%</mark> |
-| Purchases | — | <mark>+78%</mark> |
+| Sessions | — | +82% |
+| Purchases | — | +78% |
 | Purchase rate (95% interval) | 5.83% (5.42–6.27) | 5.68% (5.37–6.00) |
 
 <!-- CHART: matched-window sessions, purchases and purchase rate with intervals -->
 
-Nearly double the traffic, nearly double the orders, and a conversion rate that held within its margin of error. Mobile basket → purchase actually improved, from 35.6% to 38.1%.
-
-The averages hide some movement underneath, though. Organic and Direct conversion dipped, and the Meta gap turned out to be bigger than anyone could see at the time (more on that in Part 5). Getting to that level of detail meant fixing the numbers first.
+That's the real result for the year, and it's better than it looks. Most of the growth was paid: Paid Search went from 3.5% to 20.4% of sessions, and Meta spend grew significantly. On our product pages, Meta visitors add to cart at about a third of the rate of everyone else. Even so, conversion held, and mobile basket → purchase improved from 35.6% to 38.1%.
 
 ***
 
-## Part 3: Getting numbers you can trust
+## Why the tests couldn't tell us
 
-On a small, seasonal store, the standard dashboards were telling misleading stories in both directions. One month looked like a crash, another like a triumph.
+From January to August I ran a six-test programme on PostHog, shipping variants at 75–85% probability of beating control. Re-run over their full periods, UK only:
 
-The clearest example: comparing January with August 2026, conversion was up <mark>+71%</mark>. That looks like a huge result for the testing programme that started in January. But in 2024, with no testing programme at all, conversion rose 79% over the same months. January is when nobody buys sunscreen.
-
-A few things like that were moving the conversion rate without the site changing at all.
-
-### Seasonality
-
-Month-on-month comparisons are close to meaningless here, so every comparison became year on year, on matched days.
-
-<!-- CHART: conversion by month, 2024 vs 2026: the Jan→Aug rise happens every year -->
-
-### Bot traffic
-
-From mid-January 2026, monthly sessions swung between 9k and 49k while orders barely moved. When I broke Direct traffic down by country, device and landing page, the cause was clear. In April, ~91% of Direct sessions were non-UK desktop visits lasting 2–5 seconds, landing straight on SPF product pages: almost certainly a price scraper.
-
-Bots add sessions but never buy. In April, the reported purchase rate was <mark>2.20% across all traffic, against 5.16% for real UK visitors</mark>. The bots also arrived in the same month testing began, which made January's starting point look artificially low.
-
-<!-- CHART: Direct sessions vs purchases, Jan–Jul 2026 -->
-
-### Promotions and spikes
-
-Sales lift conversion while they run, and each one boosts specific channels and products. I rebuilt the promotion calendar for both years from order data and removed those days from every comparison. A podcast about the brand had the opposite effect: in January it sent organic traffic to about 4.5× December's level, and conversion dipped as curious first-time visitors browsed without buying.
-
-### The rules that came out of it
-
-- UK traffic only. That's who can buy, and it removes most of the bots.
-- Same days year on year, never month to month.
-- Promotion days removed, using dates from order data, not memory.
-- Shopify, GA4 and PostHog checked against each other, with a 95% interval on every rate.
-
-***
-
-## Part 4: What our first year of testing could and couldn't tell us
-
-From January to August 2026 we ran a six-test programme on top of the new theme, covering navigability, trust and price objections. Once the measurement was clean, I re-ran every test over its full period, UK only:
-
-| Test | Full period, UK (95% interval) | Shipped? |
+| Test | Lift, UK (95% interval) | Shipped? |
 | --- | --- | --- |
 | PDP Recently Viewed | +4.0% (−11% to +22%) | Yes |
 | Card Badges | +6.8% (−10% to +27%) | Yes |
@@ -144,23 +82,36 @@ From January to August 2026 we ran a six-test programme on top of the new theme,
 
 <!-- CHART: every test's lift with its 95% interval, shipped tests marked -->
 
-The three shipped tests all point upwards. Together, the shipped changes come out at a median of <mark>+11%, with a 73% chance of being positive</mark>. So they most likely helped. But every interval crosses zero, so none of them can be proven at this traffic.
+The shipped tests all point upwards. Combined, they come out at a median of <mark>+11%, with a 73% chance of being positive</mark>. They most likely helped. But every interval crosses zero, so none of them can be proven. There were three reasons:
 
-That gap between "probably" and "provably" came down to three things, and each one changed how we test now:
-
-- **The tests were too small for the effects they were looking for.** The plan expected 4–8% lifts. A two-week test on this traffic carries about ±16% of noise. **Now:** work out the smallest detectable lift before launch, and run fewer, bolder tests that can actually reach it.
-- **Results were read while tests were still running.** Mid-test readings were consistently rosier than the full-period result (PDP Badges looked like +19.9%, and settled at +5.5%). In the USP test, variant C was shipped on AOV, chosen after the results were in, and its conversion was most likely lower than control. **Now:** one primary metric, chosen in advance, read once at a planned end date. I've recommended reverting C.
-- **A QA switch reached the live site.** For about six weeks, a "turn on all tests" setting meant every visitor saw the test version, so two shipped tests most likely compared identical pages. **Now:** the harness was rebuilt in July so flags only load where their test appears. <!-- TODO: if shipped, add: eligibility off by default; QA override limited to the theme editor -->
+1. **Too little traffic for the effects.** The plan targeted 4–8% lifts, and a two-week test here carries about ±16% noise.
+2. **Early reads.** Mid-test readings ran consistently higher than full-period results (PDP Badges looked like +19.9% before settling at +5.5%). USP variant C was shipped on AOV, a metric chosen after the results were in, while its conversion was most likely below control.
+3. **A QA switch on the live site.** For about six weeks, a "turn on all tests" setting showed every visitor the test version. PostHog kept logging a 50/50 split, so two of the shipped tests most likely compared identical pages.
 
 ***
 
-## Part 5: Where mobile shoppers are actually lost
+## What I changed
 
-With trustworthy data, the useful question was where the next gain is. (The rebuild had fixed the speed problem behind 2025's product page drop-off. Part of that drop-off, it turned out, was still there.) I fixed the method before pulling the data: compare each funnel step against the best comparable segment, on clean days, with minimum sample sizes. The biggest gap was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
+| | Before | After |
+| --- | --- | --- |
+| **Population** | All traffic | UK only, set at flag assignment |
+| **Comparisons** | Month on month | Same days year on year, promotion days removed using order data |
+| **Sources** | One dashboard at a time | Shopify, GA4 and PostHog reconciled against each other |
+| **Test size** | Two weeks, whatever lift came out | Smallest detectable lift worked out before launch; fewer, bolder tests |
+| **Decisions** | Read during the test, any metric | One primary metric, pre-registered in git, read once at a planned end |
+| **Validity** | Not checked | Chi-square split check before reading any result |
+| **Harness** | Flags checked on every page; QA switch could reach live | Rebuilt: flags only load where their test appears |
+| **Tracking** | Sticky Add to Cart not counted | One add-to-cart action covering both buttons, applied to past data |
 
-### Half of visitors leave before they see a price
+I also re-labelled Card Badges and PDP Badges as untested features (they're candidates for a proper re-test) and recommended reverting USP variant C.
 
-I wrote SQL against raw PostHog events for the best-selling product, a tinted SPF, to see how far each visitor scrolled and whether they added to cart. On a standard iPhone, the first screen shows the gallery, badges, rating and title. Price, shades and Add to Cart are just below it.
+***
+
+## What clean data showed
+
+With numbers I could trust, I went looking for the biggest gap in the funnel. I fixed the method before pulling the data: compare each step against the best comparable segment, on clean days, with minimum sample sizes. The biggest gap was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
+
+PostHog event data on the best-selling product showed where the gap opens up. On a standard iPhone, the first screen shows the gallery, rating and title, and the price and Add to Cart sit just below it:
 
 | Deepest point reached | Share of visitors | Added to cart |
 | --- | --- | --- |
@@ -169,43 +120,36 @@ I wrote SQL against raw PostHog events for the best-selling product, a tinted SP
 | Just past Add to Cart | 12% | 42% |
 | Details, reviews and below | 33% | 37–38% |
 
-<!-- CHART: scroll reach down the page with price, swatches, reviews marked; ATC by depth -->
+Splitting those visitors by source showed where the first-screen exits come from:
 
-Visitors who scroll convert well. The loss is the half who leave from the first screen without ever seeing a price. The shade picker, my main suspect, wasn't the problem: visitors who compared several shades added to cart at the same rate as those who clicked one.
-
-### And most of them come from Meta
-
-| Source (mobile UK visitors) | Share of visitors | Left from first screen | Added to cart |
+| Source (mobile UK) | Share of visitors | Left from first screen | Added to cart |
 | --- | --- | --- | --- |
 | Meta ads | 39% | 73% | 8.1% |
 | Everything else | 61% | 34% | 26.2% |
 
-<!-- CHART: first-screen exits and ATC, Meta vs other -->
+<!-- CHART: ATC by scroll depth; first-screen exits, Meta vs other -->
 
-This is the cost of scaling paid social: people tap a fairly generic ad and land on a product page built for someone who searched for the product.
+The Meta ads had `utm_source` and `utm_medium` swapped, so GA4 most likely filed them under "Unassigned". The fastest-growing channel was <mark>invisible in our channel reports</mark>.
 
-It hadn't shown up sooner because the ads were mis-tagged (`utm_source` and `utm_medium` swapped). GA4 most likely filed them under "Unassigned", so <mark>the fastest-growing traffic source was invisible in channel reports</mark>. <!-- TODO: once done, add "I passed the tagging fix and the conversion data to the paid media team." -->
+It's the same pattern our 2025 research found before the rebuild. The rebuild fixed the speed, but the first screen still asks a lot of someone who has just tapped an ad.
 
-### Reviews put the shade problem after purchase
-
-I also analysed all 1,221 UK reviews. Shade was the top complaint, but combined with the behavioural data it shows up *after* purchase, not before: people choose a shade blind, get it wrong and leave a 1-star review.
-
-So shade gets fixed rather than tested. That means correcting the site's "size down if between shades" advice, which reviewers quote as the reason they bought the wrong one, and setting expectations about how the product goes on.
+Two other suspects didn't hold up. The shade picker wasn't the barrier: visitors who compared shades added to cart at the same rate as those who picked one. And the 1,221 store reviews place shade problems *after* purchase, which makes them a returns problem to fix rather than a conversion test.
 
 ***
 
-## Part 6: The next test
+## The test
 
-Everything above points at one change: **put the buying decision on the first screen.** I designed it as a "decision-first" mobile product page, with a compact gallery and the title, price, shade swatches and Add to Cart all visible without scrolling. It reorders existing content, so it needs no new copy, and it covers every mobile product page.
+The change: a decision-first mobile product page, where the title, price, shade swatches and Add to Cart are all visible without scrolling. It reorders existing content across every mobile product page, so it needs no new copy.
 
-It's built to give a result that holds up, and the pre-registration was committed to git before launch:
+The pre-registration was committed to git before launch:
 
-- **Primary metric:** the share of visitors who add to cart. Purchases and revenue per visitor are guardrails.
+- **Primary metric:** add to cart. Guardrails: purchases and revenue per visitor.
 - **Smallest detectable lift:** +15% at 80% power. That's 3,060 visitors per variant, about 5–6 weeks in autumn.
 - **One read** at the planned stop, with a hard stop before Black Friday.
-- **Ship rule:** the whole 95% interval sits above zero, and no guardrail blocks.
+- **Ship rule:** the whole 95% interval is above zero, and no guardrail blocks.
 - **Meta vs everyone else** is read as a segment chosen in advance.
-- **A daily split check** for the first three days, plus anti-flicker applied equally to both variants.
+
+My first launch enrolled desktop visitors into a mobile-only change and went live before the pre-registration was committed. I stopped it after three days and relaunched it mobile-only.
 
 <!-- TODO: RESULT — read once at the stop. Split check, add-to-cart lift with 95% interval, guardrails, Meta segment, decision. Report it straight whichever way it goes. -->
 
@@ -217,10 +161,8 @@ It's built to give a result that holds up, and the pre-registration was committe
 
 ## Key Learnings
 
-**Scaling is a conversion result too.** Holding conversion while traffic nearly doubles, much of it cold, doesn't make a flashy headline, but it's what lets growth turn into orders. A fast foundation is what made it possible.
+**Check the denominator before the result.** Seasonality and bots moved this store's conversion rate more than any test did.
 
-**On a small, seasonal store, measurement comes before optimisation.** Bots, seasonality and promotions can each move conversion more than any test. Sorting those out first is what made everything after it readable.
+**Size tests to the traffic you have.** On a small store, a steady stream of small tests produces confident-looking noise. Fewer, bolder tests with a planned read can actually answer something.
 
-**Size tests to the traffic you actually have.** Fewer, bolder changes, with the detectable lift worked out before launch and one planned read, beat a steady stream of small tests nobody can prove.
-
-**Break problems down by traffic source.** The biggest product page problem turned out to be one channel landing in the wrong place, and it had been hidden by a tagging mistake.
+**Break problems down by source.** The biggest product page problem turned out to be one channel, and a tagging mistake had hidden it.
