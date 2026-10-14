@@ -30,3 +30,6 @@ pnpm-debug.log*
 
 # Local article drafts (kept out of the content collection)
 drafts/
+
+# Private discussions and notes (never committed)
+_private/
