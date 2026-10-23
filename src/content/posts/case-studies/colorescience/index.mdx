@@ -18,6 +18,8 @@ I'd been reading it the way most in-house teams do: this month against last. On 
 
 When I went back over the numbers properly, most of that rise was seasonality and bot traffic, and the tests had been too small to prove their wins. So I rebuilt how we measure and test. The clean numbers showed traffic up 82% year on year with conversion holding, and they pointed to where the next real gain was. Four tests over the following seven weeks took UK conversion to <mark>6.04% by October</mark>, out of season for a sunscreen brand.
 
+Over the last 12 months, CRO work in conjunction with scaling paid ads grew revenue by <mark>£237K year on year</mark>.
+
 ![](./_assets/cs-splash-image.png)
 
 ***
@@ -72,6 +74,8 @@ That's better than it sounds. Most of the growth came from paid channels: Paid S
 
 From January to August, I'd been running tests on PostHog and shipping variants once they had a 75–85% probability of beating control. When I re-ran them over their full periods, UK only, none could be proven: every 95% interval crossed zero.
 
+![The three tests I shipped, all published on results that couldn't be proven.](./_assets/cs-shipped-tests.png)
+
 The three I shipped did all point upwards: PDP Recently Viewed (+4.0%), Card Badges (+6.8%) and PDP Badges (+5.5%). Combined, they come out at a median of +11%, with a 73% chance of being positive. They most likely helped, but "most likely" wasn't what I'd been reporting.
 
 {/* CHART: every test's lift with its 95% interval, shipped tests marked */}
@@ -92,17 +96,15 @@ Then I fixed the testing. Before launch, each test now gets one primary metric, 
 
 ## What clean data showed
 
-With numbers I could trust, I went looking for the biggest gap in the funnel, comparing each step against the best comparable segment on clean days. It was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
+With numbers I could trust, the biggest gap in the funnel was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
 
-PostHog data on the best-selling product showed where the gap opens up. On a standard iPhone, the first screen shows the gallery, rating and title, and the price and Add to Cart sit just below it. Nearly half of visitors (48%) never scrolled past that first screen, and only 2–5% of them added to cart. Of those who scrolled just past Add to Cart, 42% added to cart.
+On the best-selling product, a standard iPhone showed the gallery, rating and title on the first screen, with the price and Add to Cart just below. Nearly half of visitors (48%) never scrolled past that first screen, and only 2–5% of them added to cart. Of those who scrolled past Add to Cart, 42% added.
 
-Splitting by source showed who was leaving. Meta ads brought 39% of UK mobile visitors. 73% of them left from the first screen, and 8.1% added to cart. For everyone else, those figures were 34% and 26.2%.
+Most of those first-screen exits came from Meta ads: 73% of Meta visitors left there, against 34% of everyone else.
 
 {/* CHART: ATC by scroll depth; first-screen exits, Meta vs other */}
 
-The Meta ads also had `utm_source` and `utm_medium` swapped, so GA4 most likely filed them under "Unassigned". The fastest-growing channel was <mark>invisible in our channel reports</mark>.
-
-Our 2025 research had found the same pattern before the rebuild. The rebuild fixed the speed, but the first screen still asks a lot of someone who has just tapped an ad. Two other suspects didn't hold up. Visitors who compared shades added to cart at the same rate as those who didn't. And the 1,221 store reviews place shade problems *after* purchase, which makes them a returns problem rather than a conversion one.
+That made it the natural first test, and a clear example of where the clean data led. Instead of a list of ideas to try, it pointed to one step, on one device, driven by one audience. The change followed directly from it: put the price, shades and Add to Cart on the first screen, where most Meta visitors decide whether to stay.
 
 ***
 
@@ -117,6 +119,10 @@ Every test had its primary metric and guardrails written down before launch, a f
 ### 1. Decision-first product page (weeks 1–2)
 
 The change: on mobile, the title, price, shade swatches and Add to Cart all sit on the first screen. It reorders existing content across every mobile product page, so it needs no new copy.
+
+I also removed the quantity selector. Quantity can already be changed in the cart drawer, and for a cold audience arriving from a Meta ad, every control before the button is friction. Getting the first purchase mattered more than selling multiples.
+
+![Reordered, minus the quantity selector. On the first screen, the control shows the gallery and title; the test shows everything needed to buy.](./_assets/cs-decision-first.png)
 
 Only mobile visitors were enrolled. The flag is checked only on mobile product pages, so desktop visitors, who would never see a difference, can't dilute the result. Add to cart counts both the main and the sticky button.
 
@@ -144,10 +150,12 @@ Conversion, revenue and AOV per recipient were secondary metrics: they explain *
 
 **How it worked:**
 
+![Klaviyo splits the list, each arm lands on its own page, and PostHog ties every purchase back to its arm.](./_assets/cs-offer-test-flow.png)
+
 - The Klaviyo list was split randomly into two arms, with the arm saved on each profile.
 - Each arm's email linked to its own landing page. The pages were identical apart from the offer, unlisted and set to noindex.
 - On load, the page records the arm with `posthog.register({ offer_arm })`, so it's attached to every later event, and applies that arm's code. Each code works once per customer, and the two can't combine.
-- In the gift arm, the cart script reads the arm and adds the gift when the cart reaches £60, then removes it if the cart drops below.
+- In the gift arm, the cart script reads the arm and adds the gift when the cart reaches £60, then removes it if the cart drops below (much harder to get right than it sounds, but too long to cover here).
 
 **Margin without per-order cost data.** If margin depends only on revenue and which offer the order actually used, a few formulas cover it. With *m* as average gross margin at full price (50%), *R* as revenue ex-VAT and shipping, and *G* as the gift's cost (£4):
 
@@ -194,6 +202,8 @@ The discount wins clearly on conversion and slightly on revenue, but it loses on
 
 The change: Quick Shop buttons are always visible on mobile product cards. On desktop, they appear on hover with a short animation to draw attention. Control had hover-only Quick Shop on desktop and none on mobile.
 
+![On mobile, the test adds an always-visible Quick Shop button to every product card.](./_assets/cs-quick-shop.png)
+
 I ran it across all devices to get a big enough sample. 20,000 UK visitors over three weeks:
 
 - **Product view rate, page or drawer (primary):** 46.0% → 47.4%, <mark>+3.0%, with a 97.6% chance of beating control</mark>
@@ -206,6 +216,8 @@ I ran it across all devices to get a big enough sample. 20,000 UK visitors over 
 - **Cart → purchase:** 59.87% → 58.81%, −1.8% (27.4% chance)
 
 The sample was big enough to confirm the engagement effect, but not the revenue effect. A 75% chance on conversion means roughly a 1 in 4 chance that the real effect is zero or negative.
+
+![The Quick Shop drawer: enough to buy without leaving the page, which is also why it can replace a product page view rather than add one.](./_assets/cs-quick-shop-drawer.png)
 
 Two traps came out of this one:
 
@@ -241,7 +253,7 @@ UK conversion reached <mark>6.04% in October</mark>. That's out of season for a 
 
 **Size tests to the traffic you have.** On a small store, a steady stream of small tests produces confident-looking noise. Fewer, bolder tests with a planned read can actually answer something.
 
-**Break problems down by source.** The biggest product page problem turned out to be one channel, and a tagging mistake had hidden it.
+**Break problems down by source.** The biggest product page problem turned out to be mostly one channel.
 
 **Choose the metric that matches the cost.** On conversion or revenue, the discount won. On margin, the gift did. Picking the metric first is what stopped the wrong offer shipping.
 
