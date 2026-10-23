@@ -149,12 +149,9 @@ Two other suspects didn't hold up. The shade picker wasn't the barrier: visitors
 
 ## Seven weeks, four tests
 
-| Weeks | Test | Where | Primary metric | Shipped? |
-| --- | --- | --- | --- | --- |
-| 1–2 | Decision-first product page | Mobile product pages | Add to cart | Yes |
-| 1–2 | 15% off vs free gift | Email | Margin per recipient | Gift |
-| 3–5 | Quick Shop | Collection pages, all devices | Product view rate | Yes |
-| 6–7 | Bundle on the product page | Mobile product pages | Add to cart | No |
+- **Weeks 1–2:** a decision-first mobile product page (shipped), alongside an email test of 15% off vs a free gift (gift kept)
+- **Weeks 3–5:** Quick Shop on collection pages, all devices (shipped)
+- **Weeks 6–7:** a bundle on the mobile product page (not shipped)
 
 Every test had its primary metric and guardrails written down before launch, a fixed end date, one read at the end and a split check before that read. I ship when the primary metric has at least a 90% chance of beating control and no guardrail is clearly worse.
 
@@ -166,12 +163,10 @@ Only mobile visitors were enrolled. The flag is checked only on mobile product p
 
 5,350 UK mobile visitors over two weeks:
 
-| Metric | Control | Variant | Lift | Chance of beating control |
-| --- | --- | --- | --- | --- |
-| **Add to cart** (primary) | 21.47% | 23.10% | +7.6% | 92.4% |
-| Conversion | 13.08% | 13.80% | +5.5% | 78.0% |
-| Average order value | £59.40 | £58.70 | −1.2% | 43.0% |
-| Revenue per visitor | | | +4.3% | 65.0% |
+- **Add to cart (primary):** 21.47% → 23.10%, <mark>+7.6%, with a 92.4% chance of beating control</mark>
+- **Conversion:** 13.08% → 13.80%, +5.5% (78% chance)
+- **Average order value:** £59.40 → £58.70, −1.2% (43% chance)
+- **Revenue per visitor:** +4.3% (65% chance)
 
 Add to cart cleared the bar, and conversion and revenue point the same way without being proven on their own. Putting the decision on the first screen fixed the largest gap the funnel analysis found, so it shipped.
 
@@ -197,11 +192,9 @@ Conversion, revenue and AOV per recipient were secondary metrics: they explain *
 
 **Margin without per-order cost data.** If margin depends only on revenue and which offer the order actually used, a few formulas cover it. With *m* as average gross margin at full price (50%), *R* as revenue ex-VAT and shipping, and *G* as the gift's cost (£4):
 
-| Order used | Margin |
-| --- | --- |
-| 15% code | R × (1 − (1 − m) ÷ 0.85) = **0.412 × R** |
-| Gift | m × R − G = **0.50 × R − £4** |
-| Neither | m × R |
+- **Order used the 15% code:** R × (1 − (1 − m) ÷ 0.85) = 0.412 × R
+- **Order included the gift:** m × R − G = 0.50 × R − £4
+- **Order used neither:** m × R
 
 The checkout pixel picks the formula from the order itself, not from the user's arm. That way, someone in the 15% arm who buys without the code is correctly given full-price margin:
 
@@ -229,12 +222,10 @@ Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cooki
 
 40,000 UK recipients, 14 days after the send:
 
-| Per recipient | Gift | 15% off | Lift | Chance 15% off wins |
-| --- | --- | --- | --- | --- |
-| Conversion | 1.80% | 2.00% | +11.1% | 93% |
-| Average order value | £66.20 | £61.40 | −7.3% | 14% |
-| Revenue | £1.19 | £1.23 | +3.0% | 62% |
-| **Margin** (primary) | £0.45 | £0.42 | −7.1% | 24% |
+- **Margin per recipient (primary):** £0.45 for the gift vs £0.42 for 15% off, so <mark>the discount made 7.1% less margin</mark> (24% chance it's actually better)
+- **Conversion:** 1.80% → 2.00%, +11.1% for the discount (93% chance)
+- **Average order value:** £66.20 → £61.40, −7.3% (14% chance)
+- **Revenue per recipient:** £1.19 → £1.23, +3.0% (62% chance)
 
 About 60% of gift-arm orders included the gift. Revenue figures include VAT, and margin is calculated ex-VAT.
 
@@ -246,16 +237,14 @@ The change: Quick Shop buttons are always visible on mobile product cards. On de
 
 I ran it across all devices to get a big enough sample. 20,000 UK visitors over three weeks:
 
-| Metric | Control | Variant | Lift | Chance of beating control |
-| --- | --- | --- | --- | --- |
-| **Product view rate** (page or drawer, primary) | 46.0% | 47.4% | +3.0% | 97.6% |
-| Products viewed per user | 2.31 | 2.38 | +3.0% | 95.1% |
-| Quick Shop click rate | 5.1% | 7.9% | +54.9% | >99.9% |
-| Add to cart | 15.20% | 15.95% | +4.9% | 92.8% |
-| Conversion | 9.10% | 9.38% | +3.1% | 75.3% |
-| Average order value | £61.20 | £61.55 | +0.6% | 55.3% |
-| Revenue per visitor | | | +3.7% | 72.3% |
-| Cart → purchase | 59.87% | 58.81% | −1.8% | 27.4% |
+- **Product view rate, page or drawer (primary):** 46.0% → 47.4%, <mark>+3.0%, with a 97.6% chance of beating control</mark>
+- **Products viewed per user:** 2.31 → 2.38, +3.0% (95.1% chance)
+- **Quick Shop click rate:** 5.1% → 7.9%, +54.9% (>99.9% chance)
+- **Add to cart:** 15.20% → 15.95%, +4.9% (92.8% chance)
+- **Conversion:** 9.10% → 9.38%, +3.1% (75.3% chance)
+- **Average order value:** £61.20 → £61.55, +0.6% (55.3% chance)
+- **Revenue per visitor:** +3.7% (72.3% chance)
+- **Cart → purchase:** 59.87% → 58.81%, −1.8% (27.4% chance)
 
 The sample was big enough to confirm the engagement effect, but not the revenue effect. A 75% chance on conversion means roughly a 1 in 4 chance that the real effect is zero or negative.
 
@@ -270,12 +259,10 @@ I was against this test. Our CMO pushed for it because kit sales from ads were u
 
 Control was the decision-first page that had just shipped. 8,000 UK mobile visitors over two weeks:
 
-| Metric | Control | Variant | Lift | Chance of beating control |
-| --- | --- | --- | --- | --- |
-| **Add to cart** (primary) | 23.10% | 22.13% | −4.2% | 15.0% |
-| Conversion | 13.80% | 13.04% | −5.5% | 15.9% |
-| Average order value | £58.70 | £59.60 | +1.5% | 60.6% |
-| Revenue per visitor | | | −4.1% | 30.7% |
+- **Add to cart (primary):** 23.10% → 22.13%, <mark>−4.2%, with only a 15% chance of beating control</mark>
+- **Conversion:** 13.80% → 13.04%, −5.5% (15.9% chance)
+- **Average order value:** £58.70 → £59.60, +1.5% (60.6% chance)
+- **Revenue per visitor:** −4.1% (30.7% chance)
 
 Average order value ticked up slightly, but the module cost more conversions than the bundle gained, so revenue per visitor fell. The likely cause is the one I expected: it pushed the main button down the page and added a decision before the visitor could buy. It didn't ship.
 
