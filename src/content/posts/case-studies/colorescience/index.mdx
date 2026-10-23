@@ -154,7 +154,7 @@ Two other suspects didn't hold up. The shade picker wasn't the barrier: visitors
 | 1–2 | Decision-first product page | Mobile product pages | Add to cart | Yes |
 | 1–2 | 15% off vs free gift | Email | Margin per recipient | Gift |
 | 3–5 | Quick Shop | Collection pages, all devices | Product view rate | Yes |
-| 6–7 | Bundle on the product page | Product pages | Add to cart | No |
+| 6–7 | Bundle on the product page | Mobile product pages | Add to cart | No |
 
 Every test had its primary metric and guardrails written down before launch, a fixed end date, one read at the end and a split check before that read. I ship when the primary metric has at least a 90% chance of beating control and no guardrail is clearly worse.
 
@@ -227,7 +227,7 @@ analytics.subscribe('checkout_completed', (event) => {
 
 Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cookie and initialises PostHog with it. Otherwise, purchases wouldn't carry the arm.
 
-40,000 recipients, 14 days after the send:
+40,000 UK recipients, 14 days after the send:
 
 | Per recipient | Gift | 15% off | Lift | Chance 15% off wins |
 | --- | --- | --- | --- | --- |
@@ -268,13 +268,16 @@ Two traps came out of this one:
 
 I was against this test. Our CMO pushed for it because kit sales from ads were up 180% year on year, and expected bundles to lift AOV and customer lifetime value. But the decision-first page had just won by moving Add to Cart *up*, and a bundle module above the button moves it back down and adds a decision before the visitor can buy. I expected it to hurt.
 
-Primary metric: add to cart. Also tracked: AOV, conversion, revenue per visitor, bundle add rate and the share of orders containing a bundle.
+Control was the decision-first page that had just shipped. 8,000 UK mobile visitors over two weeks:
 
-#### Result
+| Metric | Control | Variant | Lift | Chance of beating control |
+| --- | --- | --- | --- | --- |
+| **Add to cart** (primary) | 23.10% | 22.13% | −4.2% | 15.0% |
+| Conversion | 13.80% | 13.04% | −5.5% | 15.9% |
+| Average order value | £58.70 | £59.60 | +1.5% | 60.6% |
+| Revenue per visitor | | | −4.1% | 30.7% |
 
-{/* TODO: bundle test result. Numbers being re-checked. */}
-
-*Result to follow.*
+Average order value ticked up slightly, but the module cost more conversions than the bundle gained, so revenue per visitor fell. The likely cause is the one I expected: it pushed the main button down the page and added a decision before the visitor could buy. It didn't ship.
 
 ***
 
