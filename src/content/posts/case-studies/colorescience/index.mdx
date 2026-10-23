@@ -14,11 +14,9 @@ import pdpAfter from './_assets/cs-pdp-after-mob.jpg'
 
 I run CRO and development for [Colorescience UK](https://colorescience.co.uk/), a premium mineral SPF brand. By August, conversion was <mark>up 71% since January</mark>, and I was crediting the A/B testing programme I'd been running.
 
-For eight months, I'd been reading it the way most in-house teams do: this month against last. On a sunscreen brand. From January to August. (Yes, really.)
+I'd been reading it the way most in-house teams do: this month against last. On a sunscreen brand. From January to August. (Yes, really.)
 
-When I went back over the numbers properly, most of that rise was seasonality and bot traffic, and the tests themselves were too small to prove their wins. So I rebuilt how we measure and test.
-
-The clean numbers told a more useful story than the dashboard: traffic grew <mark>82% year on year as paid social scaled, and conversion held</mark>. They also showed where the next real gain was. I then ran four tests over seven weeks, and by October UK conversion had reached <mark>6.04%</mark>, out of season for a sunscreen brand.
+When I went back over the numbers properly, most of that rise was seasonality and bot traffic, and the tests had been too small to prove their wins. So I rebuilt how we measure and test. The clean numbers showed traffic up 82% year on year with conversion holding, and they pointed to where the next real gain was. Four tests over the following seven weeks took UK conversion to <mark>6.04% by October</mark>, out of season for a sunscreen brand.
 
 ![](./_assets/cs-splash-image.png)
 
@@ -26,9 +24,9 @@ The clean numbers told a more useful story than the dashboard: traffic grew <mar
 
 ## Context
 
-Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of UK sessions are mobile, and it's very seasonal: autumn traffic is around 40% of July's. It's also one of several brands in our group, so development time is shared.
+Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of UK sessions are mobile, and it's very seasonal: autumn traffic is around 40% of July's. It's one of several brands in our group, so development time is shared.
 
-In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build. Research had shown that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark>, and the site overall is 9.1× faster.
+In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark>, and the site overall is 9.1× faster.
 
 <BeforeAfter
   before={homeBefore}
@@ -47,105 +45,66 @@ In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a c
   maxWidth="280px"
 />
 
-A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a specific conversion lift. But it's the foundation everything below sits on.
+A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a specific conversion lift. But everything below sits on it.
 
 ***
 
-## What the numbers said vs what was happening
+## What I got wrong: the numbers
 
-Three things were moving that +71% that had nothing to do with the site:
+Three things were driving that +71%, and none of them had anything to do with the site:
 
-- **Seasonality.** The obvious one. In 2024, with no testing programme at all, conversion rose 79% over the same months.
-- **Bots.** From mid-January, a scraper wave hit Direct traffic. In April it was ~91% of Direct sessions: non-UK, 2–5 seconds long, landing straight on SPF product pages. That month, the all-traffic purchase rate was 2.20% against 5.16% for UK visitors. The wave started the same month as the programme, so it dragged the baseline down.
-- **Promotions and spikes.** There were three major discount periods in summer 2026, and a podcast in January sent organic traffic to about 4.5× December's level. I rebuilt the promotion calendar from order data, because my memory of the dates turned out to be wrong.
+- **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months.
+- **Bots.** From mid-January, a scraper wave hit Direct traffic with non-UK sessions of 2–5 seconds that landed straight on product pages. By April, it made up ~91% of Direct sessions, and the all-traffic purchase rate was 2.20% against 5.16% for UK visitors.
+- **Promotions and spikes.** There were three major discount periods over summer, and in January a podcast sent organic traffic to 4.5× December's level.
 
 {/* CHART: conversion by month, 2024 vs 2026 */}
 
-With those removed, I compared the same promotion-free days in both years, UK only:
+With those stripped out, I compared the same promotion-free days in 2025 and 2026 (12–28 July and 12–23 August), UK only:
 
-| Matched days, UK (12–28 Jul + 12–23 Aug) | 2025 | 2026 |
-| --- | --- | --- |
-| Sessions | — | +82% |
-| Purchases | — | +78% |
-| Purchase rate (95% interval) | 5.83% (5.42–6.27) | 5.68% (5.37–6.00) |
+- Sessions were up 82%, and purchases were up 78%.
+- The purchase rate went from 5.83% to 5.68%, well within each other's 95% intervals. <mark>Conversion held.</mark>
 
 {/* CHART: matched-window sessions, purchases and purchase rate with intervals */}
 
-That's the real result for the year, and it's better than it looks. Most of the growth was paid: Paid Search went from 3.5% to 20.4% of sessions, and Meta spend grew significantly. On our product pages, Meta visitors add to cart at about a third of the rate of everyone else. Even so, conversion held, and mobile basket → purchase improved from 35.6% to 38.1%.
+That's better than it sounds. Most of the growth came from paid channels: Paid Search went from 3.5% to 20.4% of sessions, Meta spend grew significantly, and Meta visitors add to cart at about a third of everyone else's rate. Conversion held anyway, and mobile basket → purchase improved from 35.6% to 38.1%.
 
-***
+## What I got wrong: the tests
 
-## Why the tests couldn't tell us
+From January to August, I'd been running tests on PostHog and shipping variants once they had a 75–85% probability of beating control. When I re-ran them over their full periods, UK only, none could be proven: every 95% interval crossed zero.
 
-From January to August I ran a six-test programme on PostHog, shipping variants at 75–85% probability of beating control. Re-run over their full periods, UK only:
-
-| Test | Lift, UK (95% interval) | Shipped? |
-| --- | --- | --- |
-| PDP Recently Viewed | +4.0% (−11% to +22%) | Yes |
-| Card Badges | +6.8% (−10% to +27%) | Yes |
-| PDP Badges | +5.5% (−15% to +31%) | Yes |
-| PLP Recently Viewed | −5.6% (−27% to +21%) | No |
-| PLP Badges | +4.5% (−16% to +30%) | No |
-| USPs B / C / D / E | +0.7% / −5.6% / −6.4% / −8.0% | C |
-| PDP Blocks | −2.5% (−14% to +11%) | No call |
+The three I shipped did all point upwards: PDP Recently Viewed (+4.0%), Card Badges (+6.8%) and PDP Badges (+5.5%). Combined, they come out at a median of +11%, with a 73% chance of being positive. They most likely helped, but "most likely" wasn't what I'd been reporting.
 
 {/* CHART: every test's lift with its 95% interval, shipped tests marked */}
 
-The shipped tests all point upwards. Combined, they come out at a median of <mark>+11%, with a 73% chance of being positive</mark>. They most likely helped. But every interval crosses zero, so none of them can be proven. There were three reasons:
+{/* IMAGE: PDP Badges control vs variant (mobile), the clearest example of an early read */}
 
-1. **Too little traffic for the effects.** The plan targeted 4–8% lifts, and a two-week test here carries about ±16% noise.
-2. **Early reads.** Mid-test readings ran consistently higher than full-period results (PDP Badges looked like +19.9% before settling at +5.5%). USP variant C was shipped on AOV, a metric chosen after the results were in, while its conversion was most likely below control.
-3. **Uneven splits.** The first three tests each put noticeably more visitors into the test arm than control (up to 54/46). A split like that means something in the setup was off, so those results can't be trusted however they read.
+There were three reasons:
 
-***
+- **Too little traffic.** The plan targeted 4–8% lifts, but a two-week test here carries about ±16% noise.
+- **Early reads.** Mid-test readings ran consistently higher than full-period results. PDP Badges looked like +19.9% before settling at +5.5%. USP variant C was shipped on AOV, a metric chosen after the results came in, even though its conversion was most likely below control.
+- **Uneven splits.** The first three tests put up to 54% of visitors into the test arm. A split like that means something in the setup was broken, so those results can't be trusted however they read.
 
-## What I changed
+## How I fixed it
 
-| | Before | After |
-| --- | --- | --- |
-| **Population** | All traffic | UK only, set at flag assignment |
-| **Comparisons** | Month on month | Same days year on year, promotion days removed using order data |
-| **Sources** | One dashboard at a time | Shopify, GA4 and PostHog reconciled against each other |
-| **Test size** | Two weeks, whatever lift came out | Smallest detectable lift worked out before launch; fewer, bolder tests |
-| **Decisions** | Read during the test, any metric | One primary metric and a ship threshold set before launch, read once at a planned end |
-| **Validity** | Not checked | Chi-square split check before reading any result |
-| **Harness** | Every flag checked on every page | Rebuilt: flags only load where their test appears |
-| **Tracking** | Sticky Add to Cart not counted | One add-to-cart action covering both buttons, applied to past data |
+I fixed the measurement first. Tests now enrol UK visitors only, at the point they're assigned a variant. Year-on-year comparisons use the same days, with promotion days removed using order data. I reconcile Shopify, GA4 and PostHog against each other rather than trusting any one of them. Add to cart now counts the sticky button as well as the main one, and I applied that back through past data.
 
-I also re-labelled Card Badges and PDP Badges as untested features (they're candidates for a proper re-test) and recommended reverting USP variant C.
-
-***
+Then I fixed the testing. Before launch, each test now gets one primary metric, a ship threshold and a fixed end date. It's read once, after a split check. I rebuilt the test harness so feature flags only load on pages where their test appears, and moved to fewer, bolder tests sized to the traffic we have. I also relabelled Card Badges and PDP Badges as untested features, and recommended reverting USP variant C.
 
 ## What clean data showed
 
-With numbers I could trust, I went looking for the biggest gap in the funnel. I fixed the method before pulling the data: compare each step against the best comparable segment, on clean days, with minimum sample sizes. The biggest gap was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
+With numbers I could trust, I went looking for the biggest gap in the funnel, comparing each step against the best comparable segment on clean days. It was <mark>mobile product page → add to cart</mark>: 20.3% on mobile against 29.6% on desktop.
 
-PostHog event data on the best-selling product showed where the gap opens up. On a standard iPhone, the first screen shows the gallery, rating and title, and the price and Add to Cart sit just below it:
+PostHog data on the best-selling product showed where the gap opens up. On a standard iPhone, the first screen shows the gallery, rating and title, and the price and Add to Cart sit just below it. Nearly half of visitors (48%) never scrolled past that first screen, and only 2–5% of them added to cart. Of those who scrolled just past Add to Cart, 42% added to cart.
 
-| Deepest point reached | Share of visitors | Added to cart |
-| --- | --- | --- |
-| First screen only | ~48% | 2–5% |
-| Price and swatches | 6% | 11% |
-| Just past Add to Cart | 12% | 42% |
-| Details, reviews and below | 33% | 37–38% |
-
-Splitting those visitors by source showed where the first-screen exits come from:
-
-| Source (mobile UK) | Share of visitors | Left from first screen | Added to cart |
-| --- | --- | --- | --- |
-| Meta ads | 39% | 73% | 8.1% |
-| Everything else | 61% | 34% | 26.2% |
+Splitting by source showed who was leaving. Meta ads brought 39% of UK mobile visitors. 73% of them left from the first screen, and 8.1% added to cart. For everyone else, those figures were 34% and 26.2%.
 
 {/* CHART: ATC by scroll depth; first-screen exits, Meta vs other */}
 
-The Meta ads had `utm_source` and `utm_medium` swapped, so GA4 most likely filed them under "Unassigned". The fastest-growing channel was <mark>invisible in our channel reports</mark>.
+The Meta ads also had `utm_source` and `utm_medium` swapped, so GA4 most likely filed them under "Unassigned". The fastest-growing channel was <mark>invisible in our channel reports</mark>.
 
-It's the same pattern our 2025 research found before the rebuild. The rebuild fixed the speed, but the first screen still asks a lot of someone who has just tapped an ad.
-
-Two other suspects didn't hold up. The shade picker wasn't the barrier: visitors who compared shades added to cart at the same rate as those who picked one. And the 1,221 store reviews place shade problems *after* purchase, which makes them a returns problem to fix rather than a conversion test.
+Our 2025 research had found the same pattern before the rebuild. The rebuild fixed the speed, but the first screen still asks a lot of someone who has just tapped an ad. Two other suspects didn't hold up. Visitors who compared shades added to cart at the same rate as those who didn't. And the 1,221 store reviews place shade problems *after* purchase, which makes them a returns problem rather than a conversion one.
 
 ***
-
 
 ## Seven weeks, four tests
 
@@ -229,7 +188,7 @@ Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cooki
 
 About 60% of gift-arm orders included the gift. Revenue figures include VAT, and margin is calculated ex-VAT.
 
-The discount wins clearly on conversion and slightly on revenue, but it loses on margin. On conversion or revenue alone, marketing would have shipped it. On margin, the gift is the better offer. A 24% chance of the discount winning makes the gift likely but not certain to be better, so if the decision is challenged, the next step is a second send to the same arms.
+The discount wins clearly on conversion and slightly on revenue, but it loses on margin. On conversion or revenue alone, marketing would have shipped it. On margin, the gift is the better offer.
 
 ### 3. Quick Shop (weeks 3–5)
 
