@@ -57,7 +57,7 @@ A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a
 
 Three things were driving that +71%, and none of them had anything to do with the site:
 
-- **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months.
+- **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months. *(Duh-doy…)*
 - **Bots.** From mid-January, a scraper wave hit Direct traffic with non-UK sessions of 2–5 seconds that landed straight on product pages. By April, it made up ~91% of Direct sessions, and the all-traffic purchase rate was 2.20% against 5.16% for UK visitors.
 - **Promotions and spikes.** There were three major discount periods over summer, and in January a podcast sent organic traffic to 4.5× December's level.
 
@@ -66,7 +66,7 @@ Three things were driving that +71%, and none of them had anything to do with th
 With those stripped out, I compared the same promotion-free days in 2025 and 2026 (12–28 July and 12–23 August), UK only:
 
 - Sessions were up 82%, and purchases were up 78%.
-- The purchase rate went from 5.83% to 5.68%, well within each other's 95% intervals. <mark>Conversion held.</mark>
+- The purchase rate went from 5.83% to 5.68%, well within each other's 95% intervals. <mark>Conversions held as we scaled paid ads.</mark>
 
 {/* CHART: matched-window sessions, purchases and purchase rate with intervals */}
 
@@ -86,15 +86,15 @@ The three I shipped did all point upwards: PDP Recently Viewed (+4.0%), Card Bad
 
 There were three reasons:
 
-- **Too little traffic.** The plan targeted 4–8% lifts, but a two-week test here carries about ±16% noise.
-- **Early reads.** Mid-test readings ran consistently higher than full-period results. PDP Badges looked like +19.9% before settling at +5.5%. USP variant C was shipped on AOV, a metric chosen after the results came in, even though its conversion was most likely below control.
-- **Uneven splits.** The first three tests put up to 54% of visitors into the test arm. A split like that means something in the setup was broken, so those results can't be trusted however they read.
+- **Too little traffic:** the tests aimed for 4–8% lifts, but two weeks here carries about ±16% noise.
+- **Early reads:** PDP Badges looked like +19.9% mid-test, then settled at +5.5%.
+- **Uneven splits:** the first three tests put up to 54% of visitors in the test arm, a sign the setup was broken.
 
 ## How I fixed it
 
 I fixed the measurement first. Tests now enrol UK visitors only, at the point they're assigned a variant. Year-on-year comparisons use the same days, with promotion days removed using order data. I reconcile Shopify, GA4 and PostHog against each other rather than trusting any one of them. Add to cart now counts the sticky button as well as the main one, and I applied that back through past data.
 
-Then I fixed the testing. Before launch, each test now gets one primary metric, a ship threshold and a fixed end date. It's read once, after a split check. I rebuilt the test harness so feature flags only load on pages where their test appears, and moved to fewer, bolder tests sized to the traffic we have. I also relabelled Card Badges and PDP Badges as untested features, and recommended reverting USP variant C.
+Then I fixed the testing. Before launch, each test now gets one primary metric, a ship threshold and a fixed end date. It's read once, after a split check. I rebuilt the test harness so feature flags only load on pages where their test appears, and moved to fewer, bolder tests sized to the traffic we have. I also relabelled Card Badges and PDP Badges as untested features, and recommended reverting a USP variant that had shipped on a metric chosen after the results came in.
 
 ## What clean data showed
 

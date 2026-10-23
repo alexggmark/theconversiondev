@@ -17,14 +17,12 @@ const { before, after, alt = '', beforeLabel = 'Before', afterLabel = 'After', c
 ---
 
 <figure class="before-after" data-no-img-wrap style={maxWidth ? `max-width: ${maxWidth}` : undefined}>
-  <div class="ba-labels" aria-hidden="true">
-    <span><mark>{beforeLabel}</mark></span>
-    <span><mark>{afterLabel}</mark></span>
-  </div>
   <div class="ba-frame" style="--pos: 50%">
     <Image src={after} alt={alt} class="ba-img" />
+    <span class="ba-label ba-label-after" aria-hidden="true">{afterLabel}</span>
     <div class="ba-before" aria-hidden="true">
       <Image src={before} alt="" class="ba-img" />
+      <span class="ba-label ba-label-before">{beforeLabel}</span>
     </div>
     <div class="ba-divider" aria-hidden="true"><span class="ba-handle"></span></div>
     <input
@@ -128,12 +126,33 @@ const { before, after, alt = '', beforeLabel = 'Before', afterLabel = 'After', c
     border-left-color: #fff;
   }
 
-  /* Real <mark>s, so they pick up .prose mark (post.css) exactly */
-  .ba-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
+  /* Pills inside the frame, so they don't compete with <mark>s in the copy.
+     The before label lives in the clipped layer and the after label sits under it,
+     so the slider covers each one as it passes */
+  .ba-label {
+    position: absolute;
+    z-index: 0;
+    top: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.55);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
     white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .ba-label-before {
+    left: 0.75rem;
+  }
+
+  .ba-label-after {
+    right: 0.75rem;
   }
 
   .ba-range {
