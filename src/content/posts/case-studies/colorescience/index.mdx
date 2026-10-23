@@ -58,7 +58,7 @@ A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a
 Three things were driving that +71%, and none of them had anything to do with the site:
 
 - **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months. *(Duh-doy…)*
-- **Bots.** From mid-January, a scraper wave hit Direct traffic with non-UK sessions of 2–5 seconds that landed straight on product pages. By April, it made up ~91% of Direct sessions, and the all-traffic purchase rate was 2.20% against 5.16% for UK visitors.
+- **Bots.** From mid-January, a scraper wave hit Direct traffic. By April, bots were ~91% of Direct sessions, and the all-traffic purchase rate was 2.20% against 5.16% for real UK visitors.
 - **Promotions and spikes.** There were three major discount periods over summer, and in January a podcast sent organic traffic to 4.5× December's level.
 
 {/* CHART: conversion by month, 2024 vs 2026 */}
@@ -70,7 +70,7 @@ With those stripped out, I compared the same promotion-free days in 2025 and 202
 
 {/* CHART: matched-window sessions, purchases and purchase rate with intervals */}
 
-That's better than it sounds. Most of the growth came from paid channels: Paid Search went from 3.5% to 20.4% of sessions, Meta spend grew significantly, and Meta visitors add to cart at about a third of everyone else's rate. Conversion held anyway, and mobile basket → purchase improved from 35.6% to 38.1%.
+That's better than it sounds. Most of the growth came from paid ads, and Meta visitors add to cart at about a third of everyone else's rate. Conversion held anyway.
 
 ## What I got wrong: the tests
 
@@ -78,23 +78,27 @@ From January to August, I'd been running tests on PostHog and shipping variants 
 
 ![The three tests I shipped, all published on results that couldn't be proven.](./_assets/cs-shipped-tests.png)
 
-The three I shipped did all point upwards: PDP Recently Viewed (+4.0%), Card Badges (+6.8%) and PDP Badges (+5.5%). Combined, they come out at a median of +11%, with a 73% chance of being positive. They most likely helped, but "most likely" wasn't what I'd been reporting.
+The three I shipped did all point upwards, and together they most likely helped (a 73% chance). But "most likely" wasn't what I'd been reporting.
 
 {/* CHART: every test's lift with its 95% interval, shipped tests marked */}
-
-{/* IMAGE: PDP Badges control vs variant (mobile), the clearest example of an early read */}
 
 There were three reasons:
 
 - **Too little traffic:** the tests aimed for 4–8% lifts, but two weeks here carries about ±16% noise.
 - **Early reads:** PDP Badges looked like +19.9% mid-test, then settled at +5.5%.
-- **Uneven splits:** the first three tests put up to 54% of visitors in the test arm, a sign the setup was broken.
+- **Uneven splits:** the first three tests put up to 54% of visitors in the test variant, a sign the setup was broken.
 
 ## How I fixed it
 
-I fixed the measurement first. Tests now enrol UK visitors only, at the point they're assigned a variant. Year-on-year comparisons use the same days, with promotion days removed using order data. I reconcile Shopify, GA4 and PostHog against each other rather than trusting any one of them. Add to cart now counts the sticky button as well as the main one, and I applied that back through past data.
+- **UK visitors only,** set when a visitor is assigned a variant.
+- **Like-for-like comparisons:** the same days year on year, with promotion days removed.
+- **No single source of truth:** Shopify, GA4 and PostHog checked against each other.
+- **Decide before launch:** one primary metric, a ship threshold and a fixed end date, read once after a split check.
+- **Fewer, bolder tests,** sized to the traffic we actually have.
 
-Then I fixed the testing. Before launch, each test now gets one primary metric, a ship threshold and a fixed end date. It's read once, after a split check. I rebuilt the test harness so feature flags only load on pages where their test appears, and moved to fewer, bolder tests sized to the traffic we have. I also relabelled Card Badges and PDP Badges as untested features, and recommended reverting a USP variant that had shipped on a metric chosen after the results came in.
+I also relabelled the two badge tests as untested features, and recommended reverting a USP variant that had shipped on a metric chosen after the results came in.
+
+![Targeting for the decision-first test: the PostHog flag releases only to GB visitors, and the theme only checks it on product pages under 750px wide.](./_assets/cs-flag-targeting.png)
 
 ## What clean data showed
 
@@ -116,7 +120,7 @@ That made it the natural first test, and a clear example of where the clean data
 - **Weeks 3–5:** Quick Shop on collection pages, all devices (shipped)
 - **Weeks 6–7:** a bundle on the mobile product page (not shipped)
 
-Every test had its primary metric and guardrails written down before launch, a fixed end date, one read at the end and a split check before that read. I ship when the primary metric has at least a 90% chance of beating control and no guardrail is clearly worse.
+All four followed the new rules. I ship when the primary metric has at least a 90% chance of beating control and no guardrail is clearly worse.
 
 ### 1. Decision-first product page (weeks 1–2)
 
@@ -126,7 +130,7 @@ I also removed the quantity selector. Quantity can already be changed in the car
 
 ![Reordered, minus the quantity selector. On the first screen, the control shows the gallery and title; the test shows everything needed to buy.](./_assets/cs-decision-first.png)
 
-Only mobile visitors were enrolled. The flag is checked only on mobile product pages, so desktop visitors, who would never see a difference, can't dilute the result. Add to cart counts both the main and the sticky button.
+Enrolment was deliberately tight. The PostHog flag only releases to UK visitors, and the theme only asks for it on mobile-width product pages, so desktop visitors who'd never see a difference can't dilute the result.
 
 5,350 UK mobile visitors over two weeks:
 
@@ -139,25 +143,23 @@ Add to cart cleared the bar, and conversion and revenue point the same way witho
 
 ### 2. 15% off vs a free gift (weeks 1–2)
 
-Marketing relied heavily on discounts and gifts. I was against using price as a lever on a premium brand at all, because it trains customers to wait for the next offer, and no test window captures that. But since offers were going out anyway, it was worth finding out which one costs less.
+Marketing relied heavily on discounts and gifts. I've never loved leaning on price for a premium brand. Constant offers just don't feel right for a product people should want at full price. But since offers were going out anyway, it was worth finding out which one costs less.
 
 **Hypothesis:** a 15% discount would convert enough better than a free deluxe sample (on orders over £60) to make more money overall.
 
-**Primary metric: margin per recipient.** That's total margin from an arm's orders divided by the number of people emailed in that arm.
+**Primary metric: margin per recipient.** That's total margin from a bucket's orders divided by the number of people emailed in that bucket.
 
 - **Why margin:** conversion, revenue per visitor and AOV all ignore the cost of the offer, so they can point the wrong way.
 - **Why per recipient:** PostHog only sees people who click through, and the two emails attract different people. Dividing by everyone emailed keeps the comparison randomised.
 
-Conversion, revenue and AOV per recipient were secondary metrics: they explain *why* the result happened, but none of them decides it. Repeat rate and LTV by arm sit with marketing in Lifetimely.
-
 **How it worked:**
 
-![Klaviyo splits the list, each arm lands on its own page, and PostHog ties every purchase back to its arm.](./_assets/cs-offer-test-flow.png)
+![Klaviyo splits the list, each bucket lands on its own page, and PostHog ties every purchase back to its bucket.](./_assets/cs-offer-test-flow.png)
 
-- The Klaviyo list was split randomly into two arms, with the arm saved on each profile.
-- Each arm's email linked to its own landing page. The pages were identical apart from the offer, unlisted and set to noindex.
-- On load, the page records the arm with `posthog.register({ offer_arm })`, so it's attached to every later event, and applies that arm's code. Each code works once per customer, and the two can't combine.
-- In the gift arm, the cart script reads the arm and adds the gift when the cart reaches £60, then removes it if the cart drops below (much harder to get right than it sounds, but too long to cover here).
+- The Klaviyo list was split randomly into two buckets, with the bucket saved on each profile.
+- Each bucket's email linked to its own landing page. The pages were identical apart from the offer, unlisted and set to noindex.
+- On load, the page records the bucket with `posthog.register({ offer_bucket })`, so it's attached to every later event, and applies that bucket's code. Each code works once per customer, and the two can't combine.
+- In the gift bucket, the cart script reads the bucket and adds the gift when the cart reaches £60, then removes it if the cart drops below (much harder to get right than it sounds, but too long to cover here).
 
 **Margin without per-order cost data.** If margin depends only on revenue and which offer the order actually used, a few formulas cover it. With *m* as average gross margin at full price (50%), *R* as revenue ex-VAT and shipping, and *G* as the gift's cost (£4):
 
@@ -165,7 +167,7 @@ Conversion, revenue and AOV per recipient were secondary metrics: they explain *
 - **Order included the gift:** m × R − G = 0.50 × R − £4
 - **Order used neither:** m × R
 
-The checkout pixel picks the formula from the order itself, not from the user's arm. That way, someone in the 15% arm who buys without the code is correctly given full-price margin:
+The checkout pixel picks the formula from the order itself, not from the user's bucket. That way, someone in the 15% bucket who buys without the code is correctly given full-price margin:
 
 ```js
 analytics.subscribe('checkout_completed', (event) => {
@@ -187,7 +189,7 @@ analytics.subscribe('checkout_completed', (event) => {
 });
 ```
 
-Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cookie and initialises PostHog with it. Otherwise, purchases wouldn't carry the arm.
+Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cookie and initialises PostHog with it. Otherwise, purchases wouldn't carry the bucket.
 
 40,000 UK recipients, 14 days after the send:
 
@@ -195,8 +197,6 @@ Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cooki
 - **Conversion:** 1.80% → 2.00%, +11.1% for the discount (93% chance)
 - **Average order value:** £66.20 → £61.40, −7.3% (14% chance)
 - **Revenue per recipient:** £1.19 → £1.23, +3.0% (62% chance)
-
-About 60% of gift-arm orders included the gift. Revenue figures include VAT, and margin is calculated ex-VAT.
 
 The discount wins clearly on conversion and slightly on revenue, but it loses on margin. On conversion or revenue alone, marketing would have shipped it. On margin, the gift is the better offer.
 
@@ -209,22 +209,19 @@ The change: Quick Shop buttons are always visible on mobile product cards. On de
 I ran it across all devices to get a big enough sample. 20,000 UK visitors over three weeks:
 
 - **Product view rate, page or drawer (primary):** 46.0% → 47.4%, <mark>+3.0%, with a 97.6% chance of beating control</mark>
-- **Products viewed per user:** 2.31 → 2.38, +3.0% (95.1% chance)
 - **Quick Shop click rate:** 5.1% → 7.9%, +54.9% (>99.9% chance)
 - **Add to cart:** 15.20% → 15.95%, +4.9% (92.8% chance)
 - **Conversion:** 9.10% → 9.38%, +3.1% (75.3% chance)
-- **Average order value:** £61.20 → £61.55, +0.6% (55.3% chance)
 - **Revenue per visitor:** +3.7% (72.3% chance)
-- **Cart → purchase:** 59.87% → 58.81%, −1.8% (27.4% chance)
 
-The sample was big enough to confirm the engagement effect, but not the revenue effect. A 75% chance on conversion means roughly a 1 in 4 chance that the real effect is zero or negative.
+Big enough to confirm the engagement effect, but not the revenue effect: there's still roughly a 1 in 4 chance the conversion lift is zero or negative.
 
 ![The Quick Shop drawer: enough to buy without leaving the page, which is also why it can replace a product page view rather than add one.](./_assets/cs-quick-shop-drawer.png)
 
 Two traps came out of this one:
 
-- **Compare arms, not clickers.** People who open Quick Shop were more likely to buy anyway, so comparing clickers with non-clickers exaggerates the effect. The only fair comparison is control against variant.
-- **Check for substitution.** If people open the drawer *instead of* the product page, product viewing hasn't increased; they've just taken a different route. I should have checked whether product page views fell by about as much as drawer opens rose. I didn't, and the primary metric can't rule it out.
+- **Compare variants, not clickers.** People who open Quick Shop were more likely to buy anyway, so comparing them with non-clickers exaggerates the effect.
+- **Check for substitution.** If people open the drawer *instead of* the product page, they've just taken a different route. I should have checked whether product page views fell as drawer opens rose, and I didn't.
 
 ### 4. Bundle on the product page (weeks 6–7)
 
@@ -237,26 +234,20 @@ Control was the decision-first page that had just shipped. 8,000 UK mobile visit
 - **Average order value:** £58.70 → £59.60, +1.5% (60.6% chance)
 - **Revenue per visitor:** −4.1% (30.7% chance)
 
-Average order value ticked up slightly, but the module cost more conversions than the bundle gained, so revenue per visitor fell. The likely cause is the one I expected: it pushed the main button down the page and added a decision before the visitor could buy. It didn't ship.
+AOV ticked up, but the module cost more conversions than the bundle gained. As expected, pushing the button down and adding a decision hurt. It didn't ship.
 
 ***
 
 ## Where it landed
 
-UK conversion reached <mark>6.04% in October</mark>. That's out of season for a sunscreen brand, when traffic is around 40% of July's. Marketing ran strong campaigns over the same weeks, so not all of it belongs to the tests, but the decision-first page and Quick Shop both moved the funnel steps they were aimed at.
+UK conversion reached <mark>6.04% in October</mark>, out of season for a sunscreen brand. Marketing ran strong campaigns over the same weeks, so not all of it belongs to the tests, but the decision-first page and Quick Shop both moved the funnel steps they were aimed at.
 
 {/* TODO: October 2025 UK conversion on the same basis, for a like-for-like comparison */}
 
 ***
 
-## Key Learnings
+## Looking back
 
-**Check the denominator before the result.** Seasonality and bots moved this store's conversion rate more than any test did.
+Mismeasuring didn't make the first eight months a failure. The rebuild and early tests kept conversion steady while paid ads nearly doubled traffic with visitors far less ready to buy, and that's worth a lot on its own. What I couldn't do was prove it, or see where to go next.
 
-**Size tests to the traffic you have.** On a small store, a steady stream of small tests produces confident-looking noise. Fewer, bolder tests with a planned read can actually answer something.
-
-**Break problems down by source.** The biggest product page problem turned out to be mostly one channel.
-
-**Choose the metric that matches the cost.** On conversion or revenue, the discount won. On margin, the gift did. Picking the metric first is what stopped the wrong offer shipping.
-
-**Compare arms, and check where engagement came from.** Clickers aren't a control group, and a new route to the same page isn't more interest.
+The measurable wins came once I could trust the numbers. Clean data pointed to one specific problem, each test was built to answer a question rather than produce a number, and I could stand behind every result, including the two that said no.
