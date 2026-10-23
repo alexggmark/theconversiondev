@@ -52,6 +52,11 @@
         return;
       }
 
+      // Skip components that lay out their own images (e.g. BeforeAfter)
+      if (img.closest('[data-no-img-wrap]')) {
+        return;
+      }
+
       // Create wrapper
       var wrapper = document.createElement('div');
       wrapper.className = 'prose-img-wrapper';
