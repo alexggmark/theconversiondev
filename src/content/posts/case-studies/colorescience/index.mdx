@@ -12,7 +12,7 @@ import homeAfter from './_assets/cs-after.jpg'
 import pdpBefore from './_assets/cs-pdp-before-mob.jpg'
 import pdpAfter from './_assets/cs-pdp-after-mob.jpg'
 
-I run CRO and development for [Colorescience UK](https://colorescienceuk.com/), a premium mineral SPF brand. Over the last 12 months, my rebuild and CRO work helped lift conversion <mark>27%</mark> above the 12 months before it began. Alongside scaling paid ads, that grew revenue by <mark>£237K year on year</mark>.
+I run CRO and development for [Colorescience UK](https://colorescienceuk.com/), a premium mineral SPF brand. Over the last 12 months, a rebuild I spearheaded followed by CRO work helped lift conversions <mark>+27%</mark>. Alongside scaling paid ads, that grew revenue by <mark>£237K year on year</mark>.
 
 After seven weeks of testing, UK conversion reached <mark>6.04% in October</mark>, against 4.90% a year earlier (+23%) - out of season!
 
@@ -26,7 +26,7 @@ Getting there meant admitting the tests I'd been crediting hadn't actually prove
 
 Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of UK sessions are mobile, and it's very seasonal: autumn traffic is around 40% of July's.
 
-In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark> to load (p75 LCP), and the site overall loads 9.1× faster.
+In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after my research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark> to load (p75 LCP), and the site overall loads 9.1× faster.
 
 <BeforeAfter
   before={homeBefore}
@@ -59,13 +59,15 @@ By August, conversion was up 71% since January, and I was crediting my A/B tests
 
 {/* CHART: monthly CVR Jan–Aug, 2024 vs 2026 – lines climbing together */}
 
-So what did the rebuild and early tests actually do? On the same promotion-free days in 2025 and 2026, UK only, sessions rose 82% and the purchase rate barely moved (5.83% → 5.68%, within noise). <mark>Conversion held while paid ads nearly doubled traffic</mark>, even though Meta's share of sessions went from 28% to 52% and Meta visitors add to cart at a third of everyone else's rate.
+So what did the rebuild and early tests actually do?
+
+On the same promotion-free days in 2025 and 2026, UK only, sessions rose 82% and the purchase rate barely moved (5.83% → 5.68%, within noise). <mark>Conversion held while paid ads nearly doubled traffic</mark>, even though Meta's share of sessions went from 28% to 52% and Meta visitors add to cart at a third of everyone else's rate.
 
 ## What I got wrong: the tests
 
 From January to August, I'd been running tests on PostHog and shipping variants once they had a 75–85% probability of beating control. When I re-checked all seven of them, none could be proven: every 95% interval crossed zero.
 
-![The three tests I shipped, all published on results that couldn't be proven.](./_assets/cs-shipped-tests.png)
+![The three tests I shipped, all published on results that couldn't be proven, and aiming too small for the traffic we actually had.](./_assets/cs-shipped-tests.png)
 
 The three I shipped did all point upwards, and together they most likely helped (a 73% chance). But "most likely" wasn't what I'd been reporting.
 
@@ -130,7 +132,7 @@ Add to cart cleared the bar, and conversion points the same way without being pr
 
 ### 2. 15% off vs a free gift (weeks 1–2)
 
-Marketing leaned heavily on offers, so I tested which one costs less: 15% off, or a free deluxe sample on orders over £60.
+Marketing leaned heavily on promos (something I'm not a fan of), so I tested which one costs less: 15% off, or a free deluxe sample on orders over £60.
 
 **Why test at all?** Product data tells you what each offer costs per order, but not how people respond: how many extra buyers 15% off brings in, how many would have paid full price anyway, and how many push their basket past £60 for the gift. Across a large range at different prices, that's impossible to plan on paper, so the only way to know was to run both.
 
@@ -191,7 +193,9 @@ Two traps came out of this one:
 
 ### 4. Bundle on the product page (weeks 6–7)
 
-I was against this test. Our CMO pushed for it because kit sales from ads were up 180% year on year, and expected bundles to lift AOV and customer lifetime value. But the decision-first page had just won by moving Add to Cart *up*, and a bundle module above the button moves it back down and adds a decision before the visitor can buy. I expected it to hurt.
+I was against this test. Our CMO pushed for it because kit sales from ads were up 180% year on year, and expected bundles to lift AOV and customer lifetime value. But the decision-first page had just won by clearing the path to Add to Cart, and a kit module right under the button adds a second decision, with two more Add to Cart buttons competing for the same tap. I expected it to hurt.
+
+![The test added a "Complete your routine" module of discounted kits directly under Add to Cart, each with its own button.](./_assets/cs-bundle.png)
 
 Control was the decision-first page that had just shipped. 8,000 UK mobile visitors over two weeks:
 
@@ -199,7 +203,7 @@ Control was the decision-first page that had just shipped. 8,000 UK mobile visit
 - **Average order value:** £58.70 → £59.60, +1.5% (60.6% chance)
 - **Revenue per visitor:** −4.1% (30.7% chance)
 
-AOV ticked up, but nowhere near enough to cover the lost add-to-carts. As expected, pushing the button down and adding a decision hurt. It didn't ship.
+AOV ticked up, but nowhere near enough to cover the lost add-to-carts. As expected, adding a second decision straight after the first hurt. It didn't ship.
 
 ***
 
