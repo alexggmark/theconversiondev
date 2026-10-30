@@ -92,12 +92,15 @@ The number that matters is the IDs. They aren't styling hooks. **The markup is t
 
 ## Attempt #1: the clean rewrite
 
-Even inside Option 1, I tried to keep a path open to something modern: a parallel `v2` layout in Tailwind and Alpine, new JSON endpoints, and pages ported one by one from my prototype. If the backend ever opened up, `v2` could become the headless frontend.
+Even inside Option 1, I tried to keep a path open to something modern. The plan was a [Strangler Fig](https://martinfowler.com/bliki/StranglerFigApplication.html): build the new site around the old one and replace it piece by piece until nothing of the original is left.
+
+In practice, that meant backing up old views as `v1` files, writing new ones from scratch in Tailwind and Alpine on a parallel `v2` layout, adding new JSON endpoints, and porting pages one by one from my prototype. If the backend ever opened up, `v2` could become the headless frontend.
 
 About two months in, I made the call to stop. The reasons:
 
 - **The data contract was frozen.** One commit message reads *"Replacing .NET banner logic with new Alpine, will eventually update models"*. "Eventually" depended on backend capacity that wasn't coming. So rebuilding the basket in Alpine didn't *improve* it; it cloned the existing behaviour, quirks and all.
 - **Alpine meant rewriting too much jQuery.** The state lived in thousands of jQuery handlers, Kendo widgets and AJAX callbacks that read and write the DOM directly. Making Alpine the source of truth meant rewriting all of them.
+- **The patchwork didn't scale.** Strangler Fig works when you can see the finish line. With 729 views, half the site was new and half was old, and the two halves had to share a basket, a header and a checkout. The more pages I ported, the more seams there were to hold together, and the end was nowhere in sight.
 - **A parallel layout doubled the surface area.** Every fix had to land in v1 *and* v2, and every new file had to be registered by hand in an old-style `.csproj`.
 
 That was a hard decision to make alone, two months into a project with a deadline. But continuing would have meant delivering half of two sites instead of all of one.
