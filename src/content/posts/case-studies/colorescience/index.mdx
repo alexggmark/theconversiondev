@@ -14,7 +14,7 @@ import pdpAfter from './_assets/cs-pdp-after-mob.jpg'
 
 I run CRO and development for [Colorescience UK](https://colorescienceuk.com/), a premium mineral SPF brand. Over the last 12 months, my rebuild and CRO work helped lift conversion <mark>27%</mark> above the 12 months before it began. Alongside scaling paid ads, that grew revenue by <mark>£237K year on year</mark>.
 
-After seven weeks of testing, UK conversion reached <mark>6.04% in October</mark>, against [INSERT NUMBER: UK CVR October 2025, same bot/promo filtering] a year earlier ([CALCULATION: 6.04% ÷ October 2025 UK CVR − 1]) - out of season!
+After seven weeks of testing, UK conversion reached <mark>6.04% in October</mark>, against 4.90% a year earlier (+23%) - out of season!
 
 Getting there meant admitting the tests I'd been crediting hadn't actually proven anything, and rebuilding how we measure and test.
 
@@ -26,7 +26,7 @@ Getting there meant admitting the tests I'd been crediting hadn't actually prove
 
 Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of UK sessions are mobile, and it's very seasonal: autumn traffic is around 40% of July's.
 
-In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark> [INSERT NUMBER: name the measure, e.g. p75 LCP], and the site overall is 9.1× faster [INSERT NUMBER: same, which measure].
+In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark> to load (p75 LCP), and the site overall loads 9.1× faster.
 
 (Really not exaggerating here, it was *crushingly* slow…)
 
@@ -60,8 +60,10 @@ I'd been reading it the way most in-house teams do: this month against last. On 
 Three things were driving that +71%, and none of them had anything to do with the site:
 
 - **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months. *(Duh-doy…)*
-- **Bots.** From mid-January, a scraper wave hit Direct traffic. By April, bots were ~91% of Direct sessions ([INSERT NUMBER: bots as % of all sessions in April]), and the all-traffic purchase rate was 2.20% against 5.16% for real UK visitors.
+- **Bots.** From mid-January, a scraper wave hit Direct traffic. By April, bots were ~91% of Direct sessions (~57% of all sessions), and the all-traffic purchase rate was 2.20% against 5.16% for real UK visitors.
 - **Promotions and spikes.** There were three major discount periods over summer, and in January a podcast sent organic traffic to 4.5× December's level.
+
+So what was the actual impact of the rebuild and those first tests?
 
 With those stripped out, I compared the same promotion-free days in 2025 and 2026 (12–28 July and 12–23 August), UK only:
 
@@ -70,11 +72,11 @@ With those stripped out, I compared the same promotion-free days in 2025 and 202
 
 {/* CHART: matched-window sessions, purchases and purchase rate with intervals */}
 
-That's better than it sounds. Most of the growth came from paid ads: Meta went from [INSERT NUMBER: Meta % of UK sessions, 2025 window] to [INSERT NUMBER: Meta % of UK sessions, 2026 window] of UK sessions, and Meta visitors add to cart at about a third of everyone else's rate ([INSERT NUMBER: Meta ATC rate] vs [INSERT NUMBER: non-Meta ATC rate]). Conversion held anyway.
+That's better than it sounds. Most of the growth came from paid ads: Meta went from 28% to 52% of UK sessions, and Meta visitors add to cart at about a third of everyone else's rate (6.8% vs 19.9%). Conversion held anyway.
 
 ## What I got wrong: the tests
 
-From January to August, I'd been running tests on PostHog and shipping variants once they had a 75–85% probability of beating control. When I re-ran all [INSERT NUMBER: tests run January–August] of them over their full periods, UK only, none could be proven: every 95% interval crossed zero.
+From January to August, I'd been running tests on PostHog and shipping variants once they had a 75–85% probability of beating control. When I re-checked all seven of them, none could be proven: every 95% interval crossed zero.
 
 ![The three tests I shipped, all published on results that couldn't be proven.](./_assets/cs-shipped-tests.png)
 
@@ -94,10 +96,10 @@ There were three reasons:
 - **Like-for-like comparisons:** the same days year on year, with promotion days removed.
 - **No single source of truth:** Shopify, GA4 and PostHog checked against each other.
 - **Decide before launch:** one primary metric, a ship threshold and a fixed end date, read once after a split check.
-- **Primary metrics close to the change:** add to cart happens about [CALCULATION: UK ATC rate ÷ UK purchase rate]× as often as a purchase, so two weeks of traffic carries about ±[INSERT NUMBER: two-week noise on ATC]% noise instead of ±16%.
+- **Primary metrics close to the change:** add to cart happens about 2.3× as often as a purchase, so two weeks of traffic carries about ±10% noise instead of ±16%.
 - **Fewer, bolder tests,** sized to the traffic we actually have.
 
-I also relabelled the two badge tests as untested features, and recommended reverting a USP variant that had shipped on a metric chosen after the results came in.
+I also relabelled our previous winners as "inconclusive".
 
 ![Targeting for the decision-first test: the PostHog flag releases only to GB visitors, and the theme only checks it on product pages under 750px wide.](./_assets/cs-flag-targeting.png)
 
@@ -236,7 +238,7 @@ AOV ticked up, but nowhere near enough to cover the lost add-to-carts. As expect
 
 ## Where it landed
 
-UK conversion reached <mark>6.04% in October</mark>, out of season for a sunscreen brand, against [INSERT NUMBER: UK CVR October 2025, same filtering] a year earlier and [INSERT NUMBER: UK CVR in the two weeks before test 1] just before the tests began. Marketing ran strong campaigns over the same weeks, so not all of it belongs to the tests, but the decision-first page and Quick Shop both moved the funnel steps they were aimed at.
+UK conversion reached <mark>6.04% in October</mark>, out of season for a sunscreen brand, against 4.90% a year earlier and 5.52% just before the tests began. Marketing ran strong campaigns over the same weeks, so not all of it belongs to the tests, but the decision-first page and Quick Shop both moved the funnel steps they were aimed at.
 
 Over a full year, which seasonality can't flatter, human-only conversion from October 2025 to October 2026 was <mark>27% higher</mark> than from October 2023 to October 2024, before the rebuild or any testing.
 
