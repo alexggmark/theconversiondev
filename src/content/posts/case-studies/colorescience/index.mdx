@@ -28,8 +28,6 @@ Colorescience sells mineral sunscreen direct to consumers. It's premium, 94% of 
 
 In 2025 I rebuilt the store, moving it from an ageing off-the-shelf theme to a custom Dawn build, after research showed that speed and an overloaded mobile product page were the main problems. Mobile product pages went from <mark>5s+ to ~0.5s</mark> to load (p75 LCP), and the site overall loads 9.1× faster.
 
-(Really not exaggerating here, it was *crushingly* slow…)
-
 <BeforeAfter
   before={homeBefore}
   after={homeAfter}
@@ -53,26 +51,15 @@ A ~16% price rise landed in the same weeks, so I don't credit the rebuild with a
 
 ## What I got wrong: the numbers
 
-By August, conversion rate was up 71% since January, and I was crediting the A/B testing programme I'd been running…
+By August, conversion was up 71% since January, and I was crediting my A/B tests. But I was comparing this month with last, on a sunscreen brand. Three things that had nothing to do with the site explained it:
 
-I'd been reading it the way most in-house teams do: this month against last. On a sunscreen brand. From January to August. (Yes, that ~~dumb~~ myopic.)
+- **Seasonality:** in 2024, with no testing at all, conversion rose 79% over the same months.
+- **Bots:** a scraper wave from January made up ~57% of sessions by April, pulling the measured purchase rate down to 2.20% (real UK visitors: 5.16%).
+- **Promotions and spikes:** three summer sales, and a podcast that sent organic traffic to 4.5× December's level.
 
-Three things were driving that +71%, and none of them had anything to do with the site:
+{/* CHART: monthly CVR Jan–Aug, 2024 vs 2026 – lines climbing together */}
 
-- **Seasonality.** In 2024, with no testing at all, conversion rose 79% over the same months. *(Duh-doy…)*
-- **Bots.** From mid-January, a scraper wave hit Direct traffic. By April, bots were ~91% of Direct sessions (~57% of all sessions), and the all-traffic purchase rate was 2.20% against 5.16% for real UK visitors.
-- **Promotions and spikes.** There were three major discount periods over summer, and in January a podcast sent organic traffic to 4.5× December's level.
-
-So what was the actual impact of the rebuild and those first tests?
-
-With those stripped out, I compared the same promotion-free days in 2025 and 2026 (12–28 July and 12–23 August), UK only:
-
-- Sessions were up 82%, and purchases were up 78%.
-- The purchase rate went from 5.83% to 5.68%, well within each other's 95% intervals. <mark>Conversion rate held as we scaled paid ads.</mark>
-
-{/* CHART: matched-window sessions, purchases and purchase rate with intervals */}
-
-That's better than it sounds. Most of the growth came from paid ads: Meta went from 28% to 52% of UK sessions, and Meta visitors add to cart at about a third of everyone else's rate (6.8% vs 19.9%). Conversion held anyway.
+So what did the rebuild and early tests actually do? On the same promotion-free days in 2025 and 2026, UK only, sessions rose 82% and the purchase rate barely moved (5.83% → 5.68%, within noise). <mark>Conversion held while paid ads nearly doubled traffic</mark>, even though Meta's share of sessions went from 28% to 52% and Meta visitors add to cart at a third of everyone else's rate.
 
 ## What I got wrong: the tests
 
@@ -83,8 +70,6 @@ From January to August, I'd been running tests on PostHog and shipping variants 
 The three I shipped did all point upwards, and together they most likely helped (a 73% chance). But "most likely" wasn't what I'd been reporting.
 
 {/* CHART: every test's lift with its 95% interval, shipped tests marked */}
-
-There were three reasons:
 
 - **Too little traffic:** the tests aimed for 4–8% lifts, but two weeks here carries about ±16% noise.
 - **Early reads:** PDP Badges looked like +19.9% mid-test, then settled at +5.5%.
@@ -101,7 +86,7 @@ There were three reasons:
 
 I also relabelled our previous winners as "inconclusive".
 
-![Targeting for the decision-first test: the PostHog flag releases only to GB visitors, and the theme only checks it on product pages under 750px wide.](./_assets/cs-flag-targeting.png)
+![The kind of setup fix behind these rules: the decision-first test's PostHog flag releases only to GB visitors, and the theme only checks it on product pages under 750px wide.](./_assets/cs-flag-targeting.png)
 
 ## What clean data showed
 
@@ -145,31 +130,15 @@ Add to cart cleared the bar, and conversion points the same way without being pr
 
 ### 2. 15% off vs a free gift (weeks 1–2)
 
-Marketing relied heavily on discounts and gifts. I've never loved leaning on price for a premium brand. Constant offers just don't feel right for a product people should want at full price. But since offers were going out anyway, it was worth finding out which one costs less.
+Marketing leaned heavily on offers, so I tested which one costs less: 15% off, or a free deluxe sample on orders over £60.
 
-**Hypothesis:** a 15% discount would convert enough better than a free deluxe sample (on orders over £60) to make more money overall.
+**Why test at all?** Product data tells you what each offer costs per order, but not how people respond: how many extra buyers 15% off brings in, how many would have paid full price anyway, and how many push their basket past £60 for the gift. Across a large range at different prices, that's impossible to plan on paper, so the only way to know was to run both.
 
-**Primary metric: margin per recipient.** That's total margin from a bucket's orders divided by the number of people emailed in that bucket.
-
-- **Why margin:** conversion, revenue per visitor and AOV all ignore the cost of the offer, so they can point the wrong way.
-- **Why per recipient:** PostHog only sees people who click through, and the two emails attract different people. Dividing by everyone emailed keeps the comparison randomised.
-
-**How it worked:**
+**Primary metric: margin per recipient.** Conversion and AOV ignore what the offer costs, and dividing by everyone emailed (not just clickers) keeps the comparison randomised.
 
 ![Klaviyo splits the list, each bucket lands on its own page, and PostHog ties every purchase back to its bucket.](./_assets/cs-offer-test-flow.png)
 
-- The Klaviyo list was split randomly into two buckets, with the bucket saved on each profile.
-- Each bucket's email linked to its own landing page. The pages were identical apart from the offer, unlisted and set to noindex.
-- On load, the page records the bucket with `posthog.register({ offer_bucket })`, so it's attached to every later event, and applies that bucket's code. Each code works once per customer, and the two can't combine.
-- In the gift bucket, the cart script reads the bucket and adds the gift when the cart reaches £60, then removes it if the cart drops below (much harder to get right than it sounds, but too long to cover here).
-
-**Margin without per-order cost data.** If margin depends only on revenue and which offer the order actually used, a few formulas cover it. With *m* as average gross margin at full price (50%), *R* as revenue ex-VAT and shipping, and *G* as the gift's cost (£4):
-
-- **Order used the 15% code:** R × (1 − (1 − m) ÷ 0.85) = 0.412 × R
-- **Order included the gift:** m × R − G = 0.50 × R − £4
-- **Order used neither:** m × R
-
-The checkout pixel picks the formula from the order itself, not from the user's bucket. That way, someone in the 15% bucket who buys without the code is correctly given full-price margin:
+I split the list in Klaviyo rather than on-site, so people were randomised before anyone clicked, and PostHog only had to carry each recipient's bucket through to purchase. With no per-order cost data, the checkout pixel estimates margin from what each order actually used, so a 15% recipient who buys without the code still counts at full margin:
 
 ```js
 analytics.subscribe('checkout_completed', (event) => {
@@ -191,15 +160,13 @@ analytics.subscribe('checkout_completed', (event) => {
 });
 ```
 
-Custom pixels run in a sandbox, so the pixel reads the PostHog ID from its cookie and initialises PostHog with it. Otherwise, purchases wouldn't carry the bucket.
+40,000 UK recipients, 14 days:
 
-40,000 UK recipients, 14 days after the send:
-
-- **Margin per recipient (primary):** £0.45 for the gift vs £0.42 for 15% off, so <mark>the discount made 7.1% less margin</mark> (24% chance it's actually better)
+- **Margin per recipient (primary):** £0.45 for the gift vs £0.42 for 15% off, so <mark>the discount made 6.7% less margin</mark> (24% chance it's actually better)
 - **Conversion:** 1.80% → 2.00%, +11.1% for the discount (93% chance)
-- **Revenue per recipient:** £1.19 → £1.23, +3.0% (62% chance)
+- **Revenue per recipient (inc. VAT):** £1.19 → £1.23, +3.0% (62% chance)
 
-The discount wins clearly on conversion and slightly on revenue, but it loses on margin. On conversion or revenue alone, marketing would have shipped it. On margin, the gift is probably the better offer (a 76% chance). That's short of my 90% bar, but with nothing to say the discount earns more, the cheaper, more on-brand offer stayed.
+On conversion or revenue alone, marketing would have shipped the discount. On margin, the gift is probably better (76% chance). That's short of my 90% bar, but with nothing suggesting the discount earns more, the cheaper, more on-brand offer stayed.
 
 ### 3. Quick Shop (weeks 3–5)
 
@@ -219,8 +186,8 @@ Big enough to confirm the engagement effect, but not the conversion effect: ther
 
 Two traps came out of this one:
 
-- **Compare variants, not clickers.** People who open Quick Shop were more likely to buy anyway, so comparing them with non-clickers exaggerates the effect.
-- **Check for substitution.** If people open the drawer *instead of* the product page, they've just taken a different route. I should have checked whether product page views fell as drawer opens rose, and I didn't.
+- **Compare variants, not clickers.** Quick Shop users were likelier to buy anyway, so clicker vs non-clicker exaggerates the effect.
+- **Check for substitution.** Drawer opens may have replaced product page views rather than added to them. I didn't check, which matters most for reading add to cart.
 
 ### 4. Bundle on the product page (weeks 6–7)
 
@@ -240,12 +207,12 @@ AOV ticked up, but nowhere near enough to cover the lost add-to-carts. As expect
 
 UK conversion reached <mark>6.04% in October</mark>, out of season for a sunscreen brand, against 4.90% a year earlier and 5.52% just before the tests began. Marketing ran strong campaigns over the same weeks, so not all of it belongs to the tests, but the decision-first page and Quick Shop both moved the funnel steps they were aimed at.
 
-Over a full year, which seasonality can't flatter, human-only conversion from October 2025 to October 2026 was <mark>27% higher</mark> than from October 2023 to October 2024, before the rebuild or any testing.
+Over a full year, which seasonality can't flatter, human-only conversion from October 2025 to October 2026 was <mark>27% higher</mark> than from October 2024 to October 2025.
 
 ***
 
 ## Looking back
 
-Mismeasuring didn't make the first eight months a failure. The rebuild and early tests kept conversion steady while paid ads nearly doubled traffic with visitors far less ready to buy, and that's worth a lot on its own. What I couldn't do was prove it, or see where to go next.
+Mismeasuring didn't make the first eight months a failure. The rebuild and early tests kept conversion steady through a flood of visitors far less ready to buy, and that's worth a lot on its own. What I couldn't do was prove it, or see where to go next.
 
 The measurable wins came once I could trust the numbers. Clean data pointed to one specific problem, each test was built to answer a question rather than produce a number, and I could stand behind every result, including the two that said no.
